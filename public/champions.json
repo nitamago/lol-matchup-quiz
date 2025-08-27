@@ -481,7 +481,7 @@
 	},
 	"ミリオ": {
 		"name": "ミリオ",
-		"icon": "/lol-matchup-quiz/icons/ico_Milio.jpg"
+		"icon": "/lol-matchup-quiz/icons/ico_Milio.webp"
 	},
 	"ルル": {
 		"name": "ルル",
@@ -493,7 +493,7 @@
 	},
 	"ザイラ": {
 		"name": "ザイラ",
-		"icon": "/lol-matchup-quiz/icons/ico_Xayah.jpg"
+		"icon": "/lol-matchup-quiz/icons/ico_Zyra.jpg"
 	},
 	"バード": {
 		"name": "バード",
@@ -537,7 +537,7 @@
 	},
 	"エリス": {
 		"name": "エリス",
-		"icon": "/lol-matchup-quiz/icons/ico_Ekko.jpg"
+		"icon": "/lol-matchup-quiz/icons/ico_Elise.jpg"
 	},
 	"ニダリー": {
 		"name": "ニダリー",
@@ -578,5 +578,9 @@
 	"シャコ": {
 		"name": "シャコ",
 		"icon": "/lol-matchup-quiz/icons/ico_Shaco.jpg"
+	},
+	"ユーミ": {
+		"name": "ユーミ",
+		"icon": "/lol-matchup-quiz/icons/ico_Yuumi.jpg"
 	}
 }
