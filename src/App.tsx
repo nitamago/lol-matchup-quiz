@@ -5,7 +5,7 @@ import "./style.css";
 
 
 export default function App() {
-  const [role, setRole] = useState<"top" | "mid" | "bot" | "">("");
+  const [role, setRole] = useState<"top" | "mid" | "bot" | "sup" | "">("");
   const [stage, setStage] = useState<"role" | "start" | "quiz" | "result">("role");
   const [score, setScore] = useState<number>(0);
   const [mainChampion, setMainChampion] = useState<string>(""); // 空文字 = 未選択
@@ -52,6 +52,7 @@ export default function App() {
             <option value="top">Top</option>
             <option value="mid">Mid</option>
             <option value="bot">Bot</option>
+            <option value="sup">Sup</option>
           </select>
           <div>
             <button onClick={handleRoleSelect} disabled={!role}>

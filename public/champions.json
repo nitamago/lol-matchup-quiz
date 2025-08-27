@@ -466,5 +466,117 @@
 	"セナ": {
 		"name": "セナ",
 		"icon": "/lol-matchup-quiz/icons/ico_Senna.jpg"
+	},
+	"ナミ": {
+		"name": "ナミ",
+		"icon": "/lol-matchup-quiz/icons/ico_Nami.jpg"
+	},
+	"スレッシュ": {
+		"name": "スレッシュ",
+		"icon": "/lol-matchup-quiz/icons/ico_Thresh.jpg"
+	},
+	"ソナ": {
+		"name": "ソナ",
+		"icon": "/lol-matchup-quiz/icons/ico_Sona.jpg"
+	},
+	"ミリオ": {
+		"name": "ミリオ",
+		"icon": "/lol-matchup-quiz/icons/ico_Milio.jpg"
+	},
+	"ルル": {
+		"name": "ルル",
+		"icon": "/lol-matchup-quiz/icons/ico_Lulu.jpg"
+	},
+	"レオナ": {
+		"name": "レオナ",
+		"icon": "/lol-matchup-quiz/icons/ico_Leona.jpg"
+	},
+	"ザイラ": {
+		"name": "ザイラ",
+		"icon": "/lol-matchup-quiz/icons/ico_Xayah.jpg"
+	},
+	"バード": {
+		"name": "バード",
+		"icon": "/lol-matchup-quiz/icons/ico_Bard.jpg"
+	},
+	"パイク": {
+		"name": "パイク",
+		"icon": "/lol-matchup-quiz/icons/ico_Pyke.jpg"
+	},
+	"ソラカ": {
+		"name": "ソラカ",
+		"icon": "/lol-matchup-quiz/icons/ico_Soraka.jpg"
+	},
+	"カルマ": {
+		"name": "カルマ",
+		"icon": "/lol-matchup-quiz/icons/ico_Karma.jpg"
+	},
+	"ジャンナ": {
+		"name": "ジャンナ",
+		"icon": "/lol-matchup-quiz/icons/ico_Janna.jpg"
+	},
+	"レル": {
+		"name": "レル",
+		"icon": "/lol-matchup-quiz/icons/ico_Rell.jpg"
+	},
+	"ラカン": {
+		"name": "ラカン",
+		"icon": "/lol-matchup-quiz/icons/ico_Rakan.jpg"
+	},
+	"ジリアン": {
+		"name": "ジリアン",
+		"icon": "/lol-matchup-quiz/icons/ico_Zilean.jpg"
+	},
+	"ブラウム": {
+		"name": "ブラウム",
+		"icon": "/lol-matchup-quiz/icons/ico_Braum.jpg"
+	},
+	"ブリッツクランク": {
+		"name": "ブリッツクランク",
+		"icon": "/lol-matchup-quiz/icons/ico_Blitzcrank.jpg"
+	},
+	"エリス": {
+		"name": "エリス",
+		"icon": "/lol-matchup-quiz/icons/ico_Ekko.jpg"
+	},
+	"ニダリー": {
+		"name": "ニダリー",
+		"icon": "/lol-matchup-quiz/icons/ico_Nidalee.jpg"
+	},
+	"タリック": {
+		"name": "タリック",
+		"icon": "/lol-matchup-quiz/icons/ico_Taric.jpg"
+	},
+	"アリスター": {
+		"name": "アリスター",
+		"icon": "/lol-matchup-quiz/icons/ico_Alistar.jpg"
+	},
+	"ノーチラス": {
+		"name": "ノーチラス",
+		"icon": "/lol-matchup-quiz/icons/ico_Nautilus.jpg"
+	},
+	"マオカイ": {
+		"name": "マオカイ",
+		"icon": "/lol-matchup-quiz/icons/ico_Maokai.jpg"
+	},
+	"ニーコ": {
+		"name": "ニーコ",
+		"icon": "/lol-matchup-quiz/icons/ico_Neeko.jpg"
+	},
+	"フィドルスティックス": {
+		"name": "フィドルスティックス",
+		"icon": "/lol-matchup-quiz/icons/ico_Fiddlesticks.jpg"
+	},
+	"セラフィーン": {
+		"name": "セラフィーン",
+		"icon": "/lol-matchup-quiz/icons/ico_Seraphine.jpg"
+	},
+	"レナータ・グラスク": {
+		"name": "レナータ・グラスク",
+		"icon": "/lol-matchup-quiz/icons/ico_Renata.jpg"
+	},
+	"シャコ": {
+		"name": "シャコ",
+		"icon": "/lol-matchup-quiz/icons/ico_Shaco.jpg"
 	}
 }
