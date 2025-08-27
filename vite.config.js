@@ -3,6 +3,6 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
-  base: '/lol-quiz-app/',  // GitHub リポジトリ名
+  base: '/lol-matchup-quiz/',  // GitHub リポジトリ名
 })
 
