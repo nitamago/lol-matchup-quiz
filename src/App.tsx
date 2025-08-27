@@ -3,19 +3,23 @@ import Quiz from "./Quiz";
 import "./App.css";
 import "./style.css";
 
-const mainChampions = ["アーゴット", "イラオイ", "ダリウス", "フィオラ", "ティーモ", "ガレン"]; // 必要に応じて追加
 
 export default function App() {
   const [role, setRole] = useState<"top" | "mid" | "bot" | "">("");
   const [stage, setStage] = useState<"role" | "start" | "quiz" | "result">("role");
   const [score, setScore] = useState<number>(0);
   const [mainChampion, setMainChampion] = useState<string>(""); // 空文字 = 未選択
+  const [mainChampions, setMainChampions] = useState<string[]>([]); // 空文字 = 未選択
 
   // ロール決定
   const handleRoleSelect = () => {
     if (!role) return; // ロールが未選択なら進まない
     setRole(role);
     setStage("start");
+
+    if (role == "top"){
+      setMainChampions(["アーゴット", "イラオイ", "ヨリック", "ダリウス", "フィオラ", "ティーモ", "ガレン"])
+    }
   };
 
   const handleStart = () => {
