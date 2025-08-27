@@ -3,12 +3,20 @@ import Quiz from "./Quiz";
 import "./App.css";
 import "./style.css";
 
-const mainChampions = ["アーゴット", "ダリウス", "フィオラ", "ティーモ", "ガレン"]; // 必要に応じて追加
+const mainChampions = ["アーゴット", "イラオイ", "ダリウス", "フィオラ", "ティーモ", "ガレン"]; // 必要に応じて追加
 
 export default function App() {
-  const [stage, setStage] = useState<"start" | "quiz" | "result">("start");
+  const [role, setRole] = useState<"top" | "mid" | "bot" | "">("");
+  const [stage, setStage] = useState<"role" | "start" | "quiz" | "result">("role");
   const [score, setScore] = useState<number>(0);
   const [mainChampion, setMainChampion] = useState<string>(""); // 空文字 = 未選択
+
+  // ロール決定
+  const handleRoleSelect = () => {
+    if (!role) return; // ロールが未選択なら進まない
+    setRole(role);
+    setStage("start");
+  };
 
   const handleStart = () => {
     // 未選択でも進めるのでアラート不要
@@ -28,8 +36,27 @@ export default function App() {
 
   return (
     <div className="container">
-      <h1>マッチアップクイズ</h1>
-
+      {role == "" && (<h1>マッチアップクイズ</h1>)}
+      {role != "" && (<h1>マッチアップクイズ({role})</h1>)}
+      
+      {/* ロール選択画面 */}
+      {stage === "role" && (
+        <div>
+          <h3>ロールを選択してください</h3>
+          <select value={role} onChange={(e) => setRole(e.target.value as any)}>
+            <option value="">未選択</option>
+            <option value="top">Top</option>
+            <option value="mid">Mid</option>
+            <option value="bot">Bot</option>
+          </select>
+          <div>
+            <button onClick={handleRoleSelect} disabled={!role}>
+              次へ
+            </button>
+          </div>
+        </div>
+      )}
+      
       {stage === "start" && (
         <div>
           <h3>メインチャンピオンを選択（任意）</h3>
@@ -52,7 +79,7 @@ export default function App() {
         </div>
       )}
 
-      {stage === "quiz" && <Quiz mainChampion={mainChampion} onEnd={handleQuizEnd} />}
+      {stage === "quiz" && <Quiz role={role} mainChampion={mainChampion} onEnd={handleQuizEnd} />}
 
       {stage === "result" && (
         <div>

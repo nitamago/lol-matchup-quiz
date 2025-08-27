@@ -15,11 +15,12 @@ interface ChampionInfo {
 }
 
 interface QuizProps {
+  role: string;
   mainChampion: string;
   onEnd: (score: number) => void;
 }
 
-export default function Quiz({ mainChampion, onEnd }: QuizProps) {
+export default function Quiz({ role, mainChampion, onEnd }: QuizProps) {
   const [matchups, setMatchups] = useState<Matchups>({});
   const [champions, setChampions] = useState<ChampionInfo>({});
   const [round, setRound] = useState(0);
@@ -32,7 +33,7 @@ export default function Quiz({ mainChampion, onEnd }: QuizProps) {
   // 両方の JSON を読み込む
   useEffect(() => {
     Promise.all([
-      fetch("/lol-matchup-quiz/matchups.json").then((res) => res.json()),
+      fetch("/lol-matchup-quiz/"+role+"_matchups.json").then((res) => res.json()),
       fetch("/lol-matchup-quiz/champions.json").then((res) => res.json()),
     ]).then(([matchupData, championData]) => {
       setMatchups(matchupData);
@@ -51,7 +52,6 @@ export default function Quiz({ mainChampion, onEnd }: QuizProps) {
       if (round < 6) { 
         // 選択肢にメインチャンプがくる問題 
         if (Math.random() > 0.5) { 
-          console.log('hoge'); 
           const possibleOpponents = Object.keys(data).filter((c) => data[c].loses.includes(mainChampion)); 
           opponentChampion = possibleOpponents[Math.floor(Math.random() * possibleOpponents.length)]; 
         } else { 
@@ -61,12 +61,14 @@ export default function Quiz({ mainChampion, onEnd }: QuizProps) {
       } else { 
         // 相手にメインチャンプがくる問題 
         opponentChampion = mainChampion; 
+        console.log('Opponent:', opponentChampion);
       } 
     } else { 
       // 未選択なら完全ランダム 
       const champions = Object.keys(data); opponentChampion = champions[Math.floor(Math.random() * champions.length)]; 
     }
     setOpponent(opponentChampion); 
+    console.log('Opponent:', opponentChampion);
     
     // プレイヤー選択肢は mainChampion の勝ち・負け関係で決定 
     let advantage: string; 
@@ -91,6 +93,7 @@ export default function Quiz({ mainChampion, onEnd }: QuizProps) {
       const beatChampions = data[opponentChampion].beats; 
       disadvantage = beatChampions[Math.floor(Math.random() * beatChampions.length)]; 
     }
+    console.log('Advantage:', advantage, 'Disadvantage:', disadvantage);
 
     setChoices([advantage, disadvantage].sort(() => Math.random() - 0.5));
   };
