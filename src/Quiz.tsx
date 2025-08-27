@@ -32,8 +32,8 @@ export default function Quiz({ mainChampion, onEnd }: QuizProps) {
   // 両方の JSON を読み込む
   useEffect(() => {
     Promise.all([
-      fetch("/lol-quiz-app/matchups.json").then((res) => res.json()),
-      fetch("/lol-quiz-app/champions.json").then((res) => res.json()),
+      fetch("/lol-matchup-quiz/matchups.json").then((res) => res.json()),
+      fetch("/lol-matchup-quiz/champions.json").then((res) => res.json()),
     ]).then(([matchupData, championData]) => {
       setMatchups(matchupData);
       setChampions(championData);
@@ -128,7 +128,7 @@ export default function Quiz({ mainChampion, onEnd }: QuizProps) {
         {history.map((x, i) => (
           <img
             key={i}
-            src={x === 1 ? "/lol-quiz-app/icons/maru.png" : "/lol-quiz-app/icons/batsu.png"}
+            src={x === 1 ? "/lol-matchup-quiz/icons/maru.png" : "/lol-matchup-quiz/icons/batsu.png"}
             alt={x === 1 ? "正解" : "不正解"}
             width={24}
             style={{ marginRight: "4px" }}
@@ -165,7 +165,7 @@ export default function Quiz({ mainChampion, onEnd }: QuizProps) {
       {selected && (
         <div>
           <img
-            src={isCorrect ? "/lol-quiz-app/icons/maru.png" : "/lol-quiz-app/icons/batsu.png"}
+            src={isCorrect ? "/lol-matchup-quiz/icons/maru.png" : "/lol-matchup-quiz/icons/batsu.png"}
             alt={isCorrect ? "正解" : "不正解"}
             width={64}
             style={{ display: "block", margin: "1rem auto" }}
