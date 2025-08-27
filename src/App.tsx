@@ -1,35 +1,65 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import Quiz from "./Quiz";
+import "./App.css";
+import "./style.css";
 
-function App() {
-  const [count, setCount] = useState(0)
+const mainChampions = ["アーゴット", "ダリウス", "フィオラ", "ティーモ", "ガレン"]; // 必要に応じて追加
+
+export default function App() {
+  const [stage, setStage] = useState<"start" | "quiz" | "result">("start");
+  const [score, setScore] = useState<number>(0);
+  const [mainChampion, setMainChampion] = useState<string>(""); // 空文字 = 未選択
+
+  const handleStart = () => {
+    // 未選択でも進めるのでアラート不要
+    setStage("quiz");
+  };
+
+  const handleQuizEnd = (finalScore: number) => {
+    setScore(finalScore);
+    setStage("result");
+  };
+
+  const handleRetry = () => {
+    setScore(0);
+    setMainChampion("");
+    setStage("start");
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <div className="container">
+      <h1>マッチアップクイズ</h1>
 
-export default App
+      {stage === "start" && (
+        <div>
+          <h3>メインチャンピオンを選択（任意）</h3>
+          <select
+            value={mainChampion}
+            onChange={(e) => setMainChampion(e.target.value)}
+          >
+            <option value="">なし</option>
+            {mainChampions.map((c) => (
+              <option key={c} value={c}>
+                {c}
+              </option>
+            ))}
+          </select>
+          <div>
+            <button onClick={handleStart} className="startButton">
+              スタート
+            </button>
+          </div>
+        </div>
+      )}
+
+      {stage === "quiz" && <Quiz mainChampion={mainChampion} onEnd={handleQuizEnd} />}
+
+      {stage === "result" && (
+        <div>
+          <h2>結果: {score} / 10 </h2>
+          <button onClick={handleRetry}>再挑戦</button>
+        </div>
+      )}
+    </div>
+  );
+}
