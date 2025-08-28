@@ -61,7 +61,6 @@ export default function Quiz({ role, mainChampion, onEnd }: QuizProps) {
       } else { 
         // 相手にメインチャンプがくる問題 
         opponentChampion = mainChampion; 
-        console.log('Opponent:', opponentChampion);
       } 
     } else { 
       // 未選択なら完全ランダム 
