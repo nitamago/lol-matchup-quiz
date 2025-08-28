@@ -18,7 +18,7 @@ export default function App() {
     setStage("start");
 
     if (role == "top"){
-      setMainChampions(["アーゴット", "イラオイ", "ヨリック", "ダリウス", "フィオラ", "ティーモ", "ガレン"])
+      setMainChampions(["アーゴット", "イラオイ", "ヨリック", "ジャックス", "ダリウス", "フィオラ", "ティーモ", "ガレン"])
     }
   };
 
