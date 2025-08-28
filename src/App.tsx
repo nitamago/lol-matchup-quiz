@@ -1,11 +1,12 @@
 import { useState } from "react";
 import Quiz from "./Quiz";
+import QuizBotSup from "./QuizBotSup";
 import "./App.css";
 import "./style.css";
 
 
 export default function App() {
-  const [role, setRole] = useState<"top" | "mid" | "bot" | "sup" | "jg" | "">("");
+  const [role, setRole] = useState<"top" | "mid" | "bot" | "sup" | "jg" | "bot&sup" | "">("");
   const [stage, setStage] = useState<"role" | "start" | "quiz" | "result">("role");
   const [score, setScore] = useState<number>(0);
   const [mainChampion, setMainChampion] = useState<string>(""); // 空文字 = 未選択
@@ -54,6 +55,7 @@ export default function App() {
             <option value="mid">Mid</option>
             <option value="bot">Bot</option>
             <option value="sup">Sup</option>
+            <option value="bot&sup">Bot&Sup</option>
           </select>
           <div>
             <button onClick={handleRoleSelect} disabled={!role}>
@@ -85,7 +87,8 @@ export default function App() {
         </div>
       )}
 
-      {stage === "quiz" && <Quiz role={role} mainChampion={mainChampion} onEnd={handleQuizEnd} />}
+      {stage === "quiz" && role !== "bot&sup" && <Quiz role={role} mainChampion={mainChampion} onEnd={handleQuizEnd} />}
+      {stage === "quiz" && role === "bot&sup" && <QuizBotSup role={role} mainChampion={mainChampion} onEnd={handleQuizEnd} />}
 
       {stage === "result" && (
         <div>

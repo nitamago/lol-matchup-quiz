@@ -19,6 +19,13 @@ button {
   cursor: pointer;
 }
 
+.champions {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  justify-content: center;
+}
+
 .choicesRow {
   display: flex;
   flex-wrap: wrap;

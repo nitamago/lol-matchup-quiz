@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 
 interface Matchups {
   [key: string]: {
-    beats: string[];
-    loses: string[];
+    good: string[];
+    bad: string[];
   };
 }
 
@@ -20,11 +20,14 @@ interface QuizProps {
   onEnd: (score: number) => void;
 }
 
-export default function Quiz({ role, mainChampion, onEnd }: QuizProps) {
+export default function QuizBotSup({ role, mainChampion, onEnd }: QuizProps) {
   const [matchups, setMatchups] = useState<Matchups>({});
   const [champions, setChampions] = useState<ChampionInfo>({});
   const [round, setRound] = useState(0);
-  const [opponent, setOpponent] = useState<string | null>(null);
+  const [opponentChampionKey, setOpponentChampionKey] = useState<string | null>(null);
+  const [opponentBot, setOpponentBot] = useState<string | null>(null);
+  const [opponentSup, setOpponentSup] = useState<string | null>(null);
+  const [teamBot, setTeamBot] = useState<string | null>(null);
   const [choices, setChoices] = useState<string[]>([]);
   const [history, setHistory] = useState<number[]>([]);
   const [selected, setSelected] = useState<string | null>(null);
@@ -46,68 +49,42 @@ export default function Quiz({ role, mainChampion, onEnd }: QuizProps) {
     if (round >= 10 || Object.keys(data).length === 0) return;
     setSelected(null);
     setIsCorrect(null);
+    
+    // 未選択なら完全ランダム 
+    const champions = Object.keys(data); 
+    const key = champions[Math.floor(Math.random() * champions.length)]; 
+    setOpponentChampionKey(key);
+    const champs = key.split(',');
 
-    let opponentChampion: string; 
-    if (mainChampion && data[mainChampion]) { 
-      if (round < 6) { 
-        // 選択肢にメインチャンプがくる問題 
-        if (Math.random() > 0.5) { 
-          const possibleOpponents = Object.keys(data).filter((c) => data[c].loses.includes(mainChampion)); 
-          opponentChampion = possibleOpponents[Math.floor(Math.random() * possibleOpponents.length)]; 
-        } else { 
-          const possibleOpponents = Object.keys(data).filter((c) => data[c].beats.includes(mainChampion)); 
-          opponentChampion = possibleOpponents[Math.floor(Math.random() * possibleOpponents.length)]; 
-        } 
-      } else { 
-        // 相手にメインチャンプがくる問題 
-        opponentChampion = mainChampion; 
-        console.log('Opponent:', opponentChampion);
-      } 
-    } else { 
-      // 未選択なら完全ランダム 
-      const champions = Object.keys(data); 
-      opponentChampion = champions[Math.floor(Math.random() * champions.length)]; 
-    }
-    setOpponent(opponentChampion); 
-    console.log('Opponent:', opponentChampion);
+    setOpponentBot(champs[0]); 
+    setOpponentSup(champs[1]); 
+    setTeamBot(champs[2]); 
+    console.log('Opponent Bot:', champs[0], 'Opponent Sup:', champs[1], 'Team Bot:', champs[2]);
     
     // プレイヤー選択肢は mainChampion の勝ち・負け関係で決定 
     let advantage: string; 
     let disadvantage: string; 
-    if (mainChampion && data[mainChampion]) { 
-      if (data[opponentChampion].loses.includes(mainChampion)){ 
-        advantage = mainChampion; 
-      } else { 
-        const champions = data[opponentChampion].loses; 
-        advantage = champions[Math.floor(Math.random() * champions.length)]; 
-      } 
-      if (data[opponentChampion].beats.includes(mainChampion)){ 
-        disadvantage = mainChampion; 
-      } else { 
-        const champions = data[opponentChampion].beats; 
-        disadvantage = champions[Math.floor(Math.random() * champions.length)]; 
-      } 
-    } else { 
-      // 未選択時は従来通り 
-      const loseChampions = data[opponentChampion].loses; 
-      advantage = loseChampions[Math.floor(Math.random() * loseChampions.length)]; 
-      const beatChampions = data[opponentChampion].beats; 
-      disadvantage = beatChampions[Math.floor(Math.random() * beatChampions.length)]; 
-    }
+
+    // 未選択時は従来通り 
+    const loseChampions = data[key].good; 
+    advantage = loseChampions[Math.floor(Math.random() * loseChampions.length)]; 
+    const beatChampions = data[key].bad; 
+    disadvantage = beatChampions[Math.floor(Math.random() * beatChampions.length)];
+
     console.log('Advantage:', advantage, 'Disadvantage:', disadvantage);
 
     setChoices([advantage, disadvantage].sort(() => Math.random() - 0.5));
   };
 
   const handleChoice = (choice: string) => {
-    if (!opponent || selected) return;
+    if (!opponentChampionKey || selected) return;
     setSelected(choice);
-    const correct = matchups[opponent].loses.includes(choice);
+    const correct = matchups[opponentChampionKey].good.includes(choice);
     setIsCorrect(correct);
   };
 
   const nextRound = () => {
-    if (!opponent || selected === null) return;
+    if (!opponentChampionKey || selected === null) return;
     const newHistory = [...history, isCorrect ? 1 : 0];
     setHistory(newHistory);
 
@@ -140,12 +117,24 @@ export default function Quiz({ role, mainChampion, onEnd }: QuizProps) {
         ))}
       </div>
 
-      {opponent && (
+      {opponentBot && opponentSup && teamBot && (
         <div>
           <h3>相手のチャンピオン</h3>
-          <div className="champion">
-            <img src={champions[opponent]?.icon} alt={opponent} width={64} />
-            <div>{opponent}</div>
+          <div className="champions">
+            <div className="champion">
+              <img src={champions[opponentBot]?.icon} alt={opponentBot} width={64} />
+              <div>{opponentBot}</div>
+            </div>
+            <div className="champion">
+              <img src={champions[opponentSup]?.icon} alt={opponentSup} width={64} />
+              <div>{opponentSup}</div>
+            </div>
+          </div><h3>味方のチャンピオン</h3>
+          <div className="champions">
+            <div className="champion">
+              <img src={champions[teamBot]?.icon} alt={teamBot} width={64} />
+              <div>{teamBot}</div>
+            </div>
           </div>
         </div>
       )}
