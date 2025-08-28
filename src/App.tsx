@@ -5,7 +5,7 @@ import "./style.css";
 
 
 export default function App() {
-  const [role, setRole] = useState<"top" | "mid" | "bot" | "sup" | "">("");
+  const [role, setRole] = useState<"top" | "mid" | "bot" | "sup" | "jg" | "">("");
   const [stage, setStage] = useState<"role" | "start" | "quiz" | "result">("role");
   const [score, setScore] = useState<number>(0);
   const [mainChampion, setMainChampion] = useState<string>(""); // 空文字 = 未選択
@@ -50,6 +50,7 @@ export default function App() {
           <select value={role} onChange={(e) => setRole(e.target.value as any)}>
             <option value="">未選択</option>
             <option value="top">Top</option>
+            <option value="jg">JG</option>
             <option value="mid">Mid</option>
             <option value="bot">Bot</option>
             <option value="sup">Sup</option>
