@@ -6,6 +6,12 @@ interface Matchups {
     loses: string[];
   };
 }
+interface Reasons {
+  [key: string]: {
+    beats: { [key: string]: string };
+    loses: { [key: string]: string };
+  };
+}
 
 interface ChampionInfo {
   [key: string]: {
@@ -22,6 +28,7 @@ interface QuizProps {
 
 export default function Quiz({ role, mainChampion, onEnd }: QuizProps) {
   const [matchups, setMatchups] = useState<Matchups>({});
+  const [reasons, setReasons] = useState<Reasons>({});
   const [champions, setChampions] = useState<ChampionInfo>({});
   const [round, setRound] = useState(0);
   const [opponent, setOpponent] = useState<string | null>(null);
@@ -29,27 +36,31 @@ export default function Quiz({ role, mainChampion, onEnd }: QuizProps) {
   const [history, setHistory] = useState<number[]>([]);
   const [selected, setSelected] = useState<string | null>(null);
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
+  const [adReason, setAdReason] = useState<string | null>(null);
+  const [disadReason, setDisadReason] = useState<string | null>(null);
 
   // 両方の JSON を読み込む
   useEffect(() => {
     Promise.all([
       fetch("/lol-matchup-quiz/"+role+"_matchups.json").then((res) => res.json()),
+      fetch("/lol-matchup-quiz/"+role+"_reason.json").then((res) => res.json()),
       fetch("/lol-matchup-quiz/champions.json").then((res) => res.json()),
-    ]).then(([matchupData, championData]) => {
+    ]).then(([matchupData, reasonData, championData]) => {
       setMatchups(matchupData);
+      setReasons(reasonData);
       setChampions(championData);
-      startRound(matchupData);
+      startRound(matchupData, reasonData);
     });
   }, []);
 
-  const startRound = (data: Matchups = matchups) => {
+  const startRound = (data: Matchups = matchups, reasonsData: Reasons = reasons) => {
     if (round >= 10 || Object.keys(data).length === 0) return;
     setSelected(null);
     setIsCorrect(null);
 
     let opponentChampion: string; 
     if (mainChampion && data[mainChampion]) { 
-      if (round < 6) { 
+      if (round < 6 && false) { 
         // 選択肢にメインチャンプがくる問題 
         if (Math.random() > 0.5) { 
           const possibleOpponents = Object.keys(data).filter((c) => data[c].loses.includes(mainChampion)); 
@@ -73,7 +84,7 @@ export default function Quiz({ role, mainChampion, onEnd }: QuizProps) {
     // プレイヤー選択肢は mainChampion の勝ち・負け関係で決定 
     let advantage: string; 
     let disadvantage: string; 
-    if (mainChampion && data[mainChampion]) { 
+    if (mainChampion && data[mainChampion] && false) { 
       if (data[opponentChampion].loses.includes(mainChampion)){ 
         advantage = mainChampion; 
       } else { 
@@ -96,6 +107,15 @@ export default function Quiz({ role, mainChampion, onEnd }: QuizProps) {
     console.log('Advantage:', advantage, 'Disadvantage:', disadvantage);
 
     setChoices([advantage, disadvantage].sort(() => Math.random() - 0.5));
+
+    console.log('Reasons Data:', reasonsData[opponentChampion]);
+    if (reasonsData && reasonsData[opponentChampion]) {
+      console.log( reasonsData);
+      console.log( reasonsData[opponentChampion]["loses"][advantage]);
+      console.log( reasonsData[opponentChampion]["beats"][disadvantage]);
+      setAdReason( reasonsData[opponentChampion]["loses"][advantage]);
+      setDisadReason( reasonsData[opponentChampion]["beats"][disadvantage]);
+    }
   };
 
   const handleChoice = (choice: string) => {
@@ -173,6 +193,8 @@ export default function Quiz({ role, mainChampion, onEnd }: QuizProps) {
             width={64}
             style={{ display: "block", margin: "1rem auto" }}
           />
+          <p>{isCorrect ? adReason : disadReason}</p>
+          
           <button onClick={nextRound}>次へ</button>
         </div>
       )}
