@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
+import WinRateChart from "./Chart";
 
 interface Matchups {
   [key: string]: {
-    beats: string[];
-    loses: string[];
+    beats: { [key: string]: string }[];
+    loses: { [key: string]: string }[];
+    origins: { [key: string]: string }[];
   };
 }
 interface Reasons {
@@ -38,6 +40,11 @@ export default function Quiz({ role, mainChampion, onEnd }: QuizProps) {
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
   const [adReason, setAdReason] = useState<string | null>(null);
   const [disadReason, setDisadReason] = useState<string | null>(null);
+  const [advantage, setAdvantage] = useState<string>("");
+  const [disadvantage, setDisadvantage] = useState<string>("");
+  const [advantageDelta2, setAdvantageDelta2] = useState<string>("0.0");
+  const [disadvantageDelta2, setDisadvantageDelta2] = useState<string>("0.0");
+  const [origins, setOrigins] = useState<{[key: string]: string}[]>([]);
 
   // 両方の JSON を読み込む
   useEffect(() => {
@@ -63,10 +70,10 @@ export default function Quiz({ role, mainChampion, onEnd }: QuizProps) {
       if (round < 6 && false) { 
         // 選択肢にメインチャンプがくる問題 
         if (Math.random() > 0.5) { 
-          const possibleOpponents = Object.keys(data).filter((c) => data[c].loses.includes(mainChampion)); 
+          const possibleOpponents = Object.keys(data).filter((c) => data[c].loses.map((d) => d['name']).includes(mainChampion)); 
           opponentChampion = possibleOpponents[Math.floor(Math.random() * possibleOpponents.length)]; 
         } else { 
-          const possibleOpponents = Object.keys(data).filter((c) => data[c].beats.includes(mainChampion)); 
+          const possibleOpponents = Object.keys(data).filter((c) => data[c].beats.map((d) => d['name']).includes(mainChampion)); 
           opponentChampion = possibleOpponents[Math.floor(Math.random() * possibleOpponents.length)]; 
         } 
       } else { 
@@ -81,47 +88,62 @@ export default function Quiz({ role, mainChampion, onEnd }: QuizProps) {
     setOpponent(opponentChampion); 
     console.log('Opponent:', opponentChampion);
     
+    const origins: { [key: string]: string }[] = data[opponentChampion].origins;
+    setOrigins(origins);
+    console.log('Origins:', origins);
+    
     // プレイヤー選択肢は mainChampion の勝ち・負け関係で決定 
-    let advantage: string; 
-    let disadvantage: string; 
+    let advantageName: string; 
+    let disadvantageName: string;
+    let advantageDelta2: string; 
+    let disadvantageDelta2: string;
     if (mainChampion && data[mainChampion] && false) { 
-      if (data[opponentChampion].loses.includes(mainChampion)){ 
-        advantage = mainChampion; 
+      if (data[opponentChampion].loses.map((d) => d['name']).includes(mainChampion)){ 
+        setAdvantage(data[opponentChampion].loses.filter((d) => d['name'] === mainChampion)[0]['name']); 
       } else { 
         const champions = data[opponentChampion].loses; 
-        advantage = champions[Math.floor(Math.random() * champions.length)]; 
+        setAdvantage(champions[Math.floor(Math.random() * champions.length)]['name']); 
       } 
-      if (data[opponentChampion].beats.includes(mainChampion)){ 
-        disadvantage = mainChampion; 
+      if (data[opponentChampion].beats.map((d) => d['name']).includes(mainChampion)){ 
+        setDisadvantage(data[opponentChampion].beats.filter((d) => d['name'] === mainChampion)[0]['name']); 
       } else { 
         const champions = data[opponentChampion].beats; 
-        disadvantage = champions[Math.floor(Math.random() * champions.length)]; 
+        setDisadvantage(champions[Math.floor(Math.random() * champions.length)]['name']); 
       } 
     } else { 
       // 未選択時は従来通り 
       const loseChampions = data[opponentChampion].loses; 
-      advantage = loseChampions[Math.floor(Math.random() * loseChampions.length)]; 
+      console.log(loseChampions[Math.floor(Math.random() * loseChampions.length)]);
+      const advantageData = loseChampions[Math.floor(Math.random() * loseChampions.length)];
+      advantageName = advantageData['name'];
+      advantageDelta2 = advantageData['delta2'];
       const beatChampions = data[opponentChampion].beats; 
-      disadvantage = beatChampions[Math.floor(Math.random() * beatChampions.length)]; 
+      const disadvantageData = beatChampions[Math.floor(Math.random() * beatChampions.length)];
+      disadvantageName = disadvantageData['name'];
+      disadvantageDelta2 = disadvantageData['delta2'];
     }
-    console.log('Advantage:', advantage, 'Disadvantage:', disadvantage);
+    setAdvantage(advantageName);
+    setDisadvantage(disadvantageName);
+    setAdvantageDelta2(advantageDelta2);
+    setDisadvantageDelta2(disadvantageDelta2);
+    console.log('Advantage:', advantageName, 'Disadvantage:', disadvantageName);
 
-    setChoices([advantage, disadvantage].sort(() => Math.random() - 0.5));
+    setChoices([advantageName, disadvantageName].sort(() => Math.random() - 0.5));
 
     console.log('Reasons Data:', reasonsData[opponentChampion]);
     if (reasonsData && reasonsData[opponentChampion]) {
       console.log( reasonsData);
-      console.log( reasonsData[opponentChampion]["loses"][advantage]);
-      console.log( reasonsData[opponentChampion]["beats"][disadvantage]);
-      setAdReason( reasonsData[opponentChampion]["loses"][advantage]);
-      setDisadReason( reasonsData[opponentChampion]["beats"][disadvantage]);
+      console.log( reasonsData[opponentChampion]["loses"][advantageName]);
+      console.log( reasonsData[opponentChampion]["beats"][disadvantageName]);
+      setAdReason( reasonsData[opponentChampion]["loses"][advantageName]);
+      setDisadReason( reasonsData[opponentChampion]["beats"][disadvantageName]);
     }
   };
 
   const handleChoice = (choice: string) => {
     if (!opponent || selected) return;
     setSelected(choice);
-    const correct = matchups[opponent].loses.includes(choice);
+    const correct = matchups[opponent].loses.map((d) => d['name']).includes(choice);
     setIsCorrect(correct);
   };
 
@@ -195,6 +217,8 @@ export default function Quiz({ role, mainChampion, onEnd }: QuizProps) {
           />
           <p>{isCorrect ? adReason : disadReason}</p>
           
+          <WinRateChart beat={{"name": advantage, "delta2": advantageDelta2}} lose={{"name": disadvantage, "delta2": disadvantageDelta2}} origins={origins}/>
+
           <button onClick={nextRound}>次へ</button>
         </div>
       )}
