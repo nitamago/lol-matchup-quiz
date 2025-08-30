@@ -192,6 +192,13 @@ export default function App() {
     setStage("start");
   };
 
+  const handleMoveRoleSelect = () => {
+    setScore(0);
+    setMainChampion("");
+    setRole("");
+    setStage("role");
+  };
+
   return (
     <div className="container">
       {role == "" && (<h1>マッチアップクイズ</h1>)}
@@ -254,8 +261,13 @@ export default function App() {
 
       {stage === "result" && (
         <div>
-          <h2>結果: {score} / 10 </h2>
-          <button onClick={handleRetry}>再挑戦</button>
+          <div>
+            <h2>結果: {score} / 10 </h2>
+            <button onClick={handleRetry}>再挑戦</button>
+          </div>
+          <div>
+            <button onClick={handleMoveRoleSelect}>ロール選択へ</button>
+          </div>
         </div>
       )}
     </div>
