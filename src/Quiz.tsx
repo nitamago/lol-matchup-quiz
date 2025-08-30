@@ -67,7 +67,7 @@ export default function Quiz({ role, mainChampion, onEnd }: QuizProps) {
 
     let opponentChampion: string; 
     if (mainChampion && data[mainChampion]) { 
-      if (round < 6 && false) { 
+      if (round < 6) { 
         // 選択肢にメインチャンプがくる問題 
         if (Math.random() > 0.5) { 
           const possibleOpponents = Object.keys(data).filter((c) => data[c].loses.map((d) => d['name']).includes(mainChampion)); 
@@ -97,18 +97,26 @@ export default function Quiz({ role, mainChampion, onEnd }: QuizProps) {
     let disadvantageName: string;
     let advantageDelta2: string; 
     let disadvantageDelta2: string;
-    if (mainChampion && data[mainChampion] && false) { 
+    if (mainChampion && data[mainChampion] ) { 
       if (data[opponentChampion].loses.map((d) => d['name']).includes(mainChampion)){ 
-        setAdvantage(data[opponentChampion].loses.filter((d) => d['name'] === mainChampion)[0]['name']); 
+        const advantageData = data[opponentChampion].loses.filter((d) => d['name'] === mainChampion)[0]
+        advantageName = advantageData['name'];
+        advantageDelta2 = advantageData['delta2'];
       } else { 
         const champions = data[opponentChampion].loses; 
-        setAdvantage(champions[Math.floor(Math.random() * champions.length)]['name']); 
+        const advantageData = champions[Math.floor(Math.random() * champions.length)];
+        advantageName = advantageData['name'];
+        advantageDelta2 = advantageData['delta2'];
       } 
       if (data[opponentChampion].beats.map((d) => d['name']).includes(mainChampion)){ 
-        setDisadvantage(data[opponentChampion].beats.filter((d) => d['name'] === mainChampion)[0]['name']); 
+        const disadvantageData = data[opponentChampion].beats.filter((d) => d['name'] === mainChampion)[0];
+        disadvantageName = disadvantageData['name'];
+        disadvantageDelta2 = disadvantageData['delta2'];
       } else { 
         const champions = data[opponentChampion].beats; 
-        setDisadvantage(champions[Math.floor(Math.random() * champions.length)]['name']); 
+        const disadvantageData = champions[Math.floor(Math.random() * champions.length)]
+        disadvantageName = disadvantageData['name'];
+        disadvantageDelta2 = disadvantageData['delta2'];
       } 
     } else { 
       // 未選択時は従来通り 
