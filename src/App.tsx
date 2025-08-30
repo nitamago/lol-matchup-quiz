@@ -196,7 +196,16 @@ export default function App() {
     <div className="container">
       {role == "" && (<h1>マッチアップクイズ</h1>)}
       {role != "" && (<h1>マッチアップクイズ({role})</h1>)}
-      
+        
+      {/* アプリの説明 */}
+      {stage === "role" && (
+        <p className="description">
+          League of Legendsのマッチアップクイズです。 <br></br>
+          チャンピオンの有利不利を学習する練習にお使いください。  <br></br>
+          まずはロールを選択してください。
+        </p>
+      )}
+
       {/* ロール選択画面 */}
       {stage === "role" && (
         <div>
