@@ -22,6 +22,7 @@ export default function App() {
       setMainChampions([
         "アーゴット",
         "アンベッサ",
+        "イラオイ",
         "イレリア",
         "オラフ",
         "ガレン",
