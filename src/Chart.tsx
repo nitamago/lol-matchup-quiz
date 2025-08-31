@@ -44,6 +44,7 @@ interface WinRateChartProps {
     beat: { [key: string]: string };
     lose: { [key: string]: string };
     origins: { [key: string]: string }[];
+    opponentName: string;
 }
 
 interface CharacterJson {
@@ -59,11 +60,12 @@ interface CharacterData {
   winRate: number;
 }
 
-export default function WinRateChart({ beat, lose, origins }: WinRateChartProps) {
+export default function WinRateChart({ beat, lose, origins, opponentName }: WinRateChartProps) {
   console.log("Chart Props:", { beat, lose, origins });
 
   const [figData, setFigData] = useState<CharacterData[]>([]);
   const [range, setRange] = useState<number[]>([]);
+  const [opName, setOpName] = useState<string>("");
 
   const winRateMap: Record<string, number> = {};
   winRateMap[beat["name"]] = parseFloat(beat["delta2"]);
@@ -90,6 +92,7 @@ export default function WinRateChart({ beat, lose, origins }: WinRateChartProps)
         merged.push({winRate: 50, name: "平均", icon: ""}); // 右側の画像が見切れるので、画像無しデータ追加する
         setFigData(merged);
         setRange([Math.floor(Math.min(...merged.map(d => d.winRate)) - 1), Math.ceil(Math.max(...merged.map(d => d.winRate)) + 1)]);
+        setOpName(opponentName);
     })
     .catch((err) => console.error("データ読み込みエラー", err));
   }, []);
@@ -104,7 +107,7 @@ export default function WinRateChart({ beat, lose, origins }: WinRateChartProps)
 
   return (
     <div id="fig-container" className="p-4">
-      <h2 className="text-xl font-bold mb-4">勝率グラフ</h2>
+      <h2 className="text-xl font-bold mb-4">勝率グラフ  vs{opName}</h2>
       <ScatterChart
         width={300}
         height={300}

@@ -26,11 +26,12 @@ interface QuizProps {
 export default function QuizBotSup({ role, mainChampion, onEnd }: QuizProps) {
   const [matchups, setMatchups] = useState<Matchups>({});
   const [botMatchups, setBotMatchups] = useState<Matchups>({});
+  const [supMatchups, setSupMatchups] = useState<Matchups>({});
   const [champions, setChampions] = useState<ChampionInfo>({});
   const [round, setRound] = useState(0);
   const [opponentChampionKey, setOpponentChampionKey] = useState<string | null>(null);
-  const [opponentBot, setOpponentBot] = useState<string | null>(null);
-  const [opponentSup, setOpponentSup] = useState<string | null>(null);
+  const [opponentBot, setOpponentBot] = useState<string>("");
+  const [opponentSup, setOpponentSup] = useState<string>("");
   const [teamBot, setTeamBot] = useState<string | null>(null);
   const [advantage, setAdvantage] = useState<string>("");
   const [disadvantage, setDisadvantage] = useState<string>("");
@@ -42,26 +43,28 @@ export default function QuizBotSup({ role, mainChampion, onEnd }: QuizProps) {
   const [selected, setSelected] = useState<string | null>(null);
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
   const [h100BarData, setH100BarData] = useState<Record<string, any>[]>([]);
+  const [quizType, setQuizType] = useState<string>("");
 
-  const data1 = [
-    { name: "A", A: 40, B: 60 }
-  ];
 
   // 両方の JSON を読み込む
   useEffect(() => {
     Promise.all([
-      fetch("/lol-matchup-quiz/"+role+"_matchups.json").then((res) => res.json()),
+      fetch("/lol-matchup-quiz/bot&sup_matchups.json").then((res) => res.json()),
+      fetch("/lol-matchup-quiz/sup&bot_matchups.json").then((res) => res.json()),
       fetch("/lol-matchup-quiz/bot_matchups.json").then((res) => res.json()),
+      fetch("/lol-matchup-quiz/sup_matchups.json").then((res) => res.json()),
       fetch("/lol-matchup-quiz/champions.json").then((res) => res.json()),
-    ]).then(([matchupData, botMatchupData, championData]) => {
-      setMatchups(matchupData);
+    ]).then(([matchupData1, matchupData2, botMatchupData, supMatchups, championData]) => {
+      const merged = { ...matchupData1, ...matchupData2 };
+      setMatchups(merged);
       setBotMatchups(botMatchupData);
+      setSupMatchups(supMatchups);
       setChampions(championData);
-      startRound(matchupData, botMatchupData);
+      startRound(merged, botMatchupData, supMatchups);
     });
   }, []);
 
-  const startRound = (data: Matchups = matchups, data2: Matchups = botMatchups) => {
+  const startRound = (data: Matchups = matchups, data2: Matchups = botMatchups, data3: Matchups = supMatchups) => {
     if (round >= 10 || Object.keys(data).length === 0) return;
     setSelected(null);
     setIsCorrect(null);
@@ -69,18 +72,30 @@ export default function QuizBotSup({ role, mainChampion, onEnd }: QuizProps) {
     // 未選択なら完全ランダム 
     const champions = Object.keys(data); 
     const key = champions[Math.floor(Math.random() * champions.length)]; 
+    console.log('key:', key);
     setOpponentChampionKey(key);
     const champs = key.split(',');
 
-    const opBot: string = champs[0]
-    const tmBot: string = champs[2]
-    console.log('opBot:', data2);
-    const botMatchup = data2[opBot].loses.filter(c => c['name'] == tmBot)[0];
-    const botDelta2 = parseFloat(botMatchup ? botMatchup['delta2'] : "0.0"); // losesにないということは互角であるはず
+    const opBot: string = champs[0];
+    const opSup: string = champs[1];
+    const tmBot: string = champs[2];
     setOpponentBot(opBot); 
-    setOpponentSup(champs[1]); 
+    setOpponentSup(opSup); 
     setTeamBot(tmBot); 
-    setH100BarData([{'name': "A", tmBot: 50-botDelta2, opBot: 50+botDelta2 }])
+
+    const quizType: string = champs[3];
+    setQuizType(quizType);
+
+    if (quizType == "sup") {
+      const botMatchup = data2[opBot].loses.filter(c => c['name'] == tmBot)[0];
+      const botDelta2 = parseFloat(botMatchup ? botMatchup['delta2'] : "0.0"); // losesにないということは互角であるはず
+      setH100BarData([{'name': "A", tmBot: 50-botDelta2, opBot: 50+botDelta2 }])
+    }
+    else if (quizType == "bot") {
+      const supMatchup = data3[opSup].loses.filter(c => c['name'] == tmBot)[0];
+      const supDelta2 = parseFloat(supMatchup ? supMatchup['delta2'] : "0.0"); // losesにないということは互角であるはず
+      setH100BarData([{'name': "A", tmBot: 50-supDelta2, opSup: 50+supDelta2 }])
+    }
     console.log('Opponent Bot:', champs[0], 'Opponent Sup:', champs[1], 'Team Bot:', champs[2]);
     
     const origins: { [key: string]: string }[] = data[key].origin;
@@ -191,7 +206,7 @@ export default function QuizBotSup({ role, mainChampion, onEnd }: QuizProps) {
         ))}
       </div>
 
-      {selected && opponentBot && teamBot && (
+      {selected && opponentBot && teamBot && quizType == "sup" && (
         <div>
           <img
             src={isCorrect ? "/lol-matchup-quiz/icons/maru.png" : "/lol-matchup-quiz/icons/batsu.png"}
@@ -207,7 +222,28 @@ export default function QuizBotSup({ role, mainChampion, onEnd }: QuizProps) {
               data={h100BarData}
             />
           </div>
-          <WinRateChart beat={{"name": advantage, "delta2": advantageDelta2}} lose={{"name": disadvantage, "delta2": disadvantageDelta2}} origins={origins}/>
+          <WinRateChart beat={{"name": advantage, "delta2": advantageDelta2}} lose={{"name": disadvantage, "delta2": disadvantageDelta2}} origins={origins} opponentName={opponentSup}/>
+          <button onClick={nextRound}>次へ</button>
+        </div>
+      )}
+
+      {selected && opponentSup && teamBot && quizType == "bot" && (
+        <div>
+          <img
+            src={isCorrect ? "/lol-matchup-quiz/icons/maru.png" : "/lol-matchup-quiz/icons/batsu.png"}
+            alt={isCorrect ? "正解" : "不正解"}
+            width={64}
+            style={{ display: "block", margin: "1rem auto" }}
+          />
+          <div className="p-4">
+            <h2 className="text-xl font-bold mb-4">Sup勝率</h2>
+            <Horizontal100BarChart
+              leftImageSrc={champions[teamBot]?.icon}
+              rightImageSrc={champions[opponentSup]?.icon}
+              data={h100BarData}
+            />
+          </div>
+          <WinRateChart beat={{"name": advantage, "delta2": advantageDelta2}} lose={{"name": disadvantage, "delta2": disadvantageDelta2}} origins={origins} opponentName={opponentBot}/>
           <button onClick={nextRound}>次へ</button>
         </div>
       )}

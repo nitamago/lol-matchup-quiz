@@ -33,7 +33,7 @@ export default function Quiz({ role, mainChampion, onEnd }: QuizProps) {
   const [reasons, setReasons] = useState<Reasons>({});
   const [champions, setChampions] = useState<ChampionInfo>({});
   const [round, setRound] = useState(0);
-  const [opponent, setOpponent] = useState<string | null>(null);
+  const [opponent, setOpponent] = useState<string>("");
   const [choices, setChoices] = useState<string[]>([]);
   const [history, setHistory] = useState<number[]>([]);
   const [selected, setSelected] = useState<string | null>(null);
@@ -225,7 +225,7 @@ export default function Quiz({ role, mainChampion, onEnd }: QuizProps) {
           />
           <p>{isCorrect ? adReason : disadReason}</p>
           
-          <WinRateChart beat={{"name": advantage, "delta2": advantageDelta2}} lose={{"name": disadvantage, "delta2": disadvantageDelta2}} origins={origins}/>
+          <WinRateChart beat={{"name": advantage, "delta2": advantageDelta2}} lose={{"name": disadvantage, "delta2": disadvantageDelta2}} origins={origins} opponentName={opponent}/>
 
           <button onClick={nextRound}>次へ</button>
         </div>
