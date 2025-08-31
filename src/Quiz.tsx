@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, RefObject } from "react";
 import WinRateChart from "./Chart";
 
 interface Matchups {
@@ -25,14 +25,15 @@ interface ChampionInfo {
 interface QuizProps {
   role: string;
   mainChampion: string;
+  round: React.RefObject<number>;
   onEnd: (score: number) => void;
 }
 
-export default function Quiz({ role, mainChampion, onEnd }: QuizProps) {
+export default function Quiz({ role, mainChampion, round, onEnd }: QuizProps) {
   const [matchups, setMatchups] = useState<Matchups>({});
   const [reasons, setReasons] = useState<Reasons>({});
   const [champions, setChampions] = useState<ChampionInfo>({});
-  const [round, setRound] = useState(0);
+  const [roundState, setRound] = useState(0);
   const [opponent, setOpponent] = useState<string>("");
   const [choices, setChoices] = useState<string[]>([]);
   const [history, setHistory] = useState<number[]>([]);
@@ -45,6 +46,11 @@ export default function Quiz({ role, mainChampion, onEnd }: QuizProps) {
   const [advantageDelta2, setAdvantageDelta2] = useState<string>("0.0");
   const [disadvantageDelta2, setDisadvantageDelta2] = useState<string>("0.0");
   const [origins, setOrigins] = useState<{[key: string]: string}[]>([]);
+
+  const beatIndices = useRef(new Set());
+  const loseIndices = useRef(new Set());
+  const advantageIndices = useRef(new Set());
+  const disadvantageIndices = useRef(new Set());
 
   // 両方の JSON を読み込む
   useEffect(() => {
@@ -61,20 +67,31 @@ export default function Quiz({ role, mainChampion, onEnd }: QuizProps) {
   }, []);
 
   const startRound = (data: Matchups = matchups, reasonsData: Reasons = reasons) => {
-    if (round >= 10 || Object.keys(data).length === 0) return;
+    if (round.current >= 10 || Object.keys(data).length === 0) return;
     setSelected(null);
     setIsCorrect(null);
+    setRound(round.current);
 
     let opponentChampion: string; 
     if (mainChampion && data[mainChampion]) { 
-      if (round < 6) { 
+      if (round.current < 6) { 
         // 選択肢にメインチャンプがくる問題 
         if (Math.random() > 0.5) { 
           const possibleOpponents = Object.keys(data).filter((c) => data[c].loses.map((d) => d['name']).includes(mainChampion)); 
-          opponentChampion = possibleOpponents[Math.floor(Math.random() * possibleOpponents.length)]; 
+          let index = Math.floor(Math.random() * possibleOpponents.length);
+          while (loseIndices.current.has(index)) {
+            index = Math.floor(Math.random() * possibleOpponents.length);
+          }
+          loseIndices.current.add(index);
+          opponentChampion = possibleOpponents[index]; 
         } else { 
           const possibleOpponents = Object.keys(data).filter((c) => data[c].beats.map((d) => d['name']).includes(mainChampion)); 
-          opponentChampion = possibleOpponents[Math.floor(Math.random() * possibleOpponents.length)]; 
+          let index = Math.floor(Math.random() * possibleOpponents.length);
+          while (beatIndices.current.has(index)) {
+            index = Math.floor(Math.random() * possibleOpponents.length);
+          }
+          loseIndices.current.add(index);
+          opponentChampion = possibleOpponents[index]; 
         } 
       } else { 
         // 相手にメインチャンプがくる問題 
@@ -104,7 +121,12 @@ export default function Quiz({ role, mainChampion, onEnd }: QuizProps) {
         advantageDelta2 = advantageData['delta2'];
       } else { 
         const champions = data[opponentChampion].loses; 
-        const advantageData = champions[Math.floor(Math.random() * champions.length)];
+        let index = Math.floor(Math.random() * champions.length);
+        while (advantageIndices.current.has(index)) {
+          index = Math.floor(Math.random() * champions.length);
+        }
+        advantageIndices.current.add(index);
+        const advantageData = champions[index];
         advantageName = advantageData['name'];
         advantageDelta2 = advantageData['delta2'];
       } 
@@ -114,7 +136,12 @@ export default function Quiz({ role, mainChampion, onEnd }: QuizProps) {
         disadvantageDelta2 = disadvantageData['delta2'];
       } else { 
         const champions = data[opponentChampion].beats; 
-        const disadvantageData = champions[Math.floor(Math.random() * champions.length)]
+        let index = Math.floor(Math.random() * champions.length);
+        while (disadvantageIndices.current.has(index)) {
+          index = Math.floor(Math.random() * champions.length);
+        }
+        disadvantageIndices.current.add(index);
+        const disadvantageData = champions[index]
         disadvantageName = disadvantageData['name'];
         disadvantageDelta2 = disadvantageData['delta2'];
       } 
@@ -160,10 +187,11 @@ export default function Quiz({ role, mainChampion, onEnd }: QuizProps) {
     const newHistory = [...history, isCorrect ? 1 : 0];
     setHistory(newHistory);
 
-    if (round + 1 >= 10) {
+    round.current += 1;
+    if (round.current >= 10) {
       onEnd(newHistory.reduce((a, b) => a + b, 0));
     } else {
-      setRound(round + 1);
+      setRound(round.current);
       startRound();
     }
   };
@@ -174,7 +202,7 @@ export default function Quiz({ role, mainChampion, onEnd }: QuizProps) {
 
   return (
     <div>
-      <h2>ラウンド: {round + 1} / 10</h2>
+      <h2>ラウンド: {roundState} / 10</h2>
 
       {/* 履歴 */}
       <div id="history">

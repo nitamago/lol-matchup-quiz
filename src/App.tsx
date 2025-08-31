@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Quiz from "./Quiz";
 import QuizBotSup from "./QuizBotSup";
 import "./App.css";
@@ -11,6 +11,8 @@ export default function App() {
   const [score, setScore] = useState<number>(0);
   const [mainChampion, setMainChampion] = useState<string>(""); // 空文字 = 未選択
   const [mainChampions, setMainChampions] = useState<string[]>([]); // 空文字 = 未選択
+  
+  const round = useRef<number>(1);
 
   // ロール決定
   const handleRoleSelect = () => {
@@ -180,6 +182,7 @@ export default function App() {
   };
 
   const handleStart = () => {
+    round.current = 1;
     // 未選択でも進めるのでアラート不要
     setStage("quiz");
   };
@@ -190,6 +193,7 @@ export default function App() {
   };
 
   const handleRetry = () => {
+    round.current = 1;
     setScore(0);
     setMainChampion("");
     setStage("start");
@@ -259,7 +263,7 @@ export default function App() {
         </div>
       )}
 
-      {stage === "quiz" && role !== "bot&sup" && <Quiz role={role} mainChampion={mainChampion} onEnd={handleQuizEnd} />}
+      {stage === "quiz" && role !== "bot&sup" && <Quiz role={role} mainChampion={mainChampion} round={round} onEnd={handleQuizEnd}  />}
       {stage === "quiz" && role === "bot&sup" && <QuizBotSup role={role} mainChampion={mainChampion} onEnd={handleQuizEnd} />}
 
       {stage === "result" && (
