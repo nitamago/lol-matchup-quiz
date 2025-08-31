@@ -79,16 +79,20 @@ export default function Quiz({ role, mainChampion, round, onEnd }: QuizProps) {
         if (Math.random() > 0.5) { 
           const possibleOpponents = Object.keys(data).filter((c) => data[c].loses.map((d) => d['name']).includes(mainChampion)); 
           let index = Math.floor(Math.random() * possibleOpponents.length);
-          while (loseIndices.current.has(index)) {
+          let count = 0;
+          while (loseIndices.current.has(index) && count < 100) {
             index = Math.floor(Math.random() * possibleOpponents.length);
+            count += 1;
           }
           loseIndices.current.add(index);
           opponentChampion = possibleOpponents[index]; 
         } else { 
           const possibleOpponents = Object.keys(data).filter((c) => data[c].beats.map((d) => d['name']).includes(mainChampion)); 
           let index = Math.floor(Math.random() * possibleOpponents.length);
-          while (beatIndices.current.has(index)) {
+          let count = 0;
+          while (beatIndices.current.has(index) && count < 100) {
             index = Math.floor(Math.random() * possibleOpponents.length);
+            count += 1;
           }
           loseIndices.current.add(index);
           opponentChampion = possibleOpponents[index]; 
@@ -122,8 +126,10 @@ export default function Quiz({ role, mainChampion, round, onEnd }: QuizProps) {
       } else { 
         const champions = data[opponentChampion].loses; 
         let index = Math.floor(Math.random() * champions.length);
-        while (advantageIndices.current.has(index)) {
+        let count = 0;
+        while (advantageIndices.current.has(index) && count < 100) {
           index = Math.floor(Math.random() * champions.length);
+          count += 1;
         }
         advantageIndices.current.add(index);
         const advantageData = champions[index];
@@ -137,8 +143,10 @@ export default function Quiz({ role, mainChampion, round, onEnd }: QuizProps) {
       } else { 
         const champions = data[opponentChampion].beats; 
         let index = Math.floor(Math.random() * champions.length);
-        while (disadvantageIndices.current.has(index)) {
+        let count = 0;
+        while (disadvantageIndices.current.has(index) && count < 100) {
           index = Math.floor(Math.random() * champions.length);
+          count += 1;
         }
         disadvantageIndices.current.add(index);
         const disadvantageData = champions[index]
