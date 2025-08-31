@@ -1,0 +1,7 @@
+#h100bar {
+    display: flex;
+}
+
+#h100bar img {
+    padding-top: 10px;
+}
