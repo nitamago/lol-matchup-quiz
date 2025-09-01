@@ -2,8 +2,10 @@ import { useState, useRef } from "react";
 import Quiz from "./Quiz";
 import QuizBotSup from "./QuizBotSup";
 import Footer from "./Footer";
+import TweetButton from "./TweetButton";
 import "./App.css";
 import "./style.css";
+
 
 
 export default function App() {
@@ -273,6 +275,7 @@ export default function App() {
             <h2>結果: {score} / 10 </h2>
             <button onClick={handleRetry}>再挑戦</button>
           </div>
+          <TweetButton role={role} mainChampion={mainChampion} score={score+" / 10"} gameUrl="https://nitamago.github.io/lol-matchup-quiz/" />
           <div>
             <button onClick={handleMoveRoleSelect}>ロール選択へ</button>
           </div>
