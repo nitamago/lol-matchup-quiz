@@ -1,6 +1,7 @@
 import { useState, useRef } from "react";
 import Quiz from "./Quiz";
 import QuizBotSup from "./QuizBotSup";
+import Footer from "./Footer";
 import "./App.css";
 import "./style.css";
 
@@ -277,6 +278,8 @@ export default function App() {
           </div>
         </div>
       )}
+
+      <Footer />
     </div>
   );
 }
