@@ -67,7 +67,7 @@ export default function Quiz({ role, mainChampion, round, onEnd }: QuizProps) {
   }, []);
 
   const startRound = (data: Matchups = matchups, reasonsData: Reasons = reasons) => {
-    if (round.current >= 10 || Object.keys(data).length === 0) return;
+    if (round.current >= 11 || Object.keys(data).length === 0) return;
     setSelected(null);
     setIsCorrect(null);
     setRound(round.current);
@@ -194,9 +194,10 @@ export default function Quiz({ role, mainChampion, round, onEnd }: QuizProps) {
     if (!opponent || selected === null) return;
     const newHistory = [...history, isCorrect ? 1 : 0];
     setHistory(newHistory);
+    console.log("History:", newHistory);
 
     round.current += 1;
-    if (round.current >= 10) {
+    if (round.current >= 11) {
       onEnd(newHistory.reduce((a, b) => a + b, 0));
     } else {
       setRound(round.current);
