@@ -102,6 +102,7 @@ function shapeData(mainChamp: string, data: Matchups, champions: ChampionInfo, m
             result.edges.push({ source: mainChamp, target: c });
 
             data[c]['loses'].forEach((cc) => {
+                if (cc['name'] === mainChamp) return; // メインは除外
                 if (cc['name'] in candidateChamps) {
                     candidateChamps[cc['name']] += 1;
                 } else {

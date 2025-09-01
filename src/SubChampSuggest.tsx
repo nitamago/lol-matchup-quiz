@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import GraphCytoscape from "./GraphCytoscape";
 import { useState, useRef } from "react";
+import "./SubChampSuggest.css";
 import Footer from "./Footer";
 
 interface Props {
@@ -198,6 +199,10 @@ export default function SubChampSuggest({ onBack }: Props) {
             {/* ロール選択画面 */}
             {stage === "role" && (
                 <div>
+                    <p className="description">
+                    あなたのメインチャンピオンに合わせてサブチャンピオンを提案します。  <br></br>
+                    まずはロールを選択してください。
+                    </p>
                     <select value={role} onChange={(e) => setRole(e.target.value as any)}>
                         <option value="">未選択</option>
                         <option value="top">Top</option>
@@ -215,7 +220,7 @@ export default function SubChampSuggest({ onBack }: Props) {
             )}
 
             {stage === "start" && (
-                <div>
+                <div >
                     <h3>メインチャンピオンを選択</h3>
                     <select
                     value={mainChampion}
@@ -237,7 +242,11 @@ export default function SubChampSuggest({ onBack }: Props) {
             )}
 
             {stage === "result" && (
-                <div>
+                <div id='subchamp-fig-container'>
+                    <p className="description">
+                    青いゾーンのチャンピオンがサブチャンピオンにおすすめです。<br></br>
+                    グラフをドラッグして自由に動かせます。チャンピオン同士の相性を直感的に確認しましょう。
+                    </p>
                     <p>メインチャンピオン: {mainChampion} </p>
                     <GraphCytoscape role={role} mainChamp={mainChampion} mode={"type1"}/>
                     <GraphCytoscape role={role} mainChamp={mainChampion} mode={"type2"}/>
