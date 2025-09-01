@@ -59,6 +59,7 @@ export default function App() {
       setMainChampions([
         "アクシャン",
         "アニビア",
+        "アニー",
         "イレリア",
         "エコー",
         "オリアナ",
