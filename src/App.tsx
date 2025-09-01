@@ -3,6 +3,7 @@ import Quiz from "./Quiz";
 import QuizBotSup from "./QuizBotSup";
 import Footer from "./Footer";
 import TweetButton from "./TweetButton";
+import GraphCytoscape from "./GraphCytoscape";
 import "./App.css";
 import "./style.css";
 
@@ -126,6 +127,7 @@ export default function App() {
         "スレッシュ",
         "ソナ",
         "ソラカ",
+        "タム・ケンチ",
         "タリック",
         "ナミ",
         "ニーコ",
