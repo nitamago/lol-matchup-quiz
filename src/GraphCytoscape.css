@@ -1,0 +1,10 @@
+#cytoscape-container div div canvas {
+    left: 0 !important;
+}
+
+.bordered-card {
+  border: 2px solid #666; /* 線の色 */
+  padding: 16px;             /* 内側の余白 */
+  border-radius: 8px;        /* 角を少し丸める */
+  max-width: 300px;          /* 任意で幅を調整 */
+}
