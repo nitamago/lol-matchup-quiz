@@ -176,6 +176,7 @@ export default function QuizGame({ onBack }: Props) {
         "タロン",
         "ヌヌ＆ウィルンプ",
         "ニダリー",
+        "ノクターン",
         "フィドルスティックス",
         "ブライアー",
         "ベル＝ヴェス",

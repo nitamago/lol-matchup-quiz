@@ -171,6 +171,7 @@ export default function SubChampSuggest({ onBack }: Props) {
             "タロン",
             "ヌヌ＆ウィルンプ",
             "ニダリー",
+            "ノクターン",
             "フィドルスティックス",
             "ブライアー",
             "ベル＝ヴェス",
