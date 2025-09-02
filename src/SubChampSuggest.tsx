@@ -245,9 +245,9 @@ export default function SubChampSuggest({ onBack }: Props) {
             {stage === "result" && (
                 <div id='subchamp-fig-container'>
                     <p className="description">
-                    矢印でカウンターを表現しています。<br></br>
-                    青いゾーンのチャンピオンがサブチャンピオンにおすすめです。<br></br>
-                    グラフをドラッグして自由に動かせます。チャンピオン同士の相性を直感的に確認しましょう。
+                    矢印で相性をチェック！  <br></br>
+                    青ゾーンのチャンプはサブにおすすめ。<br></br>
+                    グラフはドラッグで動かせるから、直感的に相性を見てみよう！。
                     </p>
                     <p>メインチャンピオン: {mainChampion} </p>
                     <GraphCytoscape role={role} mainChamp={mainChampion} mode={"type1"}/>
