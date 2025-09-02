@@ -207,8 +207,8 @@ export default function GraphCytoscape({role, mainChamp, mode}: {role: string, m
 
     return (
         <div className="bordered-card-container" >
-            {mode === "type1" && <p>提案1：カウンターのカウンターを選ぶことで不利を減らす。</p>}
-            {mode === "type2" && <p>提案2：メインがバンされた場合、メインと同等のカウンターを持つチャンピオンで有利を維持する。</p>}
+            {mode === "type1" && <p>提案1：不利はカウンターのカウンターで回避！</p>}
+            {mode === "type2" && <p>提案2：メインBAN時は代わりのカウンターで有利キープ！</p>}
             <div id='cytoscape-container' className="bordered-card" style={{ width: "100%", height: 300}}>
                 {loading ? (
                     <p>Loading...</p>
