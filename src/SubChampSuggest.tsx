@@ -245,6 +245,7 @@ export default function SubChampSuggest({ onBack }: Props) {
             {stage === "result" && (
                 <div id='subchamp-fig-container'>
                     <p className="description">
+                    矢印でカウンターを表現しています。<br></br>
                     青いゾーンのチャンピオンがサブチャンピオンにおすすめです。<br></br>
                     グラフをドラッグして自由に動かせます。チャンピオン同士の相性を直感的に確認しましょう。
                     </p>
