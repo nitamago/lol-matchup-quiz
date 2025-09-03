@@ -27,6 +27,7 @@ export default function SubChampSuggest({ onBack }: Props) {
             "アンベッサ",
             "イラオイ",
             "イレリア",
+            "エイトロックス",
             "オラフ",
             "カ・サンテ",
             "カミール",

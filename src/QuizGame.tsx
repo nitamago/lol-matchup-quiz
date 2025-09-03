@@ -32,6 +32,7 @@ export default function QuizGame({ onBack }: Props) {
         "アンベッサ",
         "イラオイ",
         "イレリア",
+        "エイトロックス",
         "オラフ",
         "カ・サンテ",
         "カミール",
