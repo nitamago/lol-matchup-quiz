@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import WinRateChart from "./Chart";
 import Horizontal100BarChart from "./Horizontal100BarChart";
 
@@ -7,6 +7,8 @@ interface Matchups {
     beats: { [key: string]: string }[];
     loses: { [key: string]: string }[];
     origin: { [key: string]: string }[];
+    url1: string;
+    url2: string;
   };
 }
 
@@ -44,7 +46,11 @@ export default function QuizBotSup({ role, mainChampion, onEnd }: QuizProps) {
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
   const [h100BarData, setH100BarData] = useState<Record<string, any>[]>([]);
   const [quizType, setQuizType] = useState<string>("");
+  const [dataUrl1, setDataUrl1] = useState<string>("");
+  const [dataUrl2, setDataUrl2] = useState<string>("");
 
+
+  const quizIndices = useRef(new Set());
 
   // 両方の JSON を読み込む
   useEffect(() => {
@@ -71,7 +77,13 @@ export default function QuizBotSup({ role, mainChampion, onEnd }: QuizProps) {
     
     // 未選択なら完全ランダム 
     const champions = Object.keys(data); 
-    const key = champions[Math.floor(Math.random() * champions.length)]; 
+    let index = Math.floor(Math.random() * champions.length);
+    let count = 0;
+    while (quizIndices.current.has(index) && count < 100) {
+      index = Math.floor(Math.random() * champions.length);
+      count += 1;
+    }
+    const key = champions[index]; 
     console.log('key:', key);
     setOpponentChampionKey(key);
     const champs = key.split(',');
@@ -125,6 +137,10 @@ export default function QuizBotSup({ role, mainChampion, onEnd }: QuizProps) {
     console.log('Advantage:', advantage, 'Disadvantage:', disadvantage);
 
     setChoices([advantage, disadvantage].sort(() => Math.random() - 0.5));
+
+    // 参照URLセット
+    setDataUrl1(data[key].url1);
+    setDataUrl2(data[key].url2);
   };
 
   const handleChoice = (choice: string) => {
@@ -219,10 +235,11 @@ export default function QuizBotSup({ role, mainChampion, onEnd }: QuizProps) {
             <Horizontal100BarChart
               leftImageSrc={champions[teamBot]?.icon}
               rightImageSrc={champions[opponentBot]?.icon}
-              data={h100BarData}
+              data={h100BarData} url={dataUrl1}
             />
           </div>
-          <WinRateChart beat={{"name": advantage, "delta2": advantageDelta2}} lose={{"name": disadvantage, "delta2": disadvantageDelta2}} origins={origins} opponentName={opponentSup}/>
+          <WinRateChart beat={{"name": advantage, "delta2": advantageDelta2}} lose={{"name": disadvantage, "delta2": disadvantageDelta2}} 
+                        origins={origins} opponentName={opponentSup} url={dataUrl2}/>
           <button onClick={nextRound}>次へ</button>
         </div>
       )}
@@ -240,10 +257,11 @@ export default function QuizBotSup({ role, mainChampion, onEnd }: QuizProps) {
             <Horizontal100BarChart
               leftImageSrc={champions[teamBot]?.icon}
               rightImageSrc={champions[opponentSup]?.icon}
-              data={h100BarData}
+              data={h100BarData} url={dataUrl1}
             />
           </div>
-          <WinRateChart beat={{"name": advantage, "delta2": advantageDelta2}} lose={{"name": disadvantage, "delta2": disadvantageDelta2}} origins={origins} opponentName={opponentBot}/>
+          <WinRateChart beat={{"name": advantage, "delta2": advantageDelta2}} lose={{"name": disadvantage, "delta2": disadvantageDelta2}} 
+                        origins={origins} opponentName={opponentBot} url={dataUrl2}/>
           <button onClick={nextRound}>次へ</button>
         </div>
       )}
