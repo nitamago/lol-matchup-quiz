@@ -45,6 +45,7 @@ interface WinRateChartProps {
     lose: { [key: string]: string };
     origins: { [key: string]: string }[];
     opponentName: string;
+    url: string;
 }
 
 interface CharacterJson {
@@ -60,7 +61,7 @@ interface CharacterData {
   winRate: number;
 }
 
-export default function WinRateChart({ beat, lose, origins, opponentName }: WinRateChartProps) {
+export default function WinRateChart({ beat, lose, origins, opponentName, url }: WinRateChartProps) {
   console.log("Chart Props:", { beat, lose, origins });
 
   const [figData, setFigData] = useState<CharacterData[]>([]);
@@ -120,6 +121,14 @@ export default function WinRateChart({ beat, lose, origins, opponentName }: WinR
         <ReferenceLine y={50} stroke="red" strokeDasharray="4 4" label={{value: "50", position: 'left'}}/>
         <Scatter data={chartData} shape={<ImageShape />} />
       </ScatterChart>
+      {/* 出典 */}
+      {url && (
+        <p style={{ fontSize: "0.8rem", color: "#666", marginTop: "8px", textAlign: "center" }}>
+          ※参照: <a href={url} target="_blank" rel="noopener noreferrer">
+            LoLalyticsのDelta2
+          </a>
+        </p>
+      )}
     </div>
   );
 };

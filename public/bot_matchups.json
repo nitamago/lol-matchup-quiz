@@ -54,7 +54,8 @@
 				"name": "アフェリオス",
 				"delta2": "0.13"
 			}
-		]
+		],
+		"url": "https://lolalytics.com/ja/lol/tristana/build/?patch=15.16"
 	},
 	"ユナラ": {
 		"name": "ユナラ",
@@ -115,7 +116,8 @@
 				"name": "セナ",
 				"delta2": "-0.13"
 			}
-		]
+		],
+		"url": "https://lolalytics.com/ja/lol/yunara/build/?patch=15.16"
 	},
 	"シヴィア": {
 		"name": "シヴィア",
@@ -192,7 +194,8 @@
 				"name": "ジグス",
 				"delta2": "0.03"
 			}
-		]
+		],
+		"url": "https://lolalytics.com/ja/lol/sivir/build/?patch=15.16"
 	},
 	"カイ＝サ": {
 		"name": "カイ＝サ",
@@ -245,7 +248,8 @@
 				"name": "ルシアン",
 				"delta2": "-0.12"
 			}
-		]
+		],
+		"url": "https://lolalytics.com/ja/lol/kaisa/build/?patch=15.16"
 	},
 	"ジンクス": {
 		"name": "ジンクス",
@@ -290,7 +294,8 @@
 				"name": "カリスタ",
 				"delta2": "0.07"
 			}
-		]
+		],
+		"url": "https://lolalytics.com/ja/lol/jinx/build/?patch=15.16"
 	},
 	"ゼリ": {
 		"name": "ゼリ",
@@ -339,7 +344,8 @@
 				"name": "スモルダー",
 				"delta2": "-0.12"
 			}
-		]
+		],
+		"url": "https://lolalytics.com/ja/lol/zeri/build/?patch=15.16"
 	},
 	"トゥイッチ": {
 		"name": "トゥイッチ",
@@ -420,7 +426,8 @@
 				"name": "アッシュ",
 				"delta2": "-0.14"
 			}
-		]
+		],
+		"url": "https://lolalytics.com/ja/lol/twitch/build/?patch=15.16"
 	},
 	"セナ": {
 		"name": "セナ",
@@ -485,7 +492,8 @@
 				"name": "ジンクス",
 				"delta2": "-0.06"
 			}
-		]
+		],
+		"url": "https://lolalytics.com/ja/lol/senna/build/?lane=bottom&patch=15.16"
 	},
 	"ヴェイン": {
 		"name": "ヴェイン",
@@ -534,7 +542,8 @@
 				"name": "ケイトリン",
 				"delta2": "-0.05"
 			}
-		]
+		],
+		"url": "https://lolalytics.com/ja/lol/vayne/build/?patch=15.16"
 	},
 	"ジン": {
 		"name": "ジン",
@@ -583,7 +592,8 @@
 				"name": "コグ＝マウ",
 				"delta2": "0.16"
 			}
-		]
+		],
+		"url": "https://lolalytics.com/ja/lol/jhin/build/?patch=15.16"
 	},
 	"ルシアン": {
 		"name": "ルシアン",
@@ -620,7 +630,8 @@
 				"name": "サミーラ",
 				"delta2": "0.14"
 			}
-		]
+		],
+		"url": "https://lolalytics.com/ja/lol/lucian/build/?patch=15.16"
 	},
 	"ニーラ": {
 		"name": "ニーラ",
@@ -701,7 +712,8 @@
 				"name": "ルシアン",
 				"delta2": "0.18"
 			}
-		]
+		],
+		"url": "https://lolalytics.com/ja/lol/nilah/build/?patch=15.16"
 	},
 	"アフェリオス": {
 		"name": "アフェリオス",
@@ -746,7 +758,8 @@
 				"name": "ザヤ",
 				"delta2": "-0.16"
 			}
-		]
+		],
+		"url": "https://lolalytics.com/ja/lol/aphelios/build/?patch=15.16"
 	},
 	"ドレイヴン": {
 		"name": "ドレイヴン",
@@ -799,7 +812,8 @@
 				"name": "ゼリ",
 				"delta2": "-0.13"
 			}
-		]
+		],
+		"url": "https://lolalytics.com/ja/lol/draven/build/?patch=15.16"
 	},
 	"コグ＝マウ": {
 		"name": "コグ＝マウ",
@@ -856,7 +870,8 @@
 				"name": "アッシュ",
 				"delta2": "0.03"
 			}
-		]
+		],
+		"url": "https://lolalytics.com/ja/lol/kogmaw/build/?patch=15.16"
 	},
 	"スモルダー": {
 		"name": "スモルダー",
@@ -905,7 +920,8 @@
 				"name": "コグ＝マウ",
 				"delta2": "0.07"
 			}
-		]
+		],
+		"url": "https://lolalytics.com/ja/lol/smolder/build/?patch=15.16"
 	},
 	"ジグス": {
 		"name": "ジグス",
@@ -986,7 +1002,8 @@
 				"name": "スモルダー",
 				"delta2": "0.21"
 			}
-		]
+		],
+		"url": "https://lolalytics.com/ja/lol/ziggs/build/?patch=15.16"
 	},
 	"サミーラ": {
 		"name": "サミーラ",
@@ -1055,7 +1072,8 @@
 				"name": "ジンクス",
 				"delta2": "-0.11"
 			}
-		]
+		],
+		"url": "https://lolalytics.com/ja/lol/samira/build/?patch=15.16"
 	},
 	"ミス・フォーチュン": {
 		"name": "ミス・フォーチュン",
@@ -1128,7 +1146,8 @@
 				"name": "ジンクス",
 				"delta2": "0.02"
 			}
-		]
+		],
+		"url": "https://lolalytics.com/ja/lol/missfortune/build/?patch=15.16"
 	},
 	"ザヤ": {
 		"name": "ザヤ",
@@ -1181,7 +1200,8 @@
 				"name": "カイ＝サ",
 				"delta2": "0.28"
 			}
-		]
+		],
+		"url": "https://lolalytics.com/ja/lol/xayah/build/?patch=15.16"
 	},
 	"コーキ": {
 		"name": "コーキ",
@@ -1242,7 +1262,8 @@
 				"name": "ヴァルス",
 				"delta2": "-0.07"
 			}
-		]
+		],
+		"url": "https://lolalytics.com/ja/lol/corki/build/?patch=15.16"
 	},
 	"アッシュ": {
 		"name": "アッシュ",
@@ -1283,7 +1304,8 @@
 				"name": "アフェリオス",
 				"delta2": "-0.24"
 			}
-		]
+		],
+		"url": "https://lolalytics.com/ja/lol/ashe/build/?patch=15.16"
 	},
 	"エズリアル": {
 		"name": "エズリアル",
@@ -1336,7 +1358,8 @@
 				"name": "ルシアン",
 				"delta2": "-0.18"
 			}
-		]
+		],
+		"url": "https://lolalytics.com/ja/lol/ezreal/build/?patch=15.16"
 	},
 	"ケイトリン": {
 		"name": "ケイトリン",
@@ -1393,7 +1416,8 @@
 				"name": "ルシアン",
 				"delta2": "0.13"
 			}
-		]
+		],
+		"url": "https://lolalytics.com/ja/lol/caitlyn/build/?patch=15.16"
 	},
 	"カリスタ": {
 		"name": "カリスタ",
@@ -1454,7 +1478,8 @@
 				"name": "ケイトリン",
 				"delta2": "-0.20"
 			}
-		]
+		],
+		"url": "https://lolalytics.com/ja/lol/kalista/build/?patch=15.16"
 	},
 	"ヴァルス": {
 		"name": "ヴァルス",
@@ -1511,6 +1536,7 @@
 				"name": "ドレイヴン",
 				"delta2": "0.13"
 			}
-		]
+		],
+		"url": "https://lolalytics.com/ja/lol/varus/build/?patch=15.16"
 	}
 }

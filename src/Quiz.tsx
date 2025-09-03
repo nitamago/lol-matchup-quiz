@@ -6,6 +6,7 @@ interface Matchups {
     beats: { [key: string]: string }[];
     loses: { [key: string]: string }[];
     origins: { [key: string]: string }[];
+    url: string;
   };
 }
 interface Reasons {
@@ -46,6 +47,7 @@ export default function Quiz({ role, mainChampion, round, onEnd }: QuizProps) {
   const [advantageDelta2, setAdvantageDelta2] = useState<string>("0.0");
   const [disadvantageDelta2, setDisadvantageDelta2] = useState<string>("0.0");
   const [origins, setOrigins] = useState<{[key: string]: string}[]>([]);
+  const [dataUrl, setDataUrl] = useState<string>("");
 
   const beatIndices = useRef(new Set());
   const loseIndices = useRef(new Set());
@@ -71,6 +73,7 @@ export default function Quiz({ role, mainChampion, round, onEnd }: QuizProps) {
     setSelected(null);
     setIsCorrect(null);
     setRound(round.current);
+
 
     let opponentChampion: string; 
     if (mainChampion && data[mainChampion]) { 
@@ -108,6 +111,9 @@ export default function Quiz({ role, mainChampion, round, onEnd }: QuizProps) {
     }
     setOpponent(opponentChampion); 
     console.log('Opponent:', opponentChampion);
+
+    // 参照URLセット
+    setDataUrl(data[opponentChampion].url);
     
     const origins: { [key: string]: string }[] = data[opponentChampion].origins;
     setOrigins(origins);
@@ -262,7 +268,8 @@ export default function Quiz({ role, mainChampion, round, onEnd }: QuizProps) {
           />
           <p>{isCorrect ? adReason : disadReason}</p>
           
-          <WinRateChart beat={{"name": advantage, "delta2": advantageDelta2}} lose={{"name": disadvantage, "delta2": disadvantageDelta2}} origins={origins} opponentName={opponent}/>
+          <WinRateChart beat={{"name": advantage, "delta2": advantageDelta2}} lose={{"name": disadvantage, "delta2": disadvantageDelta2}} 
+                        origins={origins} opponentName={opponent} url={dataUrl}/>
 
           <button onClick={nextRound}>次へ</button>
         </div>
