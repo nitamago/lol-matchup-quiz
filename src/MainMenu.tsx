@@ -2,12 +2,20 @@
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import Footer from "./Footer";
+import { useEffect } from "react";
 
 interface Props {
   onNavigate: (page: "menu" | "quiz" | "graph") => void;
 }
 
 export default function MainMenu({ onNavigate }: Props) {
+
+  useEffect(() => {
+    if (window.gtag) {
+      window.gtag("event", "MainMenu");
+    }
+  }, []);
+
   return (
     <div>
         {/* メニュー */}

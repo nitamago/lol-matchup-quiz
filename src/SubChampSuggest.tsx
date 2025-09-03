@@ -1,7 +1,7 @@
 // CompatibilityGraph.tsx
 import { Button } from "@/components/ui/button";
 import GraphCytoscape from "./GraphCytoscape";
-import { useState, useRef } from "react";
+import { useState, useEffect } from "react";
 import "./SubChampSuggest.css";
 import Footer from "./Footer";
 
@@ -15,6 +15,14 @@ export default function SubChampSuggest({ onBack }: Props) {
     const [mainChampion, setMainChampion] = useState<string>(""); // 空文字 = 未選択
     const [mainChampions, setMainChampions] = useState<string[]>([]); // 空文字 = 未選択
   
+    useEffect(() => {
+        if (stage === "result") {
+            if (window.gtag) {
+                window.gtag("event", "SubChampSuggest");
+            }
+        }
+    }, []);
+
     // ロール決定
     const handleRoleSelect = () => {
         if (!role) return; // ロールが未選択なら進まない
@@ -193,6 +201,10 @@ export default function SubChampSuggest({ onBack }: Props) {
         if (!mainChampion) return; // メインチャンプが未選択なら進まない
         // 未選択でも進めるのでアラート不要
         setStage("result");
+
+        if (window.gtag) {
+            window.gtag("event", "SubChampSuggest");
+        }
     };
 
     return (

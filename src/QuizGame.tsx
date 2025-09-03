@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Quiz from "./Quiz";
 import QuizBotSup from "./QuizBotSup";
 import Footer from "./Footer";
@@ -19,6 +19,16 @@ export default function QuizGame({ onBack }: Props) {
   const [mainChampions, setMainChampions] = useState<string[]>([]); // 空文字 = 未選択
   
   const round = useRef<number>(1);
+
+  useEffect(() => {
+    if (window.gtag) {
+      if (stage === "quiz") {
+        window.gtag("event", "QuizStart");
+      } else if (stage === "result") {
+        window.gtag("event", "QuizEnd");
+      }
+    }
+  }, [stage]);
 
   // ロール決定
   const handleRoleSelect = () => {
