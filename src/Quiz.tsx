@@ -78,28 +78,42 @@ export default function Quiz({ role, mainChampion, round, onEnd }: QuizProps) {
 
     let opponentChampion: string; 
     if (mainChampion && data[mainChampion]) { 
-      if (round.current < 6) { 
+      // 選択肢にメインチャンプがくる問題数
+      const count1 = Object.keys(data).filter((c) => data[c].loses.map((d) => d['name']).flat()).flat().filter((e) => e == mainChampion).length; 
+      const count2 = Object.keys(data).filter((c) => data[c].beats.map((d) => d['name']).flat()).flat().filter((e) => e == mainChampion).length; 
+      console.log(count1+count2)
+
+      if (round.current < Math.min(6, count1+count2+1)) {    
+        // 事前に2パターンのインデックスを抽選
+        const possibleOpponents = Object.keys(data).filter((c) => data[c].loses.map((d) => d['name']).includes(mainChampion)); 
+        let index = Math.floor(Math.random() * possibleOpponents.length);
+        let count = 0;
+        while (loseIndices.current.has(index) && count < 100) {
+          index = Math.floor(Math.random() * possibleOpponents.length);
+          count += 1;
+        }
+
+        const possibleOpponents2 = Object.keys(data).filter((c) => data[c].beats.map((d) => d['name']).includes(mainChampion)); 
+        let index2 = Math.floor(Math.random() * possibleOpponents2.length);
+        let count2 = 0;
+        while (beatIndices.current.has(index2) && count2 < 100) {
+          index2 = Math.floor(Math.random() * possibleOpponents2.length);
+          count2 += 1;
+        }
+        
         // 選択肢にメインチャンプがくる問題 
-        if (Math.random() > 0.5) { 
-          const possibleOpponents = Object.keys(data).filter((c) => data[c].loses.map((d) => d['name']).includes(mainChampion)); 
-          let index = Math.floor(Math.random() * possibleOpponents.length);
-          let count = 0;
-          while (loseIndices.current.has(index) && count < 100) {
-            index = Math.floor(Math.random() * possibleOpponents.length);
-            count += 1;
-          }
+        if (possibleOpponents.length-loseIndices.current.size <=0) {
+          beatIndices.current.add(index2);
+          opponentChampion = possibleOpponents2[index2]; 
+        } else if (possibleOpponents2.length-beatIndices.current.size <=0) {
+          loseIndices.current.add(index);
+          opponentChampion = possibleOpponents[index];
+        } else if (Math.random() > 0.5) {           
           loseIndices.current.add(index);
           opponentChampion = possibleOpponents[index]; 
-        } else { 
-          const possibleOpponents = Object.keys(data).filter((c) => data[c].beats.map((d) => d['name']).includes(mainChampion)); 
-          let index = Math.floor(Math.random() * possibleOpponents.length);
-          let count = 0;
-          while (beatIndices.current.has(index) && count < 100) {
-            index = Math.floor(Math.random() * possibleOpponents.length);
-            count += 1;
-          }
-          loseIndices.current.add(index);
-          opponentChampion = possibleOpponents[index]; 
+        } else {                   
+          beatIndices.current.add(index2);
+          opponentChampion = possibleOpponents2[index2]; 
         } 
       } else { 
         // 相手にメインチャンプがくる問題 
