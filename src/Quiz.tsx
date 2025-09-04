@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, RefObject } from "react";
 import WinRateChart from "./Chart";
+import HyphenList from "./HyphenList";
 
 interface Matchups {
   [key: string]: {
@@ -40,8 +41,8 @@ export default function Quiz({ role, mainChampion, round, onEnd }: QuizProps) {
   const [history, setHistory] = useState<number[]>([]);
   const [selected, setSelected] = useState<string | null>(null);
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
-  const [adReason, setAdReason] = useState<string | null>(null);
-  const [disadReason, setDisadReason] = useState<string | null>(null);
+  const [adReason, setAdReason] = useState<string>("");
+  const [disadReason, setDisadReason] = useState<string >("");
   const [advantage, setAdvantage] = useState<string>("");
   const [disadvantage, setDisadvantage] = useState<string>("");
   const [advantageDelta2, setAdvantageDelta2] = useState<string>("0.0");
@@ -266,7 +267,7 @@ export default function Quiz({ role, mainChampion, round, onEnd }: QuizProps) {
             width={64}
             style={{ display: "block", margin: "1rem auto" }}
           />
-          <p>{isCorrect ? adReason : disadReason}</p>
+          <p>{isCorrect ? <HyphenList text={adReason}/> : <HyphenList text={disadReason}/>}</p>
           
           <WinRateChart beat={{"name": advantage, "delta2": advantageDelta2}} lose={{"name": disadvantage, "delta2": disadvantageDelta2}} 
                         origins={origins} opponentName={opponent} url={dataUrl}/>
