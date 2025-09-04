@@ -95,6 +95,7 @@ export default function QuizGame({ onBack }: Props) {
         "ビクター",
         "フェイ",
         "ブラッドミア",
+        "ベイガー",
         "ヤスオ",
         "ヨネ",
         "ラックス",

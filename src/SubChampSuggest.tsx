@@ -88,6 +88,7 @@ export default function SubChampSuggest({ onBack }: Props) {
             "ビクター",
             "フェイ",
             "ブラッドミア",
+            "ベイガー",
             "ヤスオ",
             "ヨネ",
             "ラックス",
