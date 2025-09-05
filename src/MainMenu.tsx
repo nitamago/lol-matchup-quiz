@@ -2,18 +2,31 @@
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import Footer from "./Footer";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 interface Props {
   onNavigate: (page: "menu" | "quiz" | "graph") => void;
 }
 
 export default function MainMenu({ onNavigate }: Props) {
+  const iframeRef = useRef<HTMLIFrameElement>(null);
 
   useEffect(() => {
     if (window.gtag) {
       window.gtag("event", "MainMenu");
     }
+    const iframe = iframeRef.current;
+    if (!iframe) return;
+
+    const onLoad = () => {
+      // iframe 読み込み後にトップへスクロール
+      window.scrollTo(0, 0);
+    };
+
+    iframe.addEventListener("load", onLoad);
+    return () => {
+      iframe.removeEventListener("load", onLoad);
+    };
   }, []);
 
   return (
@@ -51,12 +64,17 @@ export default function MainMenu({ onNavigate }: Props) {
         <p className="text-gray-700 mt-2">
           アプリの改善点や感想をぜひお寄せください！
         </p>
-        <Button
-          className="w-48"
-          onClick={() => window.open("https://docs.google.com/forms/d/e/1FAIpQLSf3tuf7J8o3xQgWQQ35Tah_Sb_0XFfjBgLv6gE-gmRPxmSi8w/viewform", "_blank")}
-        >
-          フィードバックを送る
-        </Button>
+        
+        <iframe
+          ref={iframeRef}
+          src="https://forms.cloud.microsoft/r/cS21bZ0bMP" 
+          width="640"
+          frameBorder="0"
+          marginWidth={0}
+          marginHeight={0}
+          style={{ border: "none", maxWidth: "100%", maxHeight: "100vh" }}
+          tabIndex={-1}
+        ></iframe>
         </motion.div>
 
         {/* フッター */}

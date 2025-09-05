@@ -19,6 +19,7 @@ export default function QuizGame({ onBack }: Props) {
   const [mainChampions, setMainChampions] = useState<string[]>([]); // 空文字 = 未選択
   
   const round = useRef<number>(1);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (window.gtag) {
@@ -28,6 +29,9 @@ export default function QuizGame({ onBack }: Props) {
         window.gtag("event", "QuizEnd");
       }
     }
+    
+    console.log(containerRef.current)
+    containerRef.current?.scrollTo({ top: 0, behavior: "smooth" });
   }, [stage]);
 
   // ロール決定
@@ -231,7 +235,7 @@ export default function QuizGame({ onBack }: Props) {
   };
 
   return (
-    <div className="container">
+    <div className="container" ref={containerRef} key={stage}>
       {role == "" && (<h1>マッチアップクイズ</h1>)}
       {role != "" && (<h1>マッチアップクイズ({role})</h1>)}
         
@@ -299,23 +303,18 @@ export default function QuizGame({ onBack }: Props) {
             <button onClick={handleRetry}>再挑戦</button>
           </div>
           <TweetButton role={role} mainChampion={mainChampion} score={score+" / 10"} gameUrl="https://nitamago.github.io/lol-matchup-quiz/" />
-          <div>
+          <div id="role-select">
             <button onClick={handleMoveRoleSelect}>ロール選択へ</button>
           </div>
 
-          {/* Google Forms 埋め込み */}
-          <div style={{ marginTop: "2rem" }}>
+          <div className="form-container">
+            <h2 className="form-title">フィードバックフォーム</h2>
             <iframe
-              src="https://docs.google.com/forms/d/e/1FAIpQLSf3tuf7J8o3xQgWQQ35Tah_Sb_0XFfjBgLv6gE-gmRPxmSi8w/viewform?embedded=true"
-              width="100%"
-              height="500"
-              frameBorder="0"
-              marginHeight={0}
-              marginWidth={0}
-              title="Feedback Form"
-            >
-              読み込んでいます…
-            </iframe>
+              src="https://forms.cloud.microsoft/r/cS21bZ0bMP?embed=true"
+              title="Microsoft Form"
+              className="form-iframe"
+              tabIndex={-1}
+            ></iframe>
           </div>
         </div>
       )}

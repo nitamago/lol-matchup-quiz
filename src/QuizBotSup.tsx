@@ -51,6 +51,7 @@ export default function QuizBotSup({ role, mainChampion, onEnd }: QuizProps) {
 
 
   const quizIndices = useRef(new Set());
+  const containerRef = useRef<HTMLDivElement>(null);
 
   // 両方の JSON を読み込む
   useEffect(() => {
@@ -168,7 +169,7 @@ export default function QuizBotSup({ role, mainChampion, onEnd }: QuizProps) {
   }
 
   return (
-    <div>
+    <div ref={containerRef}>
       <h2>ラウンド: {round + 1} / 10</h2>
 
       {/* 履歴 */}
