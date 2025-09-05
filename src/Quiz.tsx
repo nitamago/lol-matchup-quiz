@@ -281,7 +281,7 @@ export default function Quiz({ role, mainChampion, round, onEnd }: QuizProps) {
             width={64}
             style={{ display: "block", margin: "1rem auto" }}
           />
-          <p>{isCorrect ? <HyphenList text={adReason}/> : <HyphenList text={disadReason}/>}</p>
+          {isCorrect ? <HyphenList text={adReason}/> : <HyphenList text={disadReason}/>}
           
           <WinRateChart beat={{"name": advantage, "delta2": advantageDelta2}} lose={{"name": disadvantage, "delta2": disadvantageDelta2}} 
                         origins={origins} opponentName={opponent} url={dataUrl}/>
