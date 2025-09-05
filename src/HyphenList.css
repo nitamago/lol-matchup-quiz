@@ -1,3 +1,4 @@
 ul.hyphen-list {
     text-align: left;
+    padding-inline-start: 5px;
 }

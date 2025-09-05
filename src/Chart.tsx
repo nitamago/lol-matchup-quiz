@@ -124,8 +124,8 @@ export default function WinRateChart({ beat, lose, origins, opponentName, url }:
       {/* 出典 */}
       {url && (
         <p style={{ fontSize: "0.8rem", color: "#666", marginTop: "8px", textAlign: "center" }}>
-          ※参照: <a href={url} target="_blank" rel="noopener noreferrer">
-            LoLalyticsのDelta2
+          出典: LoLalytics <a href={url} target="_blank" rel="noopener noreferrer">
+            Delta2
           </a>
         </p>
       )}

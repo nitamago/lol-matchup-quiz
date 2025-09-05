@@ -1,0 +1,6 @@
+div.next-button {
+    position: sticky; /* または fixed */
+    bottom: 20px;
+    width: 100%;
+    text-align: center;
+}

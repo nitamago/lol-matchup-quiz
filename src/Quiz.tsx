@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, RefObject } from "react";
 import WinRateChart from "./Chart";
 import HyphenList from "./HyphenList";
+import "./Quiz.css"
 
 interface Matchups {
   [key: string]: {
@@ -54,6 +55,7 @@ export default function Quiz({ role, mainChampion, round, onEnd }: QuizProps) {
   const loseIndices = useRef(new Set());
   const advantageIndices = useRef(new Set());
   const disadvantageIndices = useRef(new Set());
+  const containerRef = useRef<HTMLDivElement>(null);
 
   // 両方の JSON を読み込む
   useEffect(() => {
@@ -69,12 +71,16 @@ export default function Quiz({ role, mainChampion, round, onEnd }: QuizProps) {
     });
   }, []);
 
+  useEffect(() => {
+    console.log(containerRef.current)
+      containerRef.current?.scrollTo({ top: 0, behavior: "smooth" });
+  }, [selected]);
+
   const startRound = (data: Matchups = matchups, reasonsData: Reasons = reasons) => {
     if (round.current >= 11 || Object.keys(data).length === 0) return;
     setSelected(null);
     setIsCorrect(null);
     setRound(round.current);
-
 
     let opponentChampion: string; 
     if (mainChampion && data[mainChampion]) { 
@@ -207,6 +213,7 @@ export default function Quiz({ role, mainChampion, round, onEnd }: QuizProps) {
   const handleChoice = (choice: string) => {
     if (!opponent || selected) return;
     setSelected(choice);
+    
     const correct = matchups[opponent].loses.map((d) => d['name']).includes(choice);
     setIsCorrect(correct);
   };
@@ -231,7 +238,7 @@ export default function Quiz({ role, mainChampion, round, onEnd }: QuizProps) {
   }
 
   return (
-    <div>
+    <div ref={containerRef} key={roundState}>
       <h2>ラウンド: {roundState} / 10</h2>
 
       {/* 履歴 */}
@@ -286,7 +293,7 @@ export default function Quiz({ role, mainChampion, round, onEnd }: QuizProps) {
           <WinRateChart beat={{"name": advantage, "delta2": advantageDelta2}} lose={{"name": disadvantage, "delta2": disadvantageDelta2}} 
                         origins={origins} opponentName={opponent} url={dataUrl}/>
 
-          <button onClick={nextRound}>次へ</button>
+          <button onClick={nextRound} tabIndex={-1}>次へ</button>
         </div>
       )}
     </div>
