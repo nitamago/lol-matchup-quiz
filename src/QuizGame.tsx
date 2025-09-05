@@ -302,6 +302,21 @@ export default function QuizGame({ onBack }: Props) {
           <div>
             <button onClick={handleMoveRoleSelect}>ロール選択へ</button>
           </div>
+
+          {/* Google Forms 埋め込み */}
+          <div style={{ marginTop: "2rem" }}>
+            <iframe
+              src="https://docs.google.com/forms/d/e/1FAIpQLSf3tuf7J8o3xQgWQQ35Tah_Sb_0XFfjBgLv6gE-gmRPxmSi8w/viewform?embedded=true"
+              width="100%"
+              height="500"
+              frameBorder="0"
+              marginHeight={0}
+              marginWidth={0}
+              title="Feedback Form"
+            >
+              読み込んでいます…
+            </iframe>
+          </div>
         </div>
       )}
 

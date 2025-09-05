@@ -45,6 +45,18 @@ export default function MainMenu({ onNavigate }: Props) {
         <Button className="w-48" onClick={() => onNavigate("graph")}>
             サブチャンプを探す
         </Button>
+        
+        {/* フィードバックボタン */}
+        <h2 className="text-xl font-bold text-indigo-700 mt-4">💬 フィードバック</h2>
+        <p className="text-gray-700 mt-2">
+          アプリの改善点や感想をぜひお寄せください！
+        </p>
+        <Button
+          className="w-48"
+          onClick={() => window.open("https://docs.google.com/forms/d/e/1FAIpQLSf3tuf7J8o3xQgWQQ35Tah_Sb_0XFfjBgLv6gE-gmRPxmSi8w/viewform", "_blank")}
+        >
+          フィードバックを送る
+        </Button>
         </motion.div>
 
         {/* フッター */}
