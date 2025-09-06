@@ -44,6 +44,7 @@ export default function SubChampSuggest({ onBack }: Props) {
             "ケイル",
             "ケネン",
             "クレッド",
+            "サイオン",
             "ザック",
             "ジャックス",
             "シェン",

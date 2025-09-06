@@ -55,6 +55,7 @@ export default function QuizGame({ onBack }: Props) {
         "ケイル",
         "ケネン",
         "クレッド",
+        "サイオン",
         "ザック",
         "ジャックス",
         "シェン",
