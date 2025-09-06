@@ -99,7 +99,7 @@ export default function Horizontal100BarChart({
       {url && (
         <p style={{ fontSize: "0.8rem", color: "#666", marginTop: "8px", textAlign: "center" }}>
           出典: LoLalytics <a href={url} target="_blank" rel="noopener noreferrer">
-            Delta2
+            Delta2(Eme+)
           </a>
         </p>
       )}
