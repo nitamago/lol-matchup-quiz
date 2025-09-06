@@ -145,13 +145,13 @@ function shapeData(mainChamp: string, data: Matchups, champions: ChampionInfo, m
         top5Keys.forEach((c) => {
             result.nodes.push({ id: c, label: c, img: champions[c]?.icon || "", parent: "zone1", level: 0, index: i++ });
         });
-        result.nodes.push({ id: "zone1", label: "zone1", parent: undefined, img: undefined, level: 0, index: 0});
+        result.nodes.push({ id: "zone1", label: "", parent: undefined, img: undefined, level: 0, index: 0});
     } else if (mode === "type2") {
         i = 1;
         top5Keys.forEach((c) => {
             result.nodes.push({ id: c, label: c, img: champions[c]?.icon || "", parent: "zone1", level: 0, index: i++ });
         });
-        result.nodes.push({ id: "zone1", label: "zone1", parent: undefined, img: undefined, level: 0, index: 2 });
+        result.nodes.push({ id: "zone1", label: "", parent: undefined, img: undefined, level: 0, index: 2 });
     }
     
     console.log("Candidate Champs:", candidateChamps);

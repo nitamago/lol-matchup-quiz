@@ -266,9 +266,6 @@ export default function QuizGame({ onBack }: Props) {
               次へ
             </button>
           </div>
-          <Button className="mt-6" onClick={onBack}>
-            ← メニューに戻る
-          </Button>
         </div>
       )}
       
@@ -307,16 +304,22 @@ export default function QuizGame({ onBack }: Props) {
           <div id="role-select">
             <button onClick={handleMoveRoleSelect}>ロール選択へ</button>
           </div>
+        </div>
+      )}
 
-          <div className="form-container">
-            <h2 className="form-title">フィードバックフォーム</h2>
-            <iframe
-              src="https://forms.cloud.microsoft/r/cS21bZ0bMP?embed=true"
-              title="Microsoft Form"
-              className="form-iframe"
-              tabIndex={-1}
-            ></iframe>
-          </div>
+      <Button className="mt-6" onClick={onBack}>
+        ← メニューに戻る
+      </Button>
+
+      {stage === "result" && (
+        <div className="form-container">
+          <h2 className="form-title">フィードバックフォーム</h2>
+          <iframe
+            src="https://forms.cloud.microsoft/r/cS21bZ0bMP?embed=true"
+            title="Microsoft Form"
+            className="form-iframe"
+            tabIndex={-1}
+          ></iframe>
         </div>
       )}
 
