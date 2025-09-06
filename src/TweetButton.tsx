@@ -22,7 +22,7 @@ export default function TweetButton({ role, mainChampion, score, gameUrl }: Twee
       onClick={handleTweet}
       className="bg-blue-500 text-white px-4 py-2 rounded"
     >
-      Twitterに投稿
+       Xでシェア
     </button>
   );
 }
