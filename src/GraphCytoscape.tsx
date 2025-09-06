@@ -86,14 +86,16 @@ function shapeData(mainChamp: string, data: Matchups, champions: ChampionInfo, m
 
         counterChamps = champ['loses'].map((c) => c['name']);
         counterChamps.forEach((c) => {
-            data[c]['loses'].forEach((cc) => {
-                if (cc['name'] in candidateChamps) {
-                    candidateChamps[cc['name']] += 1;
-                } else {
-                    candidateChamps[cc['name']] = 1;
-                }
-                rawEdges.push({ source: cc['name'], target: c });
-            });
+            if(data[c]){
+                data[c]['loses'].forEach((cc) => {
+                    if (cc['name'] in candidateChamps) {
+                        candidateChamps[cc['name']] += 1;
+                    } else {
+                        candidateChamps[cc['name']] = 1;
+                    }
+                    rawEdges.push({ source: cc['name'], target: c });
+                });
+            }
         });
     } else if (mode === "type2") {
         result.nodes.push({ id: mainChamp, label: mainChamp, img: champions[mainChamp]?.icon || "" , level: 0, index: 0});
