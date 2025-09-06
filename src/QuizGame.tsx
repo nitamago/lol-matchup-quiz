@@ -72,7 +72,8 @@ export default function QuizGame({ onBack }: Props) {
         "モルデカイザー",
         "ヨネ",
         "ランブル",
-        "リヴェン"
+        "リヴェン",
+        "レネクトン"
       ])
     } else if (role == "mid"){
       setMainChampions([

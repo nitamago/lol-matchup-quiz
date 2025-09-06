@@ -61,7 +61,8 @@ export default function SubChampSuggest({ onBack }: Props) {
             "モルデカイザー",
             "ヨネ",
             "ランブル",
-            "リヴェン"
+            "リヴェン",
+            "レネクトン"
         ])
         } else if (role == "mid"){
         setMainChampions([
