@@ -222,7 +222,11 @@ export default function GraphCytoscape({role, mainChamp, mode}: {role: string, m
                         cy={(cy: Core) => {
                             cy.ready(() => {
                                 // レイアウト完了後に初期ズーム・位置を設定
-                                cy.zoom({ level: 0.3, renderedPosition: { x: 0, y: 0 } });
+                                if (window.innerWidth < 768) {
+                                    cy.zoom({ level: 0.3, renderedPosition: { x: 0, y: 0 } }); // スマホは少し小さめ
+                                } else {
+                                    cy.zoom({ level: 0.6, renderedPosition: { x: 0, y: 0 } }); // PCは標準
+                                }
                                 cy.center(); // グラフ全体を中央に
                             });
                         }}
