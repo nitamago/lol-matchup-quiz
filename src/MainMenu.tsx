@@ -1,8 +1,10 @@
 // MainMenu.tsx
 import { Button } from "@/components/ui/button";
+import { LanguageSwitcher } from "@/components/ui/LanguageSwitcher";
 import { motion } from "framer-motion";
 import Footer from "./Footer";
 import { useEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   onNavigate: (page: "menu" | "quiz" | "graph") => void;
@@ -10,6 +12,8 @@ interface Props {
 
 export default function MainMenu({ onNavigate }: Props) {
   const iframeRef = useRef<HTMLIFrameElement>(null);
+
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (window.gtag) {
@@ -37,32 +41,32 @@ export default function MainMenu({ onNavigate }: Props) {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
         >
-        <h1 className="text-2xl font-bold mb-4">メインメニュー</h1>
-        <p className="text-lg opacity-90">クイズで腕試し & サブチャンプ提案で戦略強化！</p>
+        <LanguageSwitcher></LanguageSwitcher>
+        <h1 className="text-2xl font-bold mb-4">{t("menu.title")}</h1>
+        <p className="text-lg opacity-90">{t("menu.subTitle")}</p>
         
-        <h2 className="text-xl font-bold text-indigo-700">🎯 クイズモード</h2>
-        <p className="text-gray-700 mt-2">
-            簡単なクイズ形式でチャンピオンの特徴を学べます。  
-            自分の知識を試しながら、ゲーム理解を深めましょう！
+        <h2 className="text-xl font-bold text-indigo-700">{t("menu.quizMode")}</h2>
+        <p className="text-gray-700 mt-2" style={{ whiteSpace: "pre-line" }}>
+          {t("menu.quizDescription")}
+            
         </p>
         <Button className="w-48" onClick={() => onNavigate("quiz")}>
-            クイズを始める
+          {t("menu.startQuiz")}
         </Button>
         <p></p>
 
-        <h2 className="text-xl font-bold text-indigo-700">🤝 サブチャンプ提案</h2>
-        <p className="text-gray-700 mt-2">
-        あなたのメインチャンピオンと相性の良い「サブチャンプ」を提案します。  
-        相性グラフを見ながら、新しい選択肢を見つけてみましょう！
+        <h2 className="text-xl font-bold text-indigo-700">{t("menu.subChamp")}</h2>
+        <p className="text-gray-700 mt-2" style={{ whiteSpace: "pre-line" }}>
+          {t("menu.subChampDescription")}
         </p>
         <Button className="w-48" onClick={() => onNavigate("graph")}>
-            サブチャンプを探す
+            {t("menu.findSubChamp")}
         </Button>
         
         {/* フィードバックボタン */}
-        <h2 className="text-xl font-bold text-indigo-700 mt-4">💬 フィードバック</h2>
-        <p className="text-gray-700 mt-2">
-          アプリの改善点や感想をぜひお寄せください！
+        <h2 className="text-xl font-bold text-indigo-700 mt-4">{t("menu.feedback")}</h2>
+        <p className="text-gray-700 mt-2" style={{ whiteSpace: "pre-line" }}>
+          {t("menu.feedbackDescription")}
         </p>
         
         <iframe

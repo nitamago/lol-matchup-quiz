@@ -9,6 +9,7 @@ import {
   Legend,
   LabelList,
 } from "recharts";
+import { useTranslation } from "react-i18next";
 import "./Horizontal100BarChart.css";
 
 type Horizontal100BarChartProps = {
@@ -42,6 +43,8 @@ export default function Horizontal100BarChart({
 }: Horizontal100BarChartProps) {
   const keys = Object.keys(data[0]).filter((k) => k !== "name");
   console.log("Keys:", keys);
+
+  const { t } = useTranslation();
 
   return (
     <div>
@@ -98,7 +101,7 @@ export default function Horizontal100BarChart({
       {/* 出典 */}
       {url && (
         <p style={{ fontSize: "0.8rem", color: "#666", marginTop: "8px", textAlign: "center" }}>
-          出典: LoLalytics <a href={url} target="_blank" rel="noopener noreferrer">
+          {t("winrate.ref")}: LoLalytics <a href={url} target="_blank" rel="noopener noreferrer">
             Delta2(Eme+)
           </a>
         </p>

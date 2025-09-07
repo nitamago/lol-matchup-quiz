@@ -2,6 +2,7 @@ import { useState, useRef, useMemo, useEffect } from "react";
 // GraphCytoscape.tsx
 import CytoscapeComponent from "react-cytoscapejs";
 import type { Core, Stylesheet, ElementDefinition } from "cytoscape";
+import { useTranslation } from "react-i18next";
 import "./GraphCytoscape.css";
 
 interface Matchups {
@@ -75,7 +76,6 @@ const stylesheet = [
 function shapeData(mainChamp: string, data: Matchups, champions: ChampionInfo, mode: string): GraphJson {
     const result: GraphJson = { nodes: [], edges: [] };
     const champ = data[mainChamp];
-
 
     const candidateChamps: { [key: string]: number } = {};
     const rawEdges: EdgeData[] = [];
@@ -161,18 +161,24 @@ function shapeData(mainChamp: string, data: Matchups, champions: ChampionInfo, m
 
 export default function GraphCytoscape({role, mainChamp, mode}: {role: string, mainChamp: string, mode: string}) {
     console.log("Main Champ:", mainChamp);
+    const { t } = useTranslation();
     const [matchups, setmatchups] = useState<Matchups | null>(null);
     const [champions, setChampions] = useState<ChampionInfo>({});
     const [loading, setLoading] = useState(true);
 
+    const translateMap = useRef<Record<string, string>>({});
+
     useEffect(() => {
+        const lang = localStorage.getItem("lang") || "en";
         Promise.all([
-            fetch("/lol-matchup-quiz/"+role+"_matchups.json").then((res) => res.json()),
-            fetch("/lol-matchup-quiz/champions.json").then((res) => res.json()),
-        ]).then(([matchupData, championData]) => {
+            fetch("/lol-matchup-quiz/lol-matchup-quiz/ja/"+role+"_matchups.json").then((res) => res.json()),
+            fetch("/lol-matchup-quiz/lol-matchup-quiz/"+lang+"/champions.json").then((res) => res.json()),
+            fetch("/lol-matchup-quiz/lol-matchup-quiz/"+lang+"/name_to_ja_map.json").then((res) => res.json()),
+        ]).then(([matchupData, championData, translateJson]) => {
             setLoading(true);
             setmatchups(matchupData);
             setChampions(championData);
+            translateMap.current = translateJson;
             setLoading(false);
         })
         .catch((err) => console.error(err));;
@@ -181,7 +187,8 @@ export default function GraphCytoscape({role, mainChamp, mode}: {role: string, m
     const elements = useMemo(() => {
         if (!matchups) return [];
 
-        const result = shapeData(mainChamp, matchups, champions, mode);
+        const mainChampName = translateMap.current[mainChamp]
+        const result = shapeData(mainChampName, matchups, champions, mode);
         console.log(result)
 
         const xMap: { [key: string]: number } = {};
@@ -209,8 +216,8 @@ export default function GraphCytoscape({role, mainChamp, mode}: {role: string, m
 
     return (
         <div className="bordered-card-container" >
-            {mode === "type1" && <p>提案1：不利はカウンターのカウンターで回避！</p>}
-            {mode === "type2" && <p>提案2：メインBAN時は代わりのカウンターで有利キープ！</p>}
+            {mode === "type1" && (<p>{t("subChamp.sug1")}</p>)}
+            {mode === "type2" && (<p>{t("subChamp.sug2")}</p>)}
             <div id='cytoscape-container' className="bordered-card" style={{ width: "100%", height: 300}}>
                 {loading ? (
                     <p>Loading...</p>

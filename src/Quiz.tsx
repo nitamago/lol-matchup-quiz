@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, RefObject } from "react";
 import WinRateChart from "./Chart";
 import HyphenList from "./HyphenList";
+import { useTranslation } from "react-i18next";
 import "./Quiz.css"
 
 interface Matchups {
@@ -50,23 +51,36 @@ export default function Quiz({ role, mainChampion, round, onEnd }: QuizProps) {
   const [disadvantageDelta2, setDisadvantageDelta2] = useState<string>("0.0");
   const [origins, setOrigins] = useState<{[key: string]: string}[]>([]);
   const [dataUrl, setDataUrl] = useState<string>("");
+  const [opponentName, setOpponentName] = useState<string>(""); // 空文字 = 未選択
 
   const beatIndices = useRef(new Set());
   const loseIndices = useRef(new Set());
   const advantageIndices = useRef(new Set());
   const disadvantageIndices = useRef(new Set());
   const containerRef = useRef<HTMLDivElement>(null);
+  const translateMap = useRef<Record<string, string>>({});
+  const translateMapRev = useRef<Record<string, string>>({});
+  const mainChampionName = useRef<string>("");
+
+  const { t } = useTranslation();
 
   // 両方の JSON を読み込む
   useEffect(() => {
+    const lang = localStorage.getItem("lang") || "en";
     Promise.all([
-      fetch("/lol-matchup-quiz/"+role+"_matchups.json").then((res) => res.json()),
-      fetch("/lol-matchup-quiz/"+role+"_reason.json").then((res) => res.json()),
-      fetch("/lol-matchup-quiz/champions.json").then((res) => res.json()),
-    ]).then(([matchupData, reasonData, championData]) => {
+      fetch("/lol-matchup-quiz/lol-matchup-quiz/ja/"+role+"_matchups.json").then((res) => res.json()),
+      fetch("/lol-matchup-quiz/lol-matchup-quiz/"+lang+"/"+role+"_reason.json").then((res) => res.json()),
+      fetch("/lol-matchup-quiz/lol-matchup-quiz/"+lang+"/champions.json").then((res) => res.json()),
+      fetch("/lol-matchup-quiz/lol-matchup-quiz/"+lang+"/name_to_ja_map.json").then((res) => res.json()),
+    ]).then(([matchupData, reasonData, championData, translateJson]) => {
       setMatchups(matchupData);
       setReasons(reasonData);
       setChampions(championData);
+      translateMap.current = translateJson;
+      translateMapRev.current = Object.fromEntries(
+        Object.entries(translateJson).map(([key, value]) => [value, key])
+      );
+      console.log('translateMapRev.current', translateMapRev.current)
       startRound(matchupData, reasonData);
     });
   }, []);
@@ -76,22 +90,36 @@ export default function Quiz({ role, mainChampion, round, onEnd }: QuizProps) {
       containerRef.current?.scrollTo({ top: 0, behavior: "smooth" });
   }, [selected]);
 
+  
+  const translateChanmpName = (nameStr: string|null) => {
+    if (nameStr) {
+      console.log('nameStr', nameStr)
+      return translateMap.current[nameStr];
+    } else {
+      return "";
+    }
+  }
+
   const startRound = (data: Matchups = matchups, reasonsData: Reasons = reasons) => {
     if (round.current >= 11 || Object.keys(data).length === 0) return;
     setSelected(null);
     setIsCorrect(null);
     setRound(round.current);
 
+    // チャンピオン名を日本語に変換
+    console.log(mainChampion)
+    mainChampionName.current = translateChanmpName(mainChampion);
+
     let opponentChampion: string; 
-    if (mainChampion && data[mainChampion]) { 
+    if (mainChampionName.current != "" && data[mainChampionName.current]) { 
       // 選択肢にメインチャンプがくる問題数
-      const count1 = Object.keys(data).filter((c) => data[c].loses.map((d) => d['name']).flat()).flat().filter((e) => e == mainChampion).length; 
-      const count2 = Object.keys(data).filter((c) => data[c].beats.map((d) => d['name']).flat()).flat().filter((e) => e == mainChampion).length; 
+      const count1 = Object.keys(data).filter((c) => data[c].loses.map((d) => d['name']).flat()).flat().filter((e) => e == mainChampionName.current).length; 
+      const count2 = Object.keys(data).filter((c) => data[c].beats.map((d) => d['name']).flat()).flat().filter((e) => e == mainChampionName.current).length; 
       console.log(count1+count2)
 
       if (round.current < Math.min(6, count1+count2+1)) {    
         // 事前に2パターンのインデックスを抽選
-        const possibleOpponents = Object.keys(data).filter((c) => data[c].loses.map((d) => d['name']).includes(mainChampion)); 
+        const possibleOpponents = Object.keys(data).filter((c) => data[c].loses.map((d) => d['name']).includes(mainChampionName.current)); 
         let index = Math.floor(Math.random() * possibleOpponents.length);
         let count = 0;
         while (loseIndices.current.has(index) && count < 100) {
@@ -99,7 +127,7 @@ export default function Quiz({ role, mainChampion, round, onEnd }: QuizProps) {
           count += 1;
         }
 
-        const possibleOpponents2 = Object.keys(data).filter((c) => data[c].beats.map((d) => d['name']).includes(mainChampion)); 
+        const possibleOpponents2 = Object.keys(data).filter((c) => data[c].beats.map((d) => d['name']).includes(mainChampionName.current)); 
         let index2 = Math.floor(Math.random() * possibleOpponents2.length);
         let count2 = 0;
         while (beatIndices.current.has(index2) && count2 < 100) {
@@ -123,15 +151,21 @@ export default function Quiz({ role, mainChampion, round, onEnd }: QuizProps) {
         } 
       } else { 
         // 相手にメインチャンプがくる問題 
-        opponentChampion = mainChampion; 
+        opponentChampion = mainChampionName.current; 
       } 
     } else { 
       // 未選択なら完全ランダム 
       const champions = Object.keys(data); 
       opponentChampion = champions[Math.floor(Math.random() * champions.length)]; 
-    }
+    }    
+
     setOpponent(opponentChampion); 
+    setOpponentName(translateMapRev.current[opponentChampion]); 
     console.log('Opponent:', opponentChampion);
+    console.log('OpponentName:', translateMapRev.current[opponentChampion]);
+    if (translateMapRev.current[opponentChampion] === undefined) {
+      alert(opponentChampion+": 値が存在しません！");
+    }
 
     // 参照URLセット
     setDataUrl(data[opponentChampion].url);
@@ -145,9 +179,9 @@ export default function Quiz({ role, mainChampion, round, onEnd }: QuizProps) {
     let disadvantageName: string;
     let advantageDelta2: string; 
     let disadvantageDelta2: string;
-    if (mainChampion && data[mainChampion] ) { 
-      if (data[opponentChampion].loses.map((d) => d['name']).includes(mainChampion)){ 
-        const advantageData = data[opponentChampion].loses.filter((d) => d['name'] === mainChampion)[0]
+    if (mainChampionName.current && data[mainChampionName.current] ) { 
+      if (data[opponentChampion].loses.map((d) => d['name']).includes(mainChampionName.current)){ 
+        const advantageData = data[opponentChampion].loses.filter((d) => d['name'] === mainChampionName.current)[0]
         advantageName = advantageData['name'];
         advantageDelta2 = advantageData['delta2'];
       } else { 
@@ -163,8 +197,8 @@ export default function Quiz({ role, mainChampion, round, onEnd }: QuizProps) {
         advantageName = advantageData['name'];
         advantageDelta2 = advantageData['delta2'];
       } 
-      if (data[opponentChampion].beats.map((d) => d['name']).includes(mainChampion)){ 
-        const disadvantageData = data[opponentChampion].beats.filter((d) => d['name'] === mainChampion)[0];
+      if (data[opponentChampion].beats.map((d) => d['name']).includes(mainChampionName.current)){ 
+        const disadvantageData = data[opponentChampion].beats.filter((d) => d['name'] === mainChampionName.current)[0];
         disadvantageName = disadvantageData['name'];
         disadvantageDelta2 = disadvantageData['delta2'];
       } else { 
@@ -234,12 +268,12 @@ export default function Quiz({ role, mainChampion, round, onEnd }: QuizProps) {
   };
 
   if (Object.keys(matchups).length === 0 || Object.keys(champions).length === 0) {
-    return <p>読み込み中...</p>;
+    return <p>{t("quiz.loading")}</p>;
   }
 
   return (
     <div ref={containerRef} key={roundState}>
-      <h2>ラウンド: {roundState} / 10</h2>
+      <h2>{t("quiz.round")}: {roundState} / 10</h2>
 
       {/* 履歴 */}
       <div id="history">
@@ -256,15 +290,15 @@ export default function Quiz({ role, mainChampion, round, onEnd }: QuizProps) {
 
       {opponent && (
         <div>
-          <h3>相手のチャンピオン</h3>
+          <h3>{t("quiz.opponent")}</h3>
           <div className="champion">
             <img src={champions[opponent]?.icon} alt={opponent} width={64} />
-            <div>{opponent}</div>
+            {(localStorage.getItem("lang")==="ja")&& <div>{opponent}</div>}
           </div>
         </div>
       )}
 
-      <h3>有利な方を選択</h3>
+      <h3>{t("quiz.choose")}</h3>
       <div className="choicesRow">
         {choices.map((c) => (
           <div
@@ -274,8 +308,9 @@ export default function Quiz({ role, mainChampion, round, onEnd }: QuizProps) {
             }`}
             onClick={() => handleChoice(c)}
           >
-            <img src={champions[c]?.icon} alt={c} width={64} />
-            <div>{c}</div>
+            <img src={champions[c]?.icon} alt={c} width={64}/>
+            {(localStorage.getItem("lang")==="ja")&& <div>{c}</div>}
+            
           </div>
         ))}
       </div>
@@ -291,9 +326,9 @@ export default function Quiz({ role, mainChampion, round, onEnd }: QuizProps) {
           {isCorrect ? <HyphenList text={adReason}/> : <HyphenList text={disadReason}/>}
           
           <WinRateChart beat={{"name": advantage, "delta2": advantageDelta2}} lose={{"name": disadvantage, "delta2": disadvantageDelta2}} 
-                        origins={origins} opponentName={opponent} url={dataUrl}/>
+                        origins={origins} opponentName={opponentName} url={dataUrl}/>
 
-          <button onClick={nextRound} tabIndex={-1}>次へ</button>
+          <button onClick={nextRound} tabIndex={-1}>{t("quiz.next")}</button>
         </div>
       )}
     </div>

@@ -1,0 +1,28 @@
+
+  /* 右上に固定 */
+  .translate-select-wrapper {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+  }
+
+  /* セレクトボックスのスタイル */
+  .translate-select {
+    padding: 8px 12px;
+    font-weight: 600;
+    font-size: 14px;
+    color: #1d4ed8; /* 青文字 */
+    background-color: #ffffff; /* 白背景 */
+    border: 2px solid #1d4ed8; /* 青枠 */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15); /* 影で浮かせる */
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+  }
+
+  /* ホバー時 */
+  .translate-select:hover {
+    background-color: #e0f2fe; /* 薄い青背景 */
+    transform: translateY(-2px); /* 少し浮いた感じ */
+  }

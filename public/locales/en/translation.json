@@ -1,0 +1,64 @@
+{
+  "menu": {
+    "title": "Main Menu",
+    "subTitle": "Test your skills with quizzes & strengthen your strategy with sub-champion suggestions!",
+    "quizMode": "🎯 Quiz Mode",
+    "quizDescription": "Learn champions' traits through simple quiz questions.\nTest your knowledge while deepening your understanding of the game!",
+    "startQuiz": "Start Quiz",
+    "subChamp": "🤝 Sub-Champion Suggestions",
+    "subChampDescription": "We suggest 'sub-champions' that synergize well with your main champion.\nCheck the compatibility graph and discover new options!",
+    "findSubChamp": "Find Sub-Champion",
+    "feedback": "💬 Feedback",
+    "feedbackDescription": "Please share your suggestions or impressions to help improve the app!"
+  },
+  "quiz": {
+    "loading": "Loading...",
+    "matchupQuiz": "Matchup Quiz",
+    "matchupQuizDesc": "This is a League of Legends matchup quiz.\nUse it to practice learning champions' advantages and disadvantages.\nFirst, select a role.",
+    "no": "Not selected",
+    "chooseMainChamp": "Choose Main Champion (optional)",
+    "start": "Start",
+    "opponent": "Opponent Champion",
+    "teammate": "Ally Champion",
+    "choose": "Choose the favorable one",
+    "round": "Round",
+    "next": "Next",
+    "result": "Result",
+    "retry": "Retry",
+    "roleSelect": "Select Role",
+    "menu": "← Back to Menu",
+    "feedback": "Feedback Form",
+    "champ": "Champion",
+    "winRate": "Win Rate (%)",
+    "botWinRate": "Bot Win Rate",
+    "supWinRate": "Support Win Rate"
+  },
+  "subChamp": {
+    "title": "Sub-Champion Suggestions",
+    "description": "We suggest sub-champions that complement your main champion.\nFirst, select a role.",
+    "mainChamp": "Main Champion",
+    "mainChampSelect": "Select Main Champion",
+    "no": "None",
+    "start": "Start",
+    "graphDescription": "Check compatibility with arrows!\nChampions in the blue zone are recommended as subs.\nYou can drag the graph, so explore synergy intuitively!",
+    "menu": "← Back to Menu",
+    "next": "Next",
+    "sug1": "Proposal 1: Avoid disadvantages by countering the counter!",
+    "sug2": "Proposal 2: When your main is banned, maintain an advantage with an alternative counter!"
+  },
+  "tweet": {
+    "no": "None",
+    "share": "Share on X",
+    "text1": "Matchup Quiz\nRole",
+    "text2": "\nMain Champ",
+    "text3": "\nScore was ",
+    "text4": "!"
+  },
+  "winrate": {
+    "winrateGraph": "Win Rate Graph vs",
+    "ref": "Source"
+  },
+  "footer": {
+    "developer": "Developer"
+  }
+}

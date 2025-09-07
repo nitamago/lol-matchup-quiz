@@ -8,6 +8,7 @@ import {
   Tooltip,
   ReferenceLine,
 } from "recharts";
+import { useTranslation } from "react-i18next";
 import "./Chart.css";
 
 // キャラクターデータ型
@@ -67,6 +68,9 @@ export default function WinRateChart({ beat, lose, origins, opponentName, url }:
   const [figData, setFigData] = useState<CharacterData[]>([]);
   const [range, setRange] = useState<number[]>([]);
   const [opName, setOpName] = useState<string>("");
+  
+  const { t } = useTranslation();
+  
 
   const winRateMap: Record<string, number> = {};
   winRateMap[beat["name"]] = parseFloat(beat["delta2"]);
@@ -81,7 +85,7 @@ export default function WinRateChart({ beat, lose, origins, opponentName, url }:
 
   // JSONから name と img を読み込み、winRateMap と結合
   useEffect(() => {
-    fetch("/lol-matchup-quiz/champions.json")
+    fetch("/lol-matchup-quiz/lol-matchup-quiz/ja/champions.json")
       .then((res) => res.json())
       .then((json: CharacterJson) => {
         let merged = Object.values(json).filter((c) => nameList.includes(c["name"]))
@@ -93,6 +97,7 @@ export default function WinRateChart({ beat, lose, origins, opponentName, url }:
         merged.push({winRate: 50, name: "平均", icon: ""}); // 右側の画像が見切れるので、画像無しデータ追加する
         setFigData(merged);
         setRange([Math.floor(Math.min(...merged.map(d => d.winRate)) - 1), Math.ceil(Math.max(...merged.map(d => d.winRate)) + 1)]);
+        console.log('opponentName', opponentName);
         setOpName(opponentName);
     })
     .catch((err) => console.error("データ読み込みエラー", err));
@@ -108,15 +113,15 @@ export default function WinRateChart({ beat, lose, origins, opponentName, url }:
 
   return (
     <div id="fig-container" className="p-4">
-      <h2 className="text-xl font-bold mb-4">勝率グラフ  vs{opName}</h2>
+      <h2 className="text-xl font-bold mb-4">{t("winrate.winrateGraph")}{opName}</h2>
       <ScatterChart
         width={300}
         height={300}
         margin={{ top: 20, right: 10, bottom: 20, left: 5 }}
       >
         <CartesianGrid />
-        <XAxis type="number" dataKey="x" tick={false} label={{ value: "チャンピオン", position: "insideBottom" }} />
-        <YAxis type="number" dataKey="y" domain={range} interval={0} label={{ value: "勝率(%)", angle: -90, position: "insideLeft" }} />
+        <XAxis type="number" dataKey="x" tick={false} label={{ value: t("quiz.champ"), position: "insideBottom" }} />
+        <YAxis type="number" dataKey="y" domain={range} interval={0} label={{ value: t("quiz.winRate"), angle: -90, position: "insideLeft" }} />
         <Tooltip cursor={{ strokeDasharray: "3 3" }} />
         <ReferenceLine y={50} stroke="red" strokeDasharray="4 4" label={{value: "50", position: 'left'}}/>
         <Scatter data={chartData} shape={<ImageShape />} />
@@ -124,7 +129,7 @@ export default function WinRateChart({ beat, lose, origins, opponentName, url }:
       {/* 出典 */}
       {url && (
         <p style={{ fontSize: "0.8rem", color: "#666", marginTop: "8px", textAlign: "center" }}>
-          出典: LoLalytics <a href={url} target="_blank" rel="noopener noreferrer">
+          {t("winrate.ref")}: LoLalytics <a href={url} target="_blank" rel="noopener noreferrer">
             Delta2(Eme+)
           </a>
         </p>

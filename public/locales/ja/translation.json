@@ -1,0 +1,64 @@
+{
+  "menu": {
+    "title": "メインメニュー",
+    "subTitle": "クイズで腕試し & サブチャンプ提案で戦略強化！",
+    "quizMode": "🎯 クイズモード",
+    "quizDescription": "簡単なクイズ形式でチャンピオンの特徴を学べます。\n自分の知識を試しながら、ゲーム理解を深めましょう！",
+    "startQuiz": "クイズを始める",
+    "subChamp": "🤝 サブチャンプ提案",
+    "subChampDescription": "あなたのメインチャンピオンと相性の良い「サブチャンプ」を提案します。\n相性グラフを見ながら、新しい選択肢を見つけてみましょう！",
+    "findSubChamp": "サブチャンプを探す",
+    "feedback": "💬 フィードバック",
+    "feedbackDescription": "アプリの改善点や感想をぜひお寄せください！"
+  },
+  "quiz": {
+    "loading": "読み込み中...",
+    "matchupQuiz": "マッチアップクイズ",
+    "matchupQuizDesc": "League of Legendsのマッチアップクイズです。\nチャンピオンの有利不利を学習する練習にお使いください。\nまずはロールを選択してください。",
+    "no": "未選択",
+    "chooseMainChamp": "メインチャンピオンを選択（任意）",
+    "start": "スタート",
+    "opponent": "相手のチャンピオン",
+    "teammate": "味方のチャンピオン",
+    "choose": "有利な方を選択",
+    "round": "ラウンド",
+    "next": "次へ",
+    "result": "結果",
+    "retry": "再挑戦",
+    "roleSelect": "ロール選択へ",
+    "menu": "← メニューに戻る",
+    "feedback": "フィードバックフォーム",
+    "champ": "チャンピオン",
+    "winRate": "勝率(%)",
+    "botWinRate": "Bot勝率",
+    "supWinRate": "Sup勝率"
+  },
+  "subChamp":{
+    "title": "サブチャンピオン提案",
+    "description": "あなたのメインチャンピオンに合わせてサブチャンピオンを提案します。\nまずはロールを選択してください。",
+    "mainChamp": "メインチャンピオン",
+    "mainChampSelect": "メインチャンピオンを選択",
+    "no": "なし",
+    "start": "スタート",
+    "graphDescription": "矢印で相性をチェック！\n青ゾーンのチャンプはサブにおすすめ。\nグラフはドラッグで動かせるから、直感的に相性を見てみよう！。",
+    "menu": "← メニューに戻る",
+    "next": "次へ",
+    "sug1": "提案1：不利はカウンターのカウンターで回避！",
+    "sug2": "提案2：メインBAN時は代わりのカウンターで有利キープ！"
+  },
+  "tweet": {
+    "no": "なし",
+    "share": "Xでシェア",
+    "text1": "マッチアップクイズ\nロール",
+    "text2": "\nメインチャンプ",
+    "text3": "\nスコアは ",
+    "text4": " でした！\n"
+  },
+  "winrate": {
+    "winrateGraph": "勝率グラフ  vs",
+    "ref": "出典"
+  },
+  "footer": {
+    "developer": "開発者"
+  }
+}
