@@ -82,7 +82,6 @@ export default function Quiz({ role, mainChampion, round, onEnd }: QuizProps) {
       );
       console.log('translateMapRev.current', translateMapRev.current)
       startRound(matchupData, reasonData);
-      mainChampionName.current = translateChanmpName(mainChampion);
     });
   }, []);
 
@@ -107,8 +106,12 @@ export default function Quiz({ role, mainChampion, round, onEnd }: QuizProps) {
     setIsCorrect(null);
     setRound(round.current);
 
+    // チャンピオン名を日本語に変換
+    console.log(mainChampion)
+    mainChampionName.current = translateChanmpName(mainChampion);
+
     let opponentChampion: string; 
-    if (mainChampion && data[mainChampion]) { 
+    if (mainChampionName.current != "" && data[mainChampionName.current]) { 
       // 選択肢にメインチャンプがくる問題数
       const count1 = Object.keys(data).filter((c) => data[c].loses.map((d) => d['name']).flat()).flat().filter((e) => e == mainChampionName.current).length; 
       const count2 = Object.keys(data).filter((c) => data[c].beats.map((d) => d['name']).flat()).flat().filter((e) => e == mainChampionName.current).length; 
@@ -154,11 +157,7 @@ export default function Quiz({ role, mainChampion, round, onEnd }: QuizProps) {
       // 未選択なら完全ランダム 
       const champions = Object.keys(data); 
       opponentChampion = champions[Math.floor(Math.random() * champions.length)]; 
-    }
-    
-    // この時点で相手チャンプ名が確定する
-    // チャンピオン名を日本語に変換
-    mainChampionName.current = translateChanmpName(opponentChampion);
+    }    
 
     setOpponent(opponentChampion); 
     setOpponentName(translateMapRev.current[opponentChampion]); 
