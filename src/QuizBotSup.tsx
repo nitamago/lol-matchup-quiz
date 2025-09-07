@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import WinRateChart from "./Chart";
 import Horizontal100BarChart from "./Horizontal100BarChart";
+import { useTranslation } from "react-i18next";
 
 interface Matchups {
   [key: string]: {
@@ -52,6 +53,8 @@ export default function QuizBotSup({ role, mainChampion, onEnd }: QuizProps) {
 
   const quizIndices = useRef(new Set());
   const containerRef = useRef<HTMLDivElement>(null);
+  const { t } = useTranslation();
+
 
   // 両方の JSON を読み込む
   useEffect(() => {
@@ -165,12 +168,12 @@ export default function QuizBotSup({ role, mainChampion, onEnd }: QuizProps) {
   };
 
   if (Object.keys(matchups).length === 0 || Object.keys(champions).length === 0) {
-    return <p>読み込み中...</p>;
+    return <p>{t("quiz.loading")}</p>;
   }
 
   return (
     <div ref={containerRef}>
-      <h2>ラウンド: {round + 1} / 10</h2>
+      <h2>{t("quiz.round")}: {round + 1} / 10</h2>
 
       {/* 履歴 */}
       <div id="history">
@@ -187,7 +190,7 @@ export default function QuizBotSup({ role, mainChampion, onEnd }: QuizProps) {
 
       {opponentBot && opponentSup && teamBot && (
         <div>
-          <h3>相手のチャンピオン</h3>
+          <h3>{t("quiz.opponent")}</h3>
           <div className="champions">
             <div className="champion">
               <img src={champions[opponentBot]?.icon} alt={opponentBot} width={64} />
@@ -197,7 +200,7 @@ export default function QuizBotSup({ role, mainChampion, onEnd }: QuizProps) {
               <img src={champions[opponentSup]?.icon} alt={opponentSup} width={64} />
               <div>{opponentSup}</div>
             </div>
-          </div><h3>味方のチャンピオン</h3>
+          </div><h3>{t("quiz.teammate")}</h3>
           <div className="champions">
             <div className="champion">
               <img src={champions[teamBot]?.icon} alt={teamBot} width={64} />
@@ -207,7 +210,7 @@ export default function QuizBotSup({ role, mainChampion, onEnd }: QuizProps) {
         </div>
       )}
 
-      <h3>有利な方を選択</h3>
+      <h3>{t("quiz.choose")}</h3>
       <div className="choicesRow">
         {choices.map((c) => (
           <div
@@ -232,7 +235,7 @@ export default function QuizBotSup({ role, mainChampion, onEnd }: QuizProps) {
             style={{ display: "block", margin: "1rem auto" }}
           />
           <div className="p-4">
-            <h2 className="text-xl font-bold mb-4">Bot勝率</h2>
+            <h2 className="text-xl font-bold mb-4">{t("quiz.botWinRate")}</h2>
             <Horizontal100BarChart
               leftImageSrc={champions[teamBot]?.icon}
               rightImageSrc={champions[opponentBot]?.icon}
@@ -241,7 +244,7 @@ export default function QuizBotSup({ role, mainChampion, onEnd }: QuizProps) {
           </div>
           <WinRateChart beat={{"name": advantage, "delta2": advantageDelta2}} lose={{"name": disadvantage, "delta2": disadvantageDelta2}} 
                         origins={origins} opponentName={opponentSup} url={dataUrl2}/>
-          <button onClick={nextRound}>次へ</button>
+          <button onClick={nextRound}>{t("quiz.next")}</button>
         </div>
       )}
 
@@ -254,7 +257,7 @@ export default function QuizBotSup({ role, mainChampion, onEnd }: QuizProps) {
             style={{ display: "block", margin: "1rem auto" }}
           />
           <div className="p-4">
-            <h2 className="text-xl font-bold mb-4">Sup勝率</h2>
+            <h2 className="text-xl font-bold mb-4">{t("quiz.supWinRate")}</h2>
             <Horizontal100BarChart
               leftImageSrc={champions[teamBot]?.icon}
               rightImageSrc={champions[opponentSup]?.icon}
@@ -263,7 +266,7 @@ export default function QuizBotSup({ role, mainChampion, onEnd }: QuizProps) {
           </div>
           <WinRateChart beat={{"name": advantage, "delta2": advantageDelta2}} lose={{"name": disadvantage, "delta2": disadvantageDelta2}} 
                         origins={origins} opponentName={opponentBot} url={dataUrl2}/>
-          <button onClick={nextRound}>次へ</button>
+          <button onClick={nextRound}>{t("quiz.next")}</button>
         </div>
       )}
     </div>

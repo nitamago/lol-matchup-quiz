@@ -1,3 +1,5 @@
+import { useTranslation } from "react-i18next";
+
 type TweetButtonProps = {
   role: string;
   mainChampion: string;
@@ -6,11 +8,12 @@ type TweetButtonProps = {
 };
 
 export default function TweetButton({ role, mainChampion, score, gameUrl }: TweetButtonProps) {
+  const { t } = useTranslation();
   const handleTweet = () => {
     if (mainChampion === "") {
-        mainChampion = "なし";
+        mainChampion = t("no");
     }
-    const text = `マッチアップクイズ\nロール: ${role}\nメインチャンプ: ${mainChampion}\nスコアは ${score} でした！\n`;
+    const text = t("tweet.text1")+`: ${role}`+t("tweet.text2")+`: ${mainChampion}`+t("tweet.text3")+`${score}`+t("tweet.text4");
     const url = gameUrl ? `&url=${encodeURIComponent(gameUrl)}` : '';
     const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}${url}`;
 
@@ -22,7 +25,7 @@ export default function TweetButton({ role, mainChampion, score, gameUrl }: Twee
       onClick={handleTweet}
       className="bg-blue-500 text-white px-4 py-2 rounded"
     >
-       Xでシェア
+       {t("tweet.share")}
     </button>
   );
 }
