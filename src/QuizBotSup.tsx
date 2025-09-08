@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import WinRateChart from "./Chart";
 import Horizontal100BarChart from "./Horizontal100BarChart";
 import { useTranslation } from "react-i18next";
+import "./QuizBotSup.css"
 
 interface Matchups {
   [key: string]: {
@@ -23,15 +24,16 @@ interface ChampionInfo {
 interface QuizProps {
   role: string;
   mainChampion: string;
+  round: React.RefObject<number>;
   onEnd: (score: number) => void;
 }
 
-export default function QuizBotSup({ role, mainChampion, onEnd }: QuizProps) {
+export default function QuizBotSup({ role, mainChampion, round, onEnd }: QuizProps) {
   const [matchups, setMatchups] = useState<Matchups>({});
   const [botMatchups, setBotMatchups] = useState<Matchups>({});
   const [supMatchups, setSupMatchups] = useState<Matchups>({});
   const [champions, setChampions] = useState<ChampionInfo>({});
-  const [round, setRound] = useState(0);
+  const [roundState, setRound] = useState(0);
   const [opponentChampionKey, setOpponentChampionKey] = useState<string | null>(null);
   const [opponentBot, setOpponentBot] = useState<string>("");
   const [opponentSup, setOpponentSup] = useState<string>("");
@@ -53,32 +55,56 @@ export default function QuizBotSup({ role, mainChampion, onEnd }: QuizProps) {
 
   const quizIndices = useRef(new Set());
   const containerRef = useRef<HTMLDivElement>(null);
+  const translateMap = useRef<Record<string, string>>({});
+  const translateMapRev = useRef<Record<string, string>>({});
+  const opponentChampionName = useRef<string>("");
+
   const { t } = useTranslation();
 
 
   // 両方の JSON を読み込む
   useEffect(() => {
+    const lang = localStorage.getItem("lang") || "en";
     Promise.all([
-      fetch("/lol-matchup-quiz/bot&sup_matchups.json").then((res) => res.json()),
-      fetch("/lol-matchup-quiz/sup&bot_matchups.json").then((res) => res.json()),
-      fetch("/lol-matchup-quiz/bot_matchups.json").then((res) => res.json()),
-      fetch("/lol-matchup-quiz/sup_matchups.json").then((res) => res.json()),
-      fetch("/lol-matchup-quiz/champions.json").then((res) => res.json()),
-    ]).then(([matchupData1, matchupData2, botMatchupData, supMatchups, championData]) => {
+      fetch("/lol-matchup-quiz/lol-matchup-quiz/ja/bot&sup_matchups.json").then((res) => res.json()),
+      fetch("/lol-matchup-quiz/lol-matchup-quiz/ja/sup&bot_matchups.json").then((res) => res.json()),
+      fetch("/lol-matchup-quiz/lol-matchup-quiz/ja/bot_matchups.json").then((res) => res.json()),
+      fetch("/lol-matchup-quiz/lol-matchup-quiz/ja/sup_matchups.json").then((res) => res.json()),
+      fetch("/lol-matchup-quiz/lol-matchup-quiz/"+lang+"/champions.json").then((res) => res.json()),
+      fetch("/lol-matchup-quiz/lol-matchup-quiz/"+lang+"/name_to_ja_map.json").then((res) => res.json()),
+    ]).then(([matchupData1, matchupData2, botMatchupData, supMatchups, championData, translateJson]) => {
       const merged = { ...matchupData1, ...matchupData2 };
       setMatchups(merged);
       setBotMatchups(botMatchupData);
       setSupMatchups(supMatchups);
       setChampions(championData);
       startRound(merged, botMatchupData, supMatchups);
+      translateMap.current = translateJson;
+      translateMapRev.current = Object.fromEntries(
+        Object.entries(translateJson).map(([key, value]) => [value, key])
+      );
     });
   }, []);
+  
+  useEffect(() => {
+    window.gtag("event", "Round"+round.current);
+  }, [roundState]);
+
+  const translateChanmpName = (nameStr: string|null) => {
+    if (nameStr) {
+      console.log('nameStr', nameStr)
+      return translateMapRev.current[nameStr];
+    } else {
+      return "";
+    }
+  }
 
   const startRound = (data: Matchups = matchups, data2: Matchups = botMatchups, data3: Matchups = supMatchups) => {
-    if (round >= 10 || Object.keys(data).length === 0) return;
+    if (round.current >= 11 || Object.keys(data).length === 0) return;
     setSelected(null);
     setIsCorrect(null);
-    
+    setRound(round.current);
+        
     // 未選択なら完全ランダム 
     const champions = Object.keys(data); 
     let index = Math.floor(Math.random() * champions.length);
@@ -98,6 +124,10 @@ export default function QuizBotSup({ role, mainChampion, onEnd }: QuizProps) {
     setOpponentBot(opBot); 
     setOpponentSup(opSup); 
     setTeamBot(tmBot); 
+
+    // チャンピオン名を日本語に変換
+    console.log(tmBot)
+    opponentChampionName.current = translateChanmpName(tmBot);
 
     const quizType: string = champs[3];
     setQuizType(quizType);
@@ -159,10 +189,11 @@ export default function QuizBotSup({ role, mainChampion, onEnd }: QuizProps) {
     const newHistory = [...history, isCorrect ? 1 : 0];
     setHistory(newHistory);
 
-    if (round + 1 >= 10) {
+    round.current += 1;
+    if (round.current >= 11) {
       onEnd(newHistory.reduce((a, b) => a + b, 0));
     } else {
-      setRound(round + 1);
+      setRound(round.current);
       startRound();
     }
   };
@@ -172,8 +203,8 @@ export default function QuizBotSup({ role, mainChampion, onEnd }: QuizProps) {
   }
 
   return (
-    <div ref={containerRef}>
-      <h2>{t("quiz.round")}: {round + 1} / 10</h2>
+    <div ref={containerRef} key={roundState}>
+      <h2>{t("quiz.round")}: {roundState} / 10</h2>
 
       {/* 履歴 */}
       <div id="history">
@@ -194,17 +225,17 @@ export default function QuizBotSup({ role, mainChampion, onEnd }: QuizProps) {
           <div className="champions">
             <div className="champion">
               <img src={champions[opponentBot]?.icon} alt={opponentBot} width={64} />
-              <div>{opponentBot}</div>
+              {(localStorage.getItem("lang")==="ja")&& <div>{opponentBot}</div>}
             </div>
             <div className="champion">
               <img src={champions[opponentSup]?.icon} alt={opponentSup} width={64} />
-              <div>{opponentSup}</div>
+              {(localStorage.getItem("lang")==="ja")&& <div>{opponentSup}</div>}
             </div>
           </div><h3>{t("quiz.teammate")}</h3>
           <div className="champions">
             <div className="champion">
               <img src={champions[teamBot]?.icon} alt={teamBot} width={64} />
-              <div>{teamBot}</div>
+              {(localStorage.getItem("lang")==="ja")&& <div>{teamBot}</div>}
             </div>
           </div>
         </div>
@@ -221,7 +252,7 @@ export default function QuizBotSup({ role, mainChampion, onEnd }: QuizProps) {
             onClick={() => handleChoice(c)}
           >
             <img src={champions[c]?.icon} alt={c} width={64} />
-            <div>{c}</div>
+            {(localStorage.getItem("lang")==="ja")&& <div>{c}</div>}
           </div>
         ))}
       </div>
@@ -243,7 +274,7 @@ export default function QuizBotSup({ role, mainChampion, onEnd }: QuizProps) {
             />
           </div>
           <WinRateChart beat={{"name": advantage, "delta2": advantageDelta2}} lose={{"name": disadvantage, "delta2": disadvantageDelta2}} 
-                        origins={origins} opponentName={opponentSup} url={dataUrl2}/>
+                        origins={origins} opponentName={opponentChampionName.current} url={dataUrl2}/>
           <button onClick={nextRound}>{t("quiz.next")}</button>
         </div>
       )}
@@ -265,8 +296,8 @@ export default function QuizBotSup({ role, mainChampion, onEnd }: QuizProps) {
             />
           </div>
           <WinRateChart beat={{"name": advantage, "delta2": advantageDelta2}} lose={{"name": disadvantage, "delta2": disadvantageDelta2}} 
-                        origins={origins} opponentName={opponentBot} url={dataUrl2}/>
-          <button onClick={nextRound}>{t("quiz.next")}</button>
+                        origins={origins} opponentName={opponentChampionName.current} url={dataUrl2}/>
+          <button id="next-button" onClick={nextRound}>{t("quiz.next")}</button>
         </div>
       )}
     </div>

@@ -86,6 +86,10 @@ export default function Quiz({ role, mainChampion, round, onEnd }: QuizProps) {
   }, []);
 
   useEffect(() => {
+    window.gtag("event", "Round"+round.current);
+  }, [roundState]);
+
+  useEffect(() => {
     console.log(containerRef.current)
       containerRef.current?.scrollTo({ top: 0, behavior: "smooth" });
   }, [selected]);
@@ -328,7 +332,7 @@ export default function Quiz({ role, mainChampion, round, onEnd }: QuizProps) {
           <WinRateChart beat={{"name": advantage, "delta2": advantageDelta2}} lose={{"name": disadvantage, "delta2": disadvantageDelta2}} 
                         origins={origins} opponentName={opponentName} url={dataUrl}/>
 
-          <button onClick={nextRound} tabIndex={-1}>{t("quiz.next")}</button>
+          <button id="next-button" onClick={nextRound} tabIndex={-1}>{t("quiz.next")}</button>
         </div>
       )}
     </div>
