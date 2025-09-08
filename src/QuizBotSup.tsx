@@ -55,6 +55,10 @@ export default function QuizBotSup({ role, mainChampion, round, onEnd }: QuizPro
 
   const quizIndices = useRef(new Set());
   const containerRef = useRef<HTMLDivElement>(null);
+  const translateMap = useRef<Record<string, string>>({});
+  const translateMapRev = useRef<Record<string, string>>({});
+  const opponentChampionName = useRef<string>("");
+
   const { t } = useTranslation();
 
 
@@ -67,13 +71,18 @@ export default function QuizBotSup({ role, mainChampion, round, onEnd }: QuizPro
       fetch("/lol-matchup-quiz/lol-matchup-quiz/ja/bot_matchups.json").then((res) => res.json()),
       fetch("/lol-matchup-quiz/lol-matchup-quiz/ja/sup_matchups.json").then((res) => res.json()),
       fetch("/lol-matchup-quiz/lol-matchup-quiz/"+lang+"/champions.json").then((res) => res.json()),
-    ]).then(([matchupData1, matchupData2, botMatchupData, supMatchups, championData]) => {
+      fetch("/lol-matchup-quiz/lol-matchup-quiz/"+lang+"/name_to_ja_map.json").then((res) => res.json()),
+    ]).then(([matchupData1, matchupData2, botMatchupData, supMatchups, championData, translateJson]) => {
       const merged = { ...matchupData1, ...matchupData2 };
       setMatchups(merged);
       setBotMatchups(botMatchupData);
       setSupMatchups(supMatchups);
       setChampions(championData);
       startRound(merged, botMatchupData, supMatchups);
+      translateMap.current = translateJson;
+      translateMapRev.current = Object.fromEntries(
+        Object.entries(translateJson).map(([key, value]) => [value, key])
+      );
     });
   }, []);
   
@@ -81,12 +90,21 @@ export default function QuizBotSup({ role, mainChampion, round, onEnd }: QuizPro
     window.gtag("event", "Round"+round.current);
   }, [roundState]);
 
+  const translateChanmpName = (nameStr: string|null) => {
+    if (nameStr) {
+      console.log('nameStr', nameStr)
+      return translateMapRev.current[nameStr];
+    } else {
+      return "";
+    }
+  }
+
   const startRound = (data: Matchups = matchups, data2: Matchups = botMatchups, data3: Matchups = supMatchups) => {
     if (round.current >= 11 || Object.keys(data).length === 0) return;
     setSelected(null);
     setIsCorrect(null);
     setRound(round.current);
-    
+        
     // 未選択なら完全ランダム 
     const champions = Object.keys(data); 
     let index = Math.floor(Math.random() * champions.length);
@@ -106,6 +124,10 @@ export default function QuizBotSup({ role, mainChampion, round, onEnd }: QuizPro
     setOpponentBot(opBot); 
     setOpponentSup(opSup); 
     setTeamBot(tmBot); 
+
+    // チャンピオン名を日本語に変換
+    console.log(tmBot)
+    opponentChampionName.current = translateChanmpName(tmBot);
 
     const quizType: string = champs[3];
     setQuizType(quizType);
@@ -252,7 +274,7 @@ export default function QuizBotSup({ role, mainChampion, round, onEnd }: QuizPro
             />
           </div>
           <WinRateChart beat={{"name": advantage, "delta2": advantageDelta2}} lose={{"name": disadvantage, "delta2": disadvantageDelta2}} 
-                        origins={origins} opponentName={opponentSup} url={dataUrl2}/>
+                        origins={origins} opponentName={opponentChampionName.current} url={dataUrl2}/>
           <button onClick={nextRound}>{t("quiz.next")}</button>
         </div>
       )}
@@ -274,7 +296,7 @@ export default function QuizBotSup({ role, mainChampion, round, onEnd }: QuizPro
             />
           </div>
           <WinRateChart beat={{"name": advantage, "delta2": advantageDelta2}} lose={{"name": disadvantage, "delta2": disadvantageDelta2}} 
-                        origins={origins} opponentName={opponentBot} url={dataUrl2}/>
+                        origins={origins} opponentName={opponentChampionName.current} url={dataUrl2}/>
           <button id="next-button" onClick={nextRound}>{t("quiz.next")}</button>
         </div>
       )}
