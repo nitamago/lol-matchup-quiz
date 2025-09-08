@@ -30,7 +30,7 @@ export default function QuizGame({ onBack }: Props) {
         window.gtag("event", "QuizStart");
       } else if (stage === "result") {
         window.gtag("event", "QuizEnd");
-      }
+      } 
     }
     
     console.log(containerRef.current)
@@ -138,7 +138,7 @@ export default function QuizGame({ onBack }: Props) {
       )}
 
       {stage === "quiz" && role !== "bot&sup" && <Quiz role={role} mainChampion={mainChampion} round={round} onEnd={handleQuizEnd}  />}
-      {stage === "quiz" && role === "bot&sup" && <QuizBotSup role={role} mainChampion={mainChampion} onEnd={handleQuizEnd} />}
+      {stage === "quiz" && role === "bot&sup" && <QuizBotSup role={role} mainChampion={mainChampion} round={round} onEnd={handleQuizEnd} />}
 
       {stage === "result" && (
         <div>
