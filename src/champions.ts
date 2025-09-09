@@ -1,5 +1,6 @@
-import championsJA from "./champions.ja.json";
 import championsEN from "./champions.en.json";
+import championsJA from "./champions.ja.json";
+import championsKR from "./champions.kr.json";
 
 type Role = "top" | "mid" | "bot" | "sup" | "jg";
 
@@ -7,6 +8,7 @@ type Role = "top" | "mid" | "bot" | "sup" | "jg";
 const championsByLang: Record<string, typeof championsJA> = {
   "ja": championsJA,
   "en": championsEN,
+  "kr": championsKR,
 };
 
 function getChampions(role: Role): string[] {
