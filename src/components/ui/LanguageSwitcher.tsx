@@ -20,6 +20,7 @@ export function LanguageSwitcher() {
       >
         <option value="en">English</option>
         <option value="ja">日本語</option>
+        <option value="kr">한국어</option>
       </select>
     </div>
   );
