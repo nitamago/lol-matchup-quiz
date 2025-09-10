@@ -1,0 +1,70 @@
+{
+  "menu": {
+    "title": "主菜单",
+    "subTitle": "通过测验来测试你的技能，并通过亚军建议来增强你的策略！",
+    "quizMode": "🎯 测验模式",
+    "quizDescription": "通过简单的测验问题了解冠军的特征。  \n在加深对游戏理解的同时测试你的知识！",
+    "startQuiz": "开始测验",
+    "achievement": "成就",
+    "subChamp": "🤝 子冠军建议",
+    "subChampDescription": "我们建议与您的主英雄协同效果良好的“副英雄”。查看兼容性图表，发现新的选择！",
+    "findSubChamp": "寻找亚军",
+    "feedback": "💬 反馈",
+    "feedbackDescription": "请分享您的建议或印象，以帮助改进应用程序！"
+  },
+  "quiz": {
+    "loading": "加载中...",
+    "matchupQuiz": "对决测验",
+    "matchupQuizDesc": "这是一个英雄联盟对战测验。\n用它来练习学习英雄的优缺点。\n首先，选择一个角色。",
+    "no": "未选择",
+    "chooseMainChamp": "选择主要冠军（可选）",
+    "start": "开始",
+    "opponent": "对手冠军",
+    "teammate": "盟友冠军",
+    "choose": "选择有利的那个",
+    "round": "轮次",
+    "next": "下一个",
+    "result": "结果",
+    "retry": "重试",
+    "roleSelect": "选择角色",
+    "menu": "← 返回菜单",
+    "feedback": "反馈表单",
+    "champ": "冠军",
+    "winRate": "胜率 (%)",
+    "botWinRate": "机器人胜率",
+    "supWinRate": "支持胜率",
+    "getTitle": "成就达成！"
+  },
+  "titles": {
+    "list": "成就",
+    "description": "在测验中答对所有题目即可获得成就"
+  },
+  "subChamp": {
+    "title": "亚军建议",
+    "description": "我们建议选择与您的主英雄互补的副英雄。首先，选择一个角色。",
+    "mainChamp": "主冠军",
+    "mainChampSelect": "选择主冠军",
+    "no": "无",
+    "start": "开始",
+    "graphDescription": "检查箭头的兼容性！  \n推荐在蓝色区域的冠军作为替补。  \n您可以拖动图表，因此可以直观地探索协同效应！",
+    "menu": "← 返回菜单",
+    "next": "下一个",
+    "sug1": "提案1：通过反击对方来避免劣势！",
+    "sug2": "提案2：当你的主英雄被禁用时，利用替代反制保持优势！"
+  },
+  "tweet": {
+    "no": "无",
+    "share": "在X上分享",
+    "text1": "对决测验  \n角色  ",
+    "text2": "主冠军",
+    "text3": "得分是",
+    "text4": "！"
+  },
+  "winrate": {
+    "winrateGraph": "胜率图表 vs",
+    "ref": "请提供需要翻译的内容。"
+  },
+  "footer": {
+    "developer": "开发者"
+  }
+}

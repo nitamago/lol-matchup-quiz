@@ -18,6 +18,7 @@ export function LanguageSwitcher() {
         value={i18n.language}
         onChange={(e) => changeLanguage(e.target.value)}
       >
+        <option value="cn">简体中文</option>
         <option value="en">English</option>
         <option value="ja">日本語</option>
         <option value="kr">한국어</option>
