@@ -5,9 +5,10 @@ import { motion } from "framer-motion";
 import Footer from "./Footer";
 import { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
+import "./MainMenu.css"
 
 interface Props {
-  onNavigate: (page: "menu" | "quiz" | "graph") => void;
+  onNavigate: (page: "menu" | "quiz" | "graph" | "title") => void;
 }
 
 export default function MainMenu({ onNavigate }: Props) {
@@ -50,10 +51,14 @@ export default function MainMenu({ onNavigate }: Props) {
           {t("menu.quizDescription")}
             
         </p>
-        <Button className="w-48" onClick={() => onNavigate("quiz")}>
-          {t("menu.startQuiz")}
-        </Button>
-        <p></p>
+        <div>
+          <Button className="w-48" onClick={() => onNavigate("quiz")}>
+            {t("menu.startQuiz")}
+          </Button>
+          <Button className="w-48" onClick={() => onNavigate("title")}>
+            {t("menu.achievement")}
+          </Button>
+        </div>
 
         <h2 className="text-xl font-bold text-indigo-700">{t("menu.subChamp")}</h2>
         <p className="text-gray-700 mt-2" style={{ whiteSpace: "pre-line" }}>

@@ -22,7 +22,22 @@ export default function QuizGame({ onBack }: Props) {
   
   const round = useRef<number>(1);
   const containerRef = useRef<HTMLDivElement>(null);
+  const translateMap = useRef<Record<string, string>>({});
+  const translateMapRev = useRef<Record<string, string>>({});
   const { t } = useTranslation();
+
+  // 両方の JSON を読み込む
+  useEffect(() => {
+    const lang = localStorage.getItem("lang") || "en";
+    Promise.all([
+      fetch("/lol-matchup-quiz/lol-matchup-quiz/"+lang+"/name_to_ja_map.json").then((res) => res.json()),
+    ]).then(([translateJson]) => {
+      translateMap.current = translateJson;
+      translateMapRev.current = Object.fromEntries(
+        Object.entries(translateJson).map(([key, value]) => [value, key])
+      );
+    });
+  }, []);
 
   useEffect(() => {
     if (window.gtag) {
@@ -65,6 +80,25 @@ export default function QuizGame({ onBack }: Props) {
   const handleQuizEnd = (finalScore: number) => {
     setScore(finalScore);
     setStage("result");
+
+    if (finalScore==10){
+      const stored = localStorage.getItem("achievedTitles");
+      let achieved: string[] = [];
+
+      if (stored) {
+        try {
+          achieved = JSON.parse(stored);
+        } catch (e) {
+          console.error("localStorageの読み込みエラー", e);
+        }
+      }
+
+      const champNameJa = translateMap.current[mainChampion];
+      if (!achieved.includes(champNameJa)) {
+        achieved.push(champNameJa);
+        localStorage.setItem("achievedTitles", JSON.stringify(achieved));
+      }
+    }
   };
 
   const handleRetry = () => {
@@ -144,6 +178,7 @@ export default function QuizGame({ onBack }: Props) {
         <div>
           <div>
             <h2>{t("quiz.result")}: {score} / 10 </h2>
+            {score==10 && (<p>{t("quiz.getTitle")}</p>)}
             <button onClick={handleRetry}>{t("quiz.retry")}</button>
           </div>
           <TweetButton role={role} mainChampion={mainChampion} score={score+" / 10"} gameUrl="https://nitamago.github.io/lol-matchup-quiz/" />

@@ -5,6 +5,7 @@
     "quizMode": "🎯 Quiz Mode",
     "quizDescription": "Learn champions' traits through simple quiz questions.\nTest your knowledge while deepening your understanding of the game!",
     "startQuiz": "Start Quiz",
+    "achievement": "Achievement",
     "subChamp": "🤝 Sub-Champion Suggestions",
     "subChampDescription": "We suggest 'sub-champions' that synergize well with your main champion.\nCheck the compatibility graph and discover new options!",
     "findSubChamp": "Find Sub-Champion",
@@ -31,7 +32,12 @@
     "champ": "Champion",
     "winRate": "Win Rate (%)",
     "botWinRate": "Bot Win Rate",
-    "supWinRate": "Support Win Rate"
+    "supWinRate": "Support Win Rate",
+    "getTitle": "Achievements acquired!"
+  },
+  "titles": {
+    "list": "Achievements",
+    "description": "Get all the answers right in the quiz and earn an achievement."
   },
   "subChamp": {
     "title": "Sub-Champion Suggestions",
