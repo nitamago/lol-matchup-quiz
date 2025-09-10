@@ -1,3 +1,4 @@
+import championsCN from "./champions.cn.json";
 import championsEN from "./champions.en.json";
 import championsJA from "./champions.ja.json";
 import championsKR from "./champions.kr.json";
@@ -6,6 +7,7 @@ type Role = "top" | "mid" | "bot" | "sup" | "jg";
 
 // 言語ごとにマッピング
 const championsByLang: Record<string, typeof championsJA> = {
+  "cn": championsCN,
   "ja": championsJA,
   "en": championsEN,
   "kr": championsKR,

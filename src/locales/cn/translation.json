@@ -5,6 +5,7 @@
     "quizMode": "🎯 测验模式",
     "quizDescription": "通过简单的测验问题了解冠军的特征。  \n在加深对游戏理解的同时测试你的知识！",
     "startQuiz": "开始测验",
+    "achievement": "成就",
     "subChamp": "🤝 子冠军建议",
     "subChampDescription": "我们建议与您的主英雄协同效果良好的“副英雄”。查看兼容性图表，发现新的选择！",
     "findSubChamp": "寻找亚军",
@@ -31,7 +32,12 @@
     "champ": "冠军",
     "winRate": "胜率 (%)",
     "botWinRate": "机器人胜率",
-    "supWinRate": "支持胜率"
+    "supWinRate": "支持胜率",
+    "getTitle": "成就达成！"
+  },
+  "titles": {
+    "list": "成就",
+    "description": "在测验中答对所有题目即可获得成就"
   },
   "subChamp": {
     "title": "亚军建议",
