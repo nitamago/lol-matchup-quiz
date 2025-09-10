@@ -34,6 +34,9 @@ export default function TitlesPage({ onBack }: Props) {
 
 
   useEffect(() => {
+    if (window.gtag) {
+      window.gtag("event", "TitlesPage");
+    }
     const lang = localStorage.getItem("lang") || "en";
     Promise.all([
       fetch("/lol-matchup-quiz/lol-matchup-quiz/"+lang+"/champions.json").then((res) => res.json()),
