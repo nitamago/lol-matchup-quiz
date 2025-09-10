@@ -5,6 +5,7 @@
     "quizMode": "🎯 퀴즈 모드",
     "quizDescription": "간단한 퀴즈 질문을 통해 챔피언의 특성을 배워보세요. 게임에 대한 이해를 깊이 하면서 지식을 테스트해보세요!",
     "startQuiz": "퀴즈 시작",
+    "achievement": "업적",
     "subChamp": "🤝 서브 챔피언 제안",
     "subChampDescription": "주 챔피언과 잘 시너지를 내는 '서브 챔피언'을 추천합니다. 호환성 그래프를 확인하고 새로운 옵션을 발견하세요!",
     "findSubChamp": "서브 챔피언 찾기",
@@ -31,7 +32,12 @@
     "champ": "챔피언",
     "winRate": "승률 (%)",
     "botWinRate": "봇 승률",
-    "supWinRate": "지원 승률"
+    "supWinRate": "지원 승률",
+    "getTitle": "업적을 획득했습니다!"
+  },
+  "titles": {
+    "list": "업적",
+    "description": "퀴즈에 모든 문제를 맞혀서 실적을 획득하세요"
   },
   "subChamp": {
     "title": "서브 챔피언 제안",

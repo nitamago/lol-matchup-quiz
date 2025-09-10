@@ -5,6 +5,7 @@
     "quizMode": "🎯 クイズモード",
     "quizDescription": "簡単なクイズ形式でチャンピオンの特徴を学べます。\n自分の知識を試しながら、ゲーム理解を深めましょう！",
     "startQuiz": "クイズを始める",
+    "achievement": "実績",
     "subChamp": "🤝 サブチャンプ提案",
     "subChampDescription": "あなたのメインチャンピオンと相性の良い「サブチャンプ」を提案します。\n相性グラフを見ながら、新しい選択肢を見つけてみましょう！",
     "findSubChamp": "サブチャンプを探す",
@@ -31,7 +32,12 @@
     "champ": "チャンピオン",
     "winRate": "勝率(%)",
     "botWinRate": "Bot勝率",
-    "supWinRate": "Sup勝率"
+    "supWinRate": "Sup勝率",
+    "getTitle": "実績を獲得しました！"
+  },
+  "titles": {
+    "list": "実績一覧",
+    "description": "クイズに全問正解して実績を獲得しましょう"
   },
   "subChamp":{
     "title": "サブチャンピオン提案",

@@ -1,0 +1,61 @@
+.title-list {
+  padding: 20px;
+  text-align: center;
+}
+
+.title-list h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.title-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* 横5列固定 */
+  gap: 20px;
+  justify-items: center;
+}
+
+.title-card {
+  background: #f8f8f8;
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+  transition: transform 0.2s;
+  width: 100%;
+  max-width: 150px;
+}
+
+.title-card:hover {
+  transform: scale(1.05);
+}
+
+.title-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.title-name {
+  margin-top: 8px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+/* 未達成の称号は半透明 */
+.not-achieved {
+  opacity: 0.3;
+}
+
+button.menu-button {
+    position: fixed;
+    top: 40px;
+    left: 40px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    z-index: 1000;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
