@@ -1,4 +1,12 @@
 ul.hyphen-list {
     text-align: left;
-    padding-inline-start: 5px;
+    padding-inline-start: 200px;
+}
+
+/* スマホ（768px以下） */
+@media (max-width: 768px) {
+    ul.hyphen-list {
+        text-align: left;
+        padding-inline-start: 10px;
+    }
 }

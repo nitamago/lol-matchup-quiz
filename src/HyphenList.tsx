@@ -10,47 +10,36 @@ export default function HyphenList({ text }: Props) {
   useEffect(() => {
     setBeforeList(text.split('-')[0])
   })
+
   
-  const lines = text.split(/\r?\n/).filter(Boolean);
-  type Node = { children: Node[]; text?: string };
-
-  // ルートとスタックで階層構築
-  const root: Node = { children: [] };
-  const stack: Node[] = [root];
-
-  for (const line of lines) {
-    const m = line.match(/^\s*(-+)\s+(.+)$/);
-    if (!m) continue;
-    const lvl = m[1].length; // 1=第一階層
-    const node: Node = { children: [], text: m[2] };
-
-    // スタック調整
-    while (stack.length - 1 > lvl) stack.pop();
-    while (stack.length - 1 < lvl) {
-      const n: Node = { children: [] };
-      stack[stack.length - 1].children.push(n);
-      stack.push(n);
-    }
-    stack[stack.length - 1].children.push(node);
-  }
-
-  const render = (n: Node, key?: React.Key): React.ReactNode => {
-    if (n.text !== undefined) return <li key={key}>{n.text}</li>;
-    if (!n.children.length) return null;
-    return (
-      <div> 
-        <ul key={key} className="hyphen-list">
-          {n.children.map((c, i) => render(c, i))}
-        </ul>
-      </div>
-    );
-  };
+  // 文字列を段落ごとに分割
+  const sections = text.split("\n\n").map((x) => x.split(':\n')).flat();
 
 // 呼び出し側で beforeList を足す
 return (
-  <div>
-    <span>{beforeList} </span>
-    {render(root)}
+  <div className="analysis-container">
+    {sections.map((section, index) => {
+      if (section.trim().startsWith("-")) {
+        // リスト部分（行ごとに - で始まる）
+        const items = section.split("\n").map((line) => line.replace(/^- /, "").trim());
+        return (
+          <ul key={index} className="hyphen-list">
+            {items.map((item, i) => (
+              <li key={i}>{item}</li>
+            ))}
+          </ul>
+        );
+      } else {
+        // 見出しと段落を分ける（"理由は以下の通りです。" などは h3 扱いにすると見やすい）
+        if (index === 0) {
+          return <h3 key={index}>{section}</h3>;
+        } else if (section.includes("リード") ||section.endsWith("です。") || section.endsWith("あります。")) {
+          return <h4 key={index}>{section}</h4>;
+        } else {
+          return <p key={index}>{section}</p>;
+        }
+      }
+    })}
   </div>
 );
 }
