@@ -121,7 +121,7 @@ export default function Quiz({ role, mainChampion, round, onEnd }: QuizProps) {
       const count2 = Object.keys(data).filter((c) => data[c].beats.map((d) => d['name']).flat()).flat().filter((e) => e == mainChampionName.current).length; 
       console.log(count1+count2)
 
-      if (round.current < Math.min(6, count1+count2+1)) {    
+      if (round.current >= Math.min(6, count1+count2+1)) {    
         // 事前に2パターンのインデックスを抽選
         const possibleOpponents = Object.keys(data).filter((c) => data[c].loses.map((d) => d['name']).includes(mainChampionName.current)); 
         let index = Math.floor(Math.random() * possibleOpponents.length);

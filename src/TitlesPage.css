@@ -15,6 +15,17 @@
   justify-items: center;
 }
 
+
+/* スマホ（768px以下） */
+@media (max-width: 768px) {
+  .title-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 横5列固定 */
+    gap: 20px;
+    justify-items: center;
+  }
+}
+
 .title-card {
   background: #f8f8f8;
   border-radius: 10px;
@@ -58,4 +69,20 @@ button.menu-button {
     z-index: 1000;
     font-weight: bold;
     transition: background-color 0.2s;
+}
+
+/* スマホ（768px以下） */
+@media (max-width: 768px) {
+  button.menu-button {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    padding: 5px 5px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    z-index: 1000;
+    font-weight: bold;
+    transition: background-color 0.2s;
+  } 
 }

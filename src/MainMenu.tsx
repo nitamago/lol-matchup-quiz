@@ -52,10 +52,10 @@ export default function MainMenu({ onNavigate }: Props) {
             
         </p>
         <div>
-          <Button className="w-48" onClick={() => onNavigate("quiz")}>
+          <Button className="next-button" onClick={() => onNavigate("quiz")}>
             {t("menu.startQuiz")}
           </Button>
-          <Button className="w-48" onClick={() => onNavigate("title")}>
+          <Button className="next-button" onClick={() => onNavigate("title")}>
             {t("menu.achievement")}
           </Button>
         </div>
@@ -64,7 +64,7 @@ export default function MainMenu({ onNavigate }: Props) {
         <p className="text-gray-700 mt-2" style={{ whiteSpace: "pre-line" }}>
           {t("menu.subChampDescription")}
         </p>
-        <Button className="w-48" onClick={() => onNavigate("graph")}>
+        <Button className="next-button"  onClick={() => onNavigate("graph")}>
             {t("menu.findSubChamp")}
         </Button>
         

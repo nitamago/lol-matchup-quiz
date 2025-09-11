@@ -5,3 +5,21 @@ p {
 h2 {
     margin-bottom: 0px;
 }
+
+
+.next-button {
+    bottom: 20px;       
+    margin: 0 auto;    
+
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    border: 1px solid #ccc;      /* 薄いグレーの枠 */
+    border-radius: 8px;
+
+    background: rgba(255, 255, 255, 0.9); /* 白系で半透明 */
+    color: #222;                          /* 濃いめの黒文字 */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2); /* 周囲に影 */
+    z-index: 1000;
+    cursor: pointer;
+}
