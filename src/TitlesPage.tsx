@@ -30,6 +30,7 @@ export default function TitlesPage({ onBack }: Props) {
   const [roles, setRoles] = useState<RolesJson>({});
   const [achievedTitles, setAchievedTitles] = useState<string[]>([]);
   const [nameMap, setNameMap] = useState<{[key: string]: string}>({});
+  const [achievementMap, setAchievementMap] = useState<{[key: string]: string}>({});
   const { t } = useTranslation();
 
 
@@ -41,10 +42,12 @@ export default function TitlesPage({ onBack }: Props) {
     Promise.all([
       fetch("/lol-matchup-quiz/lol-matchup-quiz/"+lang+"/champions.json").then((res) => res.json()),
       fetch("/lol-matchup-quiz/lol-matchup-quiz/"+lang+"/name_to_ja_map.json").then((res) => res.json()),
-    ]).then(([championData, nameMap]) => {
+      fetch("/lol-matchup-quiz/lol-matchup-quiz/ja/achievement_name.json").then((res) => res.json()),
+    ]).then(([championData, nameMap, achievementMap]) => {
       setChampions(championData);
       setNameMap(nameMap);
       setRoles(championsByRole());
+      setAchievementMap(achievementMap);
     });
     const stored = localStorage.getItem("achievedTitles");
     if (stored) {
@@ -78,7 +81,7 @@ export default function TitlesPage({ onBack }: Props) {
                     alt={champName}
                     className="title-icon"
                   />
-                  <p className="title-name">{champName}</p>
+                  <p className="title-name">{achievementMap[role.toLowerCase()+"-"+champ.name]}</p>
                 </div>
               );
             })}

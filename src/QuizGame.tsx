@@ -6,6 +6,7 @@ import TweetButton from "./TweetButton";
 import { Button } from "@/components/ui/button";
 import { useTranslation } from "react-i18next";
 import { championsByRole } from "./champions";
+import { useSearchParams } from "react-router-dom";
 import "./QuizGame.css";
 import "./style.css";
 
@@ -14,6 +15,7 @@ interface Props {
 }
 
 export default function QuizGame({ onBack }: Props) {
+  const [searchParams] = useSearchParams();
   const [role, setRole] = useState<"top" | "mid" | "bot" | "sup" | "jg" | "bot&sup" | "">("");
   const [stage, setStage] = useState<"role" | "start" | "quiz" | "result">("role");
   const [score, setScore] = useState<number>(0);
@@ -51,6 +53,19 @@ export default function QuizGame({ onBack }: Props) {
     console.log(containerRef.current)
     containerRef.current?.scrollTo({ top: 0, behavior: "smooth" });
   }, [stage]);
+
+  // マウント時 & クエリ変更時に反映
+  useEffect(() => {
+    const role = searchParams.get("role");
+    if (role === "top" || role === "mid" || role === "bot" || role === "sup" || role === "jg" || role === "bot&sup") { 
+      setRole(role);
+    }
+    handleRoleSelect();
+    const champ = searchParams.get("champ");
+    if (champ) {
+      setMainChampion(champ);
+    }
+  }, [searchParams]);
 
   // ロール決定
   const handleRoleSelect = () => {
@@ -151,6 +166,7 @@ export default function QuizGame({ onBack }: Props) {
         <div>
           <h3>{t("quiz.chooseMainChamp")}</h3>
           <select
+            key={mainChampion}
             value={mainChampion}
             onChange={(e) => {
               console.log("e.target.value", e.target.value)

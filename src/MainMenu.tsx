@@ -13,7 +13,6 @@ interface Props {
 
 export default function MainMenu({ onNavigate }: Props) {
   const iframeRef = useRef<HTMLIFrameElement>(null);
-
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -51,6 +50,7 @@ export default function MainMenu({ onNavigate }: Props) {
           {t("menu.quizDescription")}
             
         </p>
+        <p>{t("titles.description")}</p>
         <div>
           <Button className="next-button" onClick={() => onNavigate("quiz")}>
             {t("menu.startQuiz")}
