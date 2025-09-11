@@ -229,7 +229,7 @@ export default function GraphCytoscape({role, mainChamp, mode}: {role: string, m
                         cy={(cy: Core) => {
                             cy.ready(() => {
                                 // レイアウト完了後に初期ズーム・位置を設定
-                                if (window.innerWidth < 375) {
+                                if (window.innerWidth < 768) {
                                     cy.zoom({ level: 0.3, renderedPosition: { x: 0, y: 0 } }); // スマホは少し小さめ
                                 } else {
                                     cy.zoom({ level: 0.6, renderedPosition: { x: 0, y: 0 } }); // PCは標準
