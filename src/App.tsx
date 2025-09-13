@@ -18,6 +18,27 @@ export default function App() {
     }
   }, [searchParams]);
 
+  useEffect(() => {
+    // ページ変更のたびに履歴を積む
+    if (page !== "menu") {
+      window.history.pushState({ page }, "", "");
+    }
+
+    const handlePopState = (event: any) => {
+      if (event.state && event.state.page) {
+        setPage(event.state.page);
+      } else {
+        // stateが無い場合はメニューへ
+        setPage("menu");
+      }
+    };
+
+    window.addEventListener("popstate", handlePopState);
+    return () => {
+      window.removeEventListener("popstate", handlePopState);
+    };
+  }, [page]);
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       {page === "menu" && <MainMenu onNavigate={setPage} />}
