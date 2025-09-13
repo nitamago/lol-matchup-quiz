@@ -105,7 +105,11 @@ export default function Quiz({ role, mainChampion, round, onEnd }: QuizProps) {
   }
 
   const startRound = (data: Matchups = matchups, reasonsData: Reasons = reasons) => {
-    if (round.current >= 11 || Object.keys(data).length === 0) return;
+    if (round.current >= 11 || Object.keys(data).length === 0) {
+      loseIndices.current = new Set();
+      beatIndices.current = new Set();
+      return;
+    }
     setSelected(null);
     setIsCorrect(null);
     setRound(round.current);
@@ -117,11 +121,10 @@ export default function Quiz({ role, mainChampion, round, onEnd }: QuizProps) {
     let opponentChampion: string; 
     if (mainChampionName.current != "" && data[mainChampionName.current]) { 
       // 選択肢にメインチャンプがくる問題数
-      const count1 = Object.keys(data).filter((c) => data[c].loses.map((d) => d['name']).flat()).flat().filter((e) => e == mainChampionName.current).length; 
-      const count2 = Object.keys(data).filter((c) => data[c].beats.map((d) => d['name']).flat()).flat().filter((e) => e == mainChampionName.current).length; 
-      console.log(count1+count2)
-
-      if (round.current >= Math.min(6, count1+count2+1)) {    
+      const count1 = Object.keys(data).map((c) => data[c].loses.map((d) => d['name'])).flat().filter((e) => e == mainChampionName.current).flat(); 
+      const count2 = Object.keys(data).map((c) => data[c].beats.map((d) => d['name'])).flat().filter((e) => e == mainChampionName.current).flat();
+      
+      if (round.current <= Math.min(6, count1.length+count2.length+1)) {    
         // 事前に2パターンのインデックスを抽選
         const possibleOpponents = Object.keys(data).filter((c) => data[c].loses.map((d) => d['name']).includes(mainChampionName.current)); 
         let index = Math.floor(Math.random() * possibleOpponents.length);
@@ -140,10 +143,10 @@ export default function Quiz({ role, mainChampion, round, onEnd }: QuizProps) {
         }
         
         // 選択肢にメインチャンプがくる問題 
-        if (possibleOpponents.length-loseIndices.current.size <=0) {
+        if (possibleOpponents.length-loseIndices.current.size <0) {
           beatIndices.current.add(index2);
           opponentChampion = possibleOpponents2[index2]; 
-        } else if (possibleOpponents2.length-beatIndices.current.size <=0) {
+        } else if (possibleOpponents2.length-beatIndices.current.size <0) {
           loseIndices.current.add(index);
           opponentChampion = possibleOpponents[index];
         } else if (Math.random() > 0.5) {           
