@@ -16,9 +16,12 @@ export default function MainMenu({ onNavigate }: Props) {
   const { t } = useTranslation();
 
   useEffect(() => {
+    const lang = localStorage.getItem("lang") || "en";
     if (window.gtag) {
       window.gtag("event", "MainMenu");
+      window.gtag("event", lang);
     }
+
     const iframe = iframeRef.current;
     if (!iframe) return;
 

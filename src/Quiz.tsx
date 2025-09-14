@@ -87,6 +87,9 @@ export default function Quiz({ role, mainChampion, round, onEnd }: QuizProps) {
 
   useEffect(() => {
     window.gtag("event", "Round"+round.current);
+    if (round.current==1){
+      window.gtag("event", role+" "+mainChampion);
+    }
   }, [roundState]);
 
   useEffect(() => {
