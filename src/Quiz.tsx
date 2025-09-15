@@ -124,10 +124,11 @@ export default function Quiz({ role, mainChampion, round, onEnd }: QuizProps) {
     let opponentChampion: string; 
     if (mainChampionName.current != "" && data[mainChampionName.current]) { 
       // 選択肢にメインチャンプがくる問題数
-      const count1 = Object.keys(data).map((c) => data[c].loses.map((d) => d['name'])).flat().filter((e) => e == mainChampionName.current).flat(); 
-      const count2 = Object.keys(data).map((c) => data[c].beats.map((d) => d['name'])).flat().filter((e) => e == mainChampionName.current).flat();
+      const count1 = Object.keys(data).map((c) => data[c].loses.map((d) => d['name'])).flat().filter((e) => e == mainChampionName.current); 
+      const count2 = Object.keys(data).map((c) => data[c].beats.map((d) => d['name'])).flat().filter((e) => e == mainChampionName.current);
       
-      if (round.current <= Math.min(6, count1.length+count2.length+1)) {    
+      console.log("count1.length+count2.length", count1.length+count2.length)
+      if (round.current <= Math.min(6, count1.length+count2.length)) {    
         // 事前に2パターンのインデックスを抽選
         const possibleOpponents = Object.keys(data).filter((c) => data[c].loses.map((d) => d['name']).includes(mainChampionName.current)); 
         let index = Math.floor(Math.random() * possibleOpponents.length);
@@ -135,6 +136,10 @@ export default function Quiz({ role, mainChampion, round, onEnd }: QuizProps) {
         while (loseIndices.current.has(index) && count < 100) {
           index = Math.floor(Math.random() * possibleOpponents.length);
           count += 1;
+          // 既出が1巡したらリセットする
+          if (loseIndices.current.size==possibleOpponents.length) {
+            loseIndices.current =  new Set();
+          }
         }
 
         const possibleOpponents2 = Object.keys(data).filter((c) => data[c].beats.map((d) => d['name']).includes(mainChampionName.current)); 
@@ -143,17 +148,16 @@ export default function Quiz({ role, mainChampion, round, onEnd }: QuizProps) {
         while (beatIndices.current.has(index2) && count2 < 100) {
           index2 = Math.floor(Math.random() * possibleOpponents2.length);
           count2 += 1;
+          // 既出が1巡したらリセットする
+          if (beatIndices.current.size==possibleOpponents2.length) {
+            beatIndices.current =  new Set();
+          }
         }
         
         // 選択肢にメインチャンプがくる問題 
-        if (possibleOpponents.length-loseIndices.current.size <0) {
-          beatIndices.current.add(index2);
-          opponentChampion = possibleOpponents2[index2]; 
-        } else if (possibleOpponents2.length-beatIndices.current.size <0) {
+        if (Math.random() < (possibleOpponents.length/(possibleOpponents.length+possibleOpponents2.length))) {           
           loseIndices.current.add(index);
-          opponentChampion = possibleOpponents[index];
-        } else if (Math.random() > 0.5) {           
-          loseIndices.current.add(index);
+          console.log("loseIndices.current",loseIndices.current)
           opponentChampion = possibleOpponents[index]; 
         } else {                   
           beatIndices.current.add(index2);
@@ -201,6 +205,10 @@ export default function Quiz({ role, mainChampion, round, onEnd }: QuizProps) {
         while (advantageIndices.current.has(index) && count < 100) {
           index = Math.floor(Math.random() * champions.length);
           count += 1;
+          // 既出が1巡したらリセットする
+          if (advantageIndices.current.size==champions.length) {
+            advantageIndices.current =  new Set();
+          }
         }
         advantageIndices.current.add(index);
         const advantageData = champions[index];
@@ -218,6 +226,10 @@ export default function Quiz({ role, mainChampion, round, onEnd }: QuizProps) {
         while (disadvantageIndices.current.has(index) && count < 100) {
           index = Math.floor(Math.random() * champions.length);
           count += 1;
+          // 既出が1巡したらリセットする
+          if (disadvantageIndices.current.size==champions.length) {
+            disadvantageIndices.current =  new Set();
+          }
         }
         disadvantageIndices.current.add(index);
         const disadvantageData = champions[index]
