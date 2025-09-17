@@ -13,8 +13,7 @@ fs.readdirSync(staticDir).forEach(file => {
   }
 });
 
-const sitemap = `
-<?xml version="1.0" encoding="UTF-8"?>
+const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="https://www.sitemaps.org/schemas/sitemap/0.9">
 ${urls.map(u => `  <url><loc>${u}</loc><priority>0.8</priority></url>`).join('\n')}
 </urlset>
