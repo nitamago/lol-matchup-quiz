@@ -91,6 +91,9 @@ export default function Quiz({ role, mainChampion, round, onEnd }: QuizProps) {
     });
   }, []);
 
+  useEffect(() => {
+    window.gtag("event", "Round"+round.current);
+  }, [roundState]);
 
   useEffect(() => {
     if (import.meta.env.VITE_DEBUG === 'true') {
@@ -169,7 +172,7 @@ export default function Quiz({ role, mainChampion, round, onEnd }: QuizProps) {
       const count2 = Object.keys(data).map((c) => data[c].beats.map((d) => d['name'])).flat().filter((e) => e == mainChampionName.current);
       
       console.log("count1.length+count2.length", count1.length+count2.length)
-      if (round.current <= Math.min(6, count1.length+count2.length)) {    
+      if (round.current <= Math.min(5, count1.length+count2.length)) {    
         // 事前に2パターンのインデックスを抽選
         const possibleOpponents = Object.keys(data).filter((c) => data[c].loses.map((d) => d['name']).includes(mainChampionName.current)); 
         let index = Math.floor(Math.random() * possibleOpponents.length);
