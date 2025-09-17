@@ -1,0 +1,489 @@
+
+          <!DOCTYPE html>
+          <html lang="ja"><head>
+    <script type="module">import { injectIntoGlobalHook } from "https://nitamago.github.io/lol-matchup-quiz/@react-refresh";
+injectIntoGlobalHook(window);
+window.$RefreshReg$ = () => {};
+window.$RefreshSig$ = () => (type) => type;</script>
+
+    <script type="module" src="https://nitamago.github.io/lol-matchup-quiz/@vite/client"></script>
+
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/svg+xml" href="https://nitamago.github.io/lol-matchup-quiz/icons/quiz_icon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="content-language" content="ja">
+
+    <meta property="og:title" content="LoL マッチアップクイズ">
+    <meta property="og:description" content="あなたは何問正解できる？ 🎮 LoL知識を試そう！">
+    <meta property="og:image" content="https://nitamago.github.iohttps://nitamago.github.io/lol-matchup-quiz/icons/ogp.png?timestamp=202050906173000">
+    <meta property="og:url" content="https://nitamago.github.iohttps://nitamago.github.io/lol-matchup-quiz/">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- Google tag (gtag.js) -->
+    <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-MVL5C35764"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      // IP 匿名化を有効化
+      gtag('config', 'G-MVL5C35764', {event_name: 'page_view', 'anonymize_ip': true});
+    </script>
+    <title> LoL アフェリオス vs アッシュ 相性</title>
+  <style type="text/css" data-vite-dev-id="/mnt/d/Documents/githttps://nitamago.github.io/lol-matchup-quiz/src/index.css">:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button:hover {
+  border-color: #646cff;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+}
+</style><style type="text/css" data-vite-dev-id="/mnt/d/Documents/githttps://nitamago.github.io/lol-matchup-quiz/src/components/ui/LanguageSwitcher.css">
+  /* 右上に固定 */
+  .translate-select-wrapper {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+  }
+
+  /* セレクトボックスのスタイル */
+  .translate-select {
+    padding: 8px 12px;
+    font-weight: 600;
+    font-size: 14px;
+    color: #1d4ed8; /* 青文字 */
+    background-color: #ffffff; /* 白背景 */
+    border: 2px solid #1d4ed8; /* 青枠 */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15); /* 影で浮かせる */
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+  }
+
+  /* ホバー時 */
+  .translate-select:hover {
+    background-color: #e0f2fe; /* 薄い青背景 */
+    transform: translateY(-2px); /* 少し浮いた感じ */
+  }</style><style type="text/css" data-vite-dev-id="/mnt/d/Documents/githttps://nitamago.github.io/lol-matchup-quiz/src/Footer.css">
+.footer {
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.8rem;
+  color: #666;
+}</style><style type="text/css" data-vite-dev-id="/mnt/d/Documents/githttps://nitamago.github.io/lol-matchup-quiz/src/MainMenu.css">p {
+    margin: 0px;
+}
+
+h2 {
+    margin-bottom: 0px;
+}
+
+
+.next-button {
+    bottom: 20px;       
+    margin: 0 auto;    
+
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    border: 1px solid #ccc;      /* 薄いグレーの枠 */
+    border-radius: 8px;
+
+    background: rgba(255, 255, 255, 0.9); /* 白系で半透明 */
+    color: #222;                          /* 濃いめの黒文字 */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2); /* 周囲に影 */
+    z-index: 1000;
+    cursor: pointer;
+}</style><style type="text/css" data-vite-dev-id="/mnt/d/Documents/githttps://nitamago.github.io/lol-matchup-quiz/src/Chart.css">#fig-container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: center;
+}</style><style type="text/css" data-vite-dev-id="/mnt/d/Documents/githttps://nitamago.github.io/lol-matchup-quiz/src/HyphenList.css">ul.hyphen-list {
+    text-align: left;
+    padding-inline-start: 200px;
+}
+
+/* スマホ（768px以下） */
+@media (max-width: 768px) {
+    ul.hyphen-list {
+        text-align: left;
+        padding-inline-start: 10px;
+    }
+}</style><style type="text/css" data-vite-dev-id="/mnt/d/Documents/githttps://nitamago.github.io/lol-matchup-quiz/src/Quiz.css">div.next-button {
+    position: sticky; /* または fixed */
+    bottom: 20px;
+    width: 100%;
+    text-align: center;
+}
+
+#next-button {
+    position: sticky;
+    bottom: 20px;       
+    margin: 0 auto;     
+    display: block;
+
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    border: 1px solid #ccc;      /* 薄いグレーの枠 */
+    border-radius: 8px;
+
+    background: rgba(255, 255, 255, 0.9); /* 白系で半透明 */
+    color: #222;                          /* 濃いめの黒文字 */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2); /* 周囲に影 */
+    z-index: 1000;
+    cursor: pointer;
+}</style><style type="text/css" data-vite-dev-id="/mnt/d/Documents/githttps://nitamago.github.io/lol-matchup-quiz/src/Horizontal100BarChart.css">#h100bar {
+    display: flex;
+}
+
+#h100bar img {
+    padding-top: 10px;
+}</style><style type="text/css" data-vite-dev-id="/mnt/d/Documents/githttps://nitamago.github.io/lol-matchup-quiz/src/QuizBotSup.css">#next-button {
+    position: sticky;
+    bottom: 20px;       
+    margin: 0 auto;     
+    display: block;
+
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    border: 1px solid #ccc;      /* 薄いグレーの枠 */
+    border-radius: 8px;
+
+    background: rgba(255, 255, 255, 0.9); /* 白系で半透明 */
+    color: #222;                          /* 濃いめの黒文字 */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2); /* 周囲に影 */
+    z-index: 1000;
+    cursor: pointer;
+}</style><style type="text/css" data-vite-dev-id="/mnt/d/Documents/githttps://nitamago.github.io/lol-matchup-quiz/src/QuizGame.css">#root {
+  display: flex;
+  justify-content: center; /* 横中央 */
+  align-items: center;     /* 縦中央 */
+  min-height: 100vh;           /* 画面全体の高さ */
+  width: 100%;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+.container {
+    text-align: center;
+}
+
+h1 {
+    font-size: 2.0rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+#role-select {
+    margin-bottom: 15px;
+}
+
+.form-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* ページ中央に配置 */
+  background-color: #f5f5f5;
+}
+
+.form-container {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 800px; /* 横幅制限 */
+}
+
+.form-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+
+.form-iframe {
+  border: none;
+}
+
+</style><style type="text/css" data-vite-dev-id="/mnt/d/Documents/githttps://nitamago.github.io/lol-matchup-quiz/src/style.css">body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  padding: 1rem;
+}
+
+.startButton,
+button {
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  margin-bottom: 1rem;
+}
+
+.champion {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+
+.champions {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  justify-content: center;
+}
+
+.choicesRow {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+#history {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 400px) {
+  .champion img {
+    width: 48px;
+    height: 48px;
+  }
+  .choicesRow {
+    gap: 0.5rem;
+  }
+}
+</style><style type="text/css" data-vite-dev-id="/mnt/d/Documents/githttps://nitamago.github.io/lol-matchup-quiz/src/GraphCytoscape.css">#cytoscape-container div div canvas {
+    left: 0 !important;
+}
+
+.bordered-card-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 1200px;
+}
+
+.bordered-card {
+  border: 2px solid #666; /* 線の色 */
+  padding: 16px;             /* 内側の余白 */
+  border-radius: 8px;        /* 角を少し丸める */
+  max-width: 1100px;          /* 任意で幅を調整 */
+}
+
+/* スマホ（768px以下） */
+@media (max-width: 768px) {
+  .bordered-card-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+  }
+
+  .bordered-card {
+    border: 2px solid #666; /* 線の色 */
+    padding: 16px;             /* 内側の余白 */
+    border-radius: 8px;        /* 角を少し丸める */
+    max-width: 300px;          /* 任意で幅を調整 */
+  }
+}</style><style type="text/css" data-vite-dev-id="/mnt/d/Documents/githttps://nitamago.github.io/lol-matchup-quiz/src/SubChampSuggest.css">#subchamp-fig-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}</style><style type="text/css" data-vite-dev-id="/mnt/d/Documents/githttps://nitamago.github.io/lol-matchup-quiz/src/TitlesPage.css">.title-list {
+  padding: 20px;
+  text-align: center;
+}
+
+.title-list h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.title-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* 横5列固定 */
+  gap: 20px;
+  justify-items: center;
+}
+
+
+/* スマホ（768px以下） */
+@media (max-width: 768px) {
+  .title-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 横5列固定 */
+    gap: 20px;
+    justify-items: center;
+  }
+}
+
+.title-card {
+  background: #f8f8f8;
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+  transition: transform 0.2s;
+  width: 100%;
+  max-width: 150px;
+}
+
+.title-card:hover {
+  transform: scale(1.05);
+}
+
+.title-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.title-name {
+  margin-top: 8px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+/* 未達成の称号は半透明 */
+.not-achieved {
+  opacity: 0.3;
+}
+
+button.menu-button {
+    position: fixed;
+    top: 40px;
+    left: 40px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    z-index: 1000;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+/* スマホ（768px以下） */
+@media (max-width: 768px) {
+  button.menu-button {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    padding: 5px 5px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    z-index: 1000;
+    font-weight: bold;
+    transition: background-color 0.2s;
+  } 
+}
+</style></head>
+  <body>
+    <div id="root"><div class="min-h-screen flex items-center justify-center bg-gray-100"><div class="container"><h1>マッチアップクイズ(bot)</h1><div><h2>ラウンド: 1 / 10</h2><div id="history"></div><div><h3>相手のチャンピオン</h3><div class="champion"><img alt="アフェリオス" width="64" src="https://nitamago.github.io/lol-matchup-quiz/icons/ico_Aphelios.jpg"><div>アフェリオス</div></div></div><h3>有利な方を選択</h3><div class="choicesRow"><div class="champion correct"><img alt="アッシュ" width="64" src="https://nitamago.github.io/lol-matchup-quiz/icons/ico_Ashe.jpg"><div>アッシュ</div></div><div class="champion "><img alt="トリスターナ" width="64" src="https://nitamago.github.io/lol-matchup-quiz/icons/ico_Tristana.jpg"><div>トリスターナ</div></div></div><div><img alt="正解" width="64" src="https://nitamago.github.io/lol-matchup-quiz/icons/maru.png" style="display: block; margin: 1rem auto;"><div class="analysis-container"><h3>アッシュが有利です。</h3><ul class="hyphen-list"><li>アッシュは射程が長く、アフェリオスの攻撃をミニオンの後ろから受け流しながらポークができるため、レーンでのハラスが得意です。</li><li>アッシュのスロー効果を活かして、アフェリオスが近づくのを防ぎつつ、持続的にダメージを与えることができます。</li><li>アフェリオスは機動力が低く、アイテムが揃う前の段階ではアッシュの攻撃に対して反撃が難しいため、序盤から中盤にかけて有利に立ち回れます。</li></ul><p>有利の取り方</p><ul class="hyphen-list"><li>レーンではミニオンの弾幕を意識し、アフェリオスの射程外からポークを行うことで、ダメージを蓄積します。</li><li>Eを使って視界を確保し、ガンクに警戒しつつ、アフェリオスが前に出た瞬間を狙ってトレードを仕掛けます。</li><li>アッシュのアルティメットを使って、アフェリオスのアルティメットやチームファイトの開始時にカウンターとして活用し、戦闘を有利に進めます。</li></ul></div><div><div id="fig-container" class="p-4"><h2 class="text-xl font-bold mb-4">勝率グラフ  vsアフェリオス</h2><div class="recharts-wrapper" style="position: relative; cursor: default; width: 300px; height: 300px;"><div xmlns="http://www.w3.org/1999/xhtml" tabindex="-1" class="recharts-tooltip-wrapper" style="visibility: hidden; pointer-events: none; position: absolute; top: 0px; left: 0px;"><div class="recharts-default-tooltip" role="status" aria-live="assertive" style="margin: 0px; padding: 10px; background-color: rgb(255, 255, 255); border: 1px solid rgb(204, 204, 204); white-space: nowrap;"><p class="recharts-tooltip-label" style="margin: 0px;"></p></div></div><svg role="application" tabindex="0" class="recharts-surface" width="300" height="300" viewBox="0 0 300 300" style="width: 100%; height: 100%;"><title></title><desc></desc><defs><clipPath id="recharts1-clip"><rect x="65" y="20" height="230" width="225"></rect></clipPath></defs><g class="recharts-cartesian-grid"><g class="recharts-cartesian-grid-horizontal"><line stroke="#ccc" fill="none" x="65" y="20" width="225" height="230" x1="65" y1="250" x2="290" y2="250"></line><line stroke="#ccc" fill="none" x="65" y="20" width="225" height="230" x1="65" y1="192.5" x2="290" y2="192.5"></line><line stroke="#ccc" fill="none" x="65" y="20" width="225" height="230" x1="65" y1="135" x2="290" y2="135"></line><line stroke="#ccc" fill="none" x="65" y="20" width="225" height="230" x1="65" y1="77.5" x2="290" y2="77.5"></line><line stroke="#ccc" fill="none" x="65" y="20" width="225" height="230" x1="65" y1="20" x2="290" y2="20"></line></g><g class="recharts-cartesian-grid-vertical"><line stroke="#ccc" fill="none" x="65" y="20" width="225" height="230" x1="65" y1="20" x2="65" y2="250"></line><line stroke="#ccc" fill="none" x="65" y="20" width="225" height="230" x1="290" y1="20" x2="290" y2="250"></line></g></g><g class="recharts-layer recharts-cartesian-axis recharts-xAxis xAxis"><line height="30" orientation="bottom" x="65" y="250" width="225" class="recharts-cartesian-axis-line" stroke="#666" fill="none" x1="65" y1="250" x2="290" y2="250"></line><text offset="5" x="177.5" y="275" class="recharts-text recharts-label" text-anchor="middle" fill="#808080"><tspan x="177.5" dy="0em">チャンピオン</tspan></text></g><g class="recharts-layer recharts-cartesian-axis recharts-yAxis yAxis"><line orientation="left" width="60" x="5" y="20" height="230" class="recharts-cartesian-axis-line" stroke="#666" fill="none" x1="65" y1="20" x2="65" y2="250"></line><g class="recharts-cartesian-axis-ticks"><g class="recharts-layer recharts-cartesian-axis-tick"><line orientation="left" width="60" x="5" y="20" height="230" class="recharts-cartesian-axis-tick-line" stroke="#666" fill="none" x1="59" y1="250" x2="65" y2="250"></line><text orientation="left" width="60" height="230" stroke="none" x="57" y="250" class="recharts-text recharts-cartesian-axis-tick-value" text-anchor="end" fill="#666"><tspan x="57" dy="0.355em">45</tspan></text></g><g class="recharts-layer recharts-cartesian-axis-tick"><line orientation="left" width="60" x="5" y="20" height="230" class="recharts-cartesian-axis-tick-line" stroke="#666" fill="none" x1="59" y1="192.5" x2="65" y2="192.5"></line><text orientation="left" width="60" height="230" stroke="none" x="57" y="192.5" class="recharts-text recharts-cartesian-axis-tick-value" text-anchor="end" fill="#666"><tspan x="57" dy="0.355em">47</tspan></text></g><g class="recharts-layer recharts-cartesian-axis-tick"><line orientation="left" width="60" x="5" y="20" height="230" class="recharts-cartesian-axis-tick-line" stroke="#666" fill="none" x1="59" y1="135" x2="65" y2="135"></line><text orientation="left" width="60" height="230" stroke="none" x="57" y="135" class="recharts-text recharts-cartesian-axis-tick-value" text-anchor="end" fill="#666"><tspan x="57" dy="0.355em">49</tspan></text></g><g class="recharts-layer recharts-cartesian-axis-tick"><line orientation="left" width="60" x="5" y="20" height="230" class="recharts-cartesian-axis-tick-line" stroke="#666" fill="none" x1="59" y1="77.5" x2="65" y2="77.5"></line><text orientation="left" width="60" height="230" stroke="none" x="57" y="77.5" class="recharts-text recharts-cartesian-axis-tick-value" text-anchor="end" fill="#666"><tspan x="57" dy="0.355em">51</tspan></text></g><g class="recharts-layer recharts-cartesian-axis-tick"><line orientation="left" width="60" x="5" y="20" height="230" class="recharts-cartesian-axis-tick-line" stroke="#666" fill="none" x1="59" y1="20" x2="65" y2="20"></line><text orientation="left" width="60" height="230" stroke="none" x="57" y="20" class="recharts-text recharts-cartesian-axis-tick-value" text-anchor="end" fill="#666"><tspan x="57" dy="0.355em">53</tspan></text></g></g><text offset="5" transform="rotate(-90, 10, 135)" x="10" y="135" class="recharts-text recharts-label" text-anchor="start" fill="#808080"><tspan x="10" dy="0.355em">勝率(%)</tspan></text></g><g class="recharts-layer recharts-reference-line"><line y="50" stroke="red" stroke-dasharray="4 4" fill="none" fill-opacity="1" stroke-width="1" x1="65" y1="106.25" x2="290" y2="106.25" class="recharts-reference-line-line"></line><text offset="5" x="60" y="106.25" class="recharts-text recharts-label" text-anchor="end" fill="#808080"><tspan x="60" dy="0.355em">50</tspan></text></g><g class="recharts-layer recharts-scatter" id="recharts-scatter-«r0»"><g class="recharts-layer"><g class="recharts-layer"><g class="recharts-layer recharts-scatter-symbol"><image x="80" y="48.70000000000009" width="30" height="30" href="https://nitamago.github.io/lol-matchup-quiz/icons/ico_Ashe.jpg" style="border-radius: 50%;"></image></g><g class="recharts-layer recharts-scatter-symbol"><image x="136.25" y="88.0875" width="30" height="30" href="https://nitamago.github.io/lol-matchup-quiz/icons/ico_Sivir.jpg" style="border-radius: 50%;"></image></g><g class="recharts-layer recharts-scatter-symbol"><image x="192.5" y="94.69999999999992" width="30" height="30" href="https://nitamago.github.io/lol-matchup-quiz/icons/ico_Yunara.webp" style="border-radius: 50%;"></image></g><g class="recharts-layer recharts-scatter-symbol"><image x="248.75" y="180.0875000000001" width="30" height="30" href="https://nitamago.github.io/lol-matchup-quiz/icons/ico_Tristana.jpg" style="border-radius: 50%;"></image></g><g class="recharts-layer recharts-scatter-symbol"><image x="305" y="91.25" width="30" height="30" style="border-radius: 50%;"></image></g></g></g></g></svg></div><p style="font-size: 0.8rem; color: rgb(102, 102, 102); margin-top: 8px; text-align: center;">出典: LoLalytics <a href="https://lolalytics.com/ja/lol/aphelios/build/?patch=15.17" target="_blank" rel="noopener noreferrer">Delta2(Eme+)</a></p></div></div></div></div><a href="https://nitamago.github.io/lol-matchup-quiz/"><button>クイズページへ</button></a><footer class="footer">© 2025 nitamago.<p>開発者:<a href="https://x.com/NitamagoVaingl1" target="_blank" rel="noopener noreferrer">@NitamagoVaingl1</a></p></footer></div></div></div>
+    <script type="module" src="https://nitamago.github.io/lol-matchup-quiz/src/main.tsx"></script>
+  
+
+<span id="recharts_measurement_span" aria-hidden="true" style="position: absolute; top: -20000px; left: 0px; padding: 0px; margin: 0px; border: none; white-space: pre;">53</span></body></html>
+          
