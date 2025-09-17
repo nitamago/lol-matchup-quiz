@@ -2,6 +2,8 @@ import { useState, useEffect, useRef, RefObject } from "react";
 import WinRateChart from "./Chart";
 import HyphenList from "./HyphenList";
 import { useTranslation } from "react-i18next";
+import ReactDOMServer from "react-dom/server";
+import { exportChartAsHtml } from "./utils/exportChart";
 import "./Quiz.css"
 
 interface Matchups {
@@ -61,6 +63,10 @@ export default function Quiz({ role, mainChampion, round, onEnd }: QuizProps) {
   const translateMap = useRef<Record<string, string>>({});
   const translateMapRev = useRef<Record<string, string>>({});
   const mainChampionName = useRef<string>("");
+  const opponentNameRef = useRef<string>("");
+
+  const chartRef = useRef<HTMLDivElement | null>(null);
+  const explanationRef = useRef<HTMLDivElement>(null);
 
   const { t } = useTranslation();
 
@@ -85,16 +91,49 @@ export default function Quiz({ role, mainChampion, round, onEnd }: QuizProps) {
     });
   }, []);
 
-  useEffect(() => {
-    window.gtag("event", "Round"+round.current);
-    if (round.current==1){
-      window.gtag("event", role+" "+mainChampion);
-    }
-  }, [roundState]);
 
   useEffect(() => {
-    console.log(containerRef.current)
-      containerRef.current?.scrollTo({ top: 0, behavior: "smooth" });
+    if (import.meta.env.VITE_DEBUG === 'true') {
+      const saveChartWithEmbeddedImages = async () => {
+        if (!selected) return;
+        if (!chartRef.current) return; // ここで null を弾く
+
+        try {
+          // const htmlContent = await exportChartAsHtml(explanationRef.current!, chartRef.current!);
+          
+          // 現在の画面をまるごと HTML として取得
+          let htmlContent = `
+          <!DOCTYPE html>
+          ${document.documentElement.outerHTML}
+          `;
+          htmlContent = htmlContent.replace('<title>マッチアップクイズ</title>', '<title>'+opponentNameRef.current+" vs "+selected+" 相性"+'</title>'); 
+          htmlContent = htmlContent.replace(/\/lol-matchup-quiz\//g, "https://nitamago.github.io/lol-matchup-quiz/"); 
+          htmlContent = htmlContent.replace('<button id="next-button" tabindex="-1">次へ</button>', ""); 
+          htmlContent = htmlContent.replace('<button class="mt-6">← メニューに戻る</button>', '<a href="https://nitamago.github.io/lol-matchup-quiz/"><button>クイズページへ</button></a>')
+          
+          // 6) Blob にして自動ダウンロード
+          const blob = new Blob([htmlContent], { type: "text/html" });
+          const link = document.createElement("a");
+          link.href = URL.createObjectURL(blob);
+          // ファイル名にroundやタイムスタンプ入れると上書き防止になる
+          link.download = `explanation_${selected}_${Date.now()}.html`;
+          link.click();
+          URL.revokeObjectURL(link.href);
+        } catch (err) {
+          console.error("保存失敗:", err);
+        }
+      };
+
+      // 少し待ってから実行することでレンダリング完了を待つ（必要なら値を増やす）
+      const delayMs = 600; // 0.6秒。必要なら 1000〜1500 に増やす
+      const id = window.setTimeout(() => {
+        void saveChartWithEmbeddedImages();
+      }, delayMs);
+
+      return () => {
+        clearTimeout(id);
+      };
+    }
   }, [selected]);
 
   
@@ -174,6 +213,8 @@ export default function Quiz({ role, mainChampion, round, onEnd }: QuizProps) {
     }    
 
     setOpponent(opponentChampion); 
+    opponentNameRef.current = opponentChampion;
+
     setOpponentName(translateMapRev.current[opponentChampion]); 
     console.log('Opponent:', opponentChampion);
     console.log('OpponentName:', translateMapRev.current[opponentChampion]);
@@ -338,7 +379,7 @@ export default function Quiz({ role, mainChampion, round, onEnd }: QuizProps) {
       </div>
 
       {selected && (
-        <div>
+        <div ref={explanationRef}>
           <img
             src={isCorrect ? "/lol-matchup-quiz/icons/maru.png" : "/lol-matchup-quiz/icons/batsu.png"}
             alt={isCorrect ? "正解" : "不正解"}
@@ -347,8 +388,10 @@ export default function Quiz({ role, mainChampion, round, onEnd }: QuizProps) {
           />
           {isCorrect ? <HyphenList text={adReason}/> : <HyphenList text={disadReason}/>}
           
-          <WinRateChart beat={{"name": advantage, "delta2": advantageDelta2}} lose={{"name": disadvantage, "delta2": disadvantageDelta2}} 
-                        origins={origins} opponentName={opponentName} url={dataUrl}/>
+          <div ref={chartRef}>
+            <WinRateChart beat={{"name": advantage, "delta2": advantageDelta2}} lose={{"name": disadvantage, "delta2": disadvantageDelta2}} 
+                          origins={origins} opponentName={opponentName} url={dataUrl}/>
+          </div>
 
           <button id="next-button" onClick={nextRound} tabIndex={-1}>{t("quiz.next")}</button>
         </div>

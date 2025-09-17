@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, forwardRef } from "react";
 import {
   ScatterChart,
   Scatter,
@@ -61,6 +61,8 @@ interface CharacterData {
   icon: string;
   winRate: number;
 }
+
+
 
 export default function WinRateChart({ beat, lose, origins, opponentName, url }: WinRateChartProps) {
   console.log("Chart Props:", { beat, lose, origins });
@@ -136,4 +138,4 @@ export default function WinRateChart({ beat, lose, origins, opponentName, url }:
       )}
     </div>
   );
-};
+}
