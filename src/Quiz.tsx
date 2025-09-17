@@ -106,7 +106,7 @@ export default function Quiz({ role, mainChampion, round, onEnd }: QuizProps) {
           <!DOCTYPE html>
           ${document.documentElement.outerHTML}
           `;
-          htmlContent = htmlContent.replace('<title>マッチアップクイズ</title>', '<title>'+opponentNameRef.current+" vs "+selected+" 相性"+'</title>'); 
+          htmlContent = htmlContent.replace('<title>マッチアップクイズ</title>', '<title> LoL '+opponentNameRef.current+" vs "+selected+" 相性"+'</title>'); 
           htmlContent = htmlContent.replace(/\/lol-matchup-quiz\//g, "https://nitamago.github.io/lol-matchup-quiz/"); 
           htmlContent = htmlContent.replace('<button id="next-button" tabindex="-1">次へ</button>', ""); 
           htmlContent = htmlContent.replace('<button class="mt-6">← メニューに戻る</button>', '<a href="https://nitamago.github.io/lol-matchup-quiz/"><button>クイズページへ</button></a>')
