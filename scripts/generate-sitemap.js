@@ -9,11 +9,12 @@ const urls = ['https://nitamago.github.io/lol-matchup-quiz/'];
 // public/static 配下の HTML を自動で追加
 fs.readdirSync(staticDir).forEach(file => {
   if (file.endsWith('.html')) {
-    urls.push(`https://nitamago.github.io/lol-matchup-quiz/static/${file}`);
+    urls.push(`https://nitamago.github.io/lol-matchup-quiz/static/${encodeURIComponent(file)}`);
   }
 });
 
-const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+const sitemap = `
+<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="https://www.sitemaps.org/schemas/sitemap/0.9">
 ${urls.map(u => `  <url><loc>${u}</loc><priority>0.8</priority></url>`).join('\n')}
 </urlset>
