@@ -107,6 +107,8 @@ export default function Quiz({ role, mainChampion, round, onEnd }: QuizProps) {
           ${document.documentElement.outerHTML}
           `;
           htmlContent = htmlContent.replace('<title>マッチアップクイズ</title>', '<title> LoL '+opponentNameRef.current+" vs "+selected+" 相性"+'</title>'); 
+          htmlContent = htmlContent.replace('<meta charset="UTF-8">', '<meta charset="UTF-8">\n<meta name="description" content="League of Legendsの'+opponentNameRef.current+' vs '+selected+'の相性について説明します。">'); 
+          
           htmlContent = htmlContent.replace(/\/lol-matchup-quiz\//g, "https://nitamago.github.io/lol-matchup-quiz/"); 
           htmlContent = htmlContent.replace('<button id="next-button" tabindex="-1">次へ</button>', ""); 
           htmlContent = htmlContent.replace('<button class="mt-6">← メニューに戻る</button>', '<a href="https://nitamago.github.io/lol-matchup-quiz/"><button>クイズページへ</button></a>')
@@ -116,7 +118,7 @@ export default function Quiz({ role, mainChampion, round, onEnd }: QuizProps) {
           const link = document.createElement("a");
           link.href = URL.createObjectURL(blob);
           // ファイル名にroundやタイムスタンプ入れると上書き防止になる
-          link.download = `explanation_${selected}_${Date.now()}.html`;
+          link.download = `explanation_${opponentNameRef.current}_vs_${selected}_${Date.now()}.html`;
           link.click();
           URL.revokeObjectURL(link.href);
         } catch (err) {
