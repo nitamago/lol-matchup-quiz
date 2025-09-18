@@ -4,6 +4,7 @@ import QuizBotSup from "./QuizBotSup";
 import Footer from "./Footer";
 import TweetButton from "./TweetButton";
 import { Button } from "@/components/ui/button";
+import { LanguageSwitcher } from "@/components/ui/LanguageSwitcher";
 import { useTranslation } from "react-i18next";
 import { championsByRole } from "./champions";
 import { useSearchParams } from "react-router-dom";
@@ -132,6 +133,7 @@ export default function QuizGame({ onBack }: Props) {
 
   return (
     <div className="container" ref={containerRef} key={stage}>
+      <LanguageSwitcher></LanguageSwitcher>
       {role == "" && (<h1>{t("quiz.matchupQuiz")}</h1>)}
       {role != "" && (<h1>{t("quiz.matchupQuiz")}({role})</h1>)}
         
