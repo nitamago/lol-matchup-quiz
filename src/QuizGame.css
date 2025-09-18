@@ -164,3 +164,35 @@ h1 {
   border-color: #4f46e5; /* 選択時に枠を表示 */
   box-shadow: 0 0 10px rgba(79, 70, 229, 0.6);
 }
+
+.champion-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+  gap: 10px;
+  justify-items: center;
+}
+
+.champion-button {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.champion-button.selected {
+  outline: 3px solid #4cafef;
+  border-radius: 8px;
+}
+
+.champion-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+.champion-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+}

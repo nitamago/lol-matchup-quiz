@@ -27,6 +27,7 @@ export default function QuizGame({ onBack }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const translateMap = useRef<Record<string, string>>({});
   const translateMapRev = useRef<Record<string, string>>({});
+  const chanmionIcons = useRef<Record<string, Record<string, string>>>({});
   const { t } = useTranslation();
 
   // 両方の JSON を読み込む
@@ -34,11 +35,13 @@ export default function QuizGame({ onBack }: Props) {
     const lang = localStorage.getItem("lang") || "en";
     Promise.all([
       fetch("/lol-matchup-quiz/lol-matchup-quiz/"+lang+"/name_to_ja_map.json").then((res) => res.json()),
-    ]).then(([translateJson]) => {
+      fetch("/lol-matchup-quiz/lol-matchup-quiz/ja/champions.json").then((res) => res.json()),
+    ]).then(([translateJson, championsJson]) => {
       translateMap.current = translateJson;
       translateMapRev.current = Object.fromEntries(
         Object.entries(translateJson).map(([key, value]) => [value, key])
       );
+      chanmionIcons.current = championsJson;
     });
   }, []);
 
@@ -186,22 +189,28 @@ export default function QuizGame({ onBack }: Props) {
       {stage === "start" && (
         <div>
           <h3>{t("quiz.chooseMainChamp")}</h3>
-          <select
-            key={mainChampion}
-            value={mainChampion}
-            onChange={(e) => {
-              console.log("e.target.value", e.target.value)
-              setMainChampion(e.target.value)}}
-          >
-            <option value="">{t("quiz.no")}</option>
+
+          <div className="champion-grid">
             {mainChampions.map((c) => (
-              <option key={c} value={c}>
-                {c}
-              </option>
+              <button
+                key={c}
+                onClick={() => setMainChampion((prev) => (prev === c ? "" : c))}
+                className={`champion-button ${mainChampion === c ? "selected" : ""}`}
+              >
+                <img
+                  src={chanmionIcons.current[c]['icon']}
+                  alt={c}
+                  className="champion-icon"
+                />
+              </button>
             ))}
-          </select>
+          </div>
+
           <div>
-            <button onClick={handleStart} className="startButton">
+            <button
+              onClick={handleStart}
+              className="startButton"
+            >
               {t("quiz.start")}
             </button>
           </div>
