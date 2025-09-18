@@ -35,7 +35,7 @@ export default function QuizGame({ onBack }: Props) {
     const lang = localStorage.getItem("lang") || "en";
     Promise.all([
       fetch("/lol-matchup-quiz/lol-matchup-quiz/"+lang+"/name_to_ja_map.json").then((res) => res.json()),
-      fetch("/lol-matchup-quiz/lol-matchup-quiz/ja/champions.json").then((res) => res.json()),
+      fetch("/lol-matchup-quiz/lol-matchup-quiz/"+lang+"/champions.json").then((res) => res.json()),
     ]).then(([translateJson, championsJson]) => {
       translateMap.current = translateJson;
       translateMapRev.current = Object.fromEntries(
@@ -198,7 +198,7 @@ export default function QuizGame({ onBack }: Props) {
                 className={`champion-button ${mainChampion === c ? "selected" : ""}`}
               >
                 <img
-                  src={chanmionIcons.current[c]['icon']}
+                  src={chanmionIcons.current[translateMap.current[c]]['icon']}
                   alt={c}
                   className="champion-icon"
                 />
