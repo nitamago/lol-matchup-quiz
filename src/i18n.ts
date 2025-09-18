@@ -12,10 +12,10 @@ i18n
   .use(initReactI18next)
   .init({
     resources: {
-      cn: { translation: cn },
+      // cn: { translation: cn },
       en: { translation: en },
       ja: { translation: ja },
-      kr: { translation: kr }
+      // kr: { translation: kr }
     },
     fallbackLng: "en", // ブラウザ言語に対応がなければ英語
     interpolation: { escapeValue: false },

@@ -109,7 +109,7 @@ export default function Quiz({ role, mainChampion, round, onEnd }: QuizProps) {
           <!DOCTYPE html>
           ${document.documentElement.outerHTML}
           `;
-          htmlContent = htmlContent.replace('<title>マッチアップクイズ</title>', '<title> LoL '+opponentNameRef.current+" vs "+selected+" 相性"+'</title>'); 
+          htmlContent = htmlContent.replace('<title>マッチアップクイズ</title>', '<title> LoL '+opponentNameRef.current+" vs "+selected+" 相性 カウンター 対策"+'</title>'); 
           htmlContent = htmlContent.replace('<meta charset="UTF-8">', '<meta charset="UTF-8">\n<meta name="description" content="League of Legendsの'+opponentNameRef.current+' vs '+selected+'の相性について説明します。">'); 
           
           htmlContent = htmlContent.replace(/\/lol-matchup-quiz\//g, "https://nitamago.github.io/lol-matchup-quiz/"); 
