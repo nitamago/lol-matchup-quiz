@@ -146,17 +146,36 @@ export default function QuizGame({ onBack }: Props) {
 
       {/* ロール選択画面 */}
       {stage === "role" && (
-        <div>
-          <select value={role} onChange={(e) => setRole(e.target.value as any)}>
-            <option value="">{t("quiz.no")}</option>
-            <option value="top">Top</option>
-            <option value="jg">JG</option>
-            <option value="mid">Mid</option>
-            <option value="bot">Bot</option>
-            <option value="sup">Sup</option>
-            <option value="bot&sup">Bot&Sup</option>
-          </select>
-          <div>
+        <div className="role-container">
+          <h2>{t("quiz.roleSelect")}</h2>
+          <div className="role-select">
+            <button
+              className={`role-btn top ${role === "top" ? "active" : ""}`}
+              onClick={() => setRole("top")}
+            />
+            <button
+              className={`role-btn jg ${role === "jg" ? "active" : ""}`}
+              onClick={() => setRole("jg")}
+            />
+            <button
+              className={`role-btn mid ${role === "mid" ? "active" : ""}`}
+              onClick={() => setRole("mid")}
+            />
+            <button
+              className={`role-btn bot ${role === "bot" ? "active" : ""}`}
+              onClick={() => setRole("bot")}
+            />
+            <button
+              className={`role-btn sup ${role === "sup" ? "active" : ""}`}
+              onClick={() => setRole("sup")}
+            />
+            <button
+              className={`role-btn bot-sup ${role === "bot&sup" ? "active" : ""}`}
+              onClick={() => setRole("bot&sup")}
+            />
+          </div>
+
+          <div className="next-btn">
             <button onClick={handleRoleSelect} disabled={!role}>
               次へ
             </button>
