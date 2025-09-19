@@ -109,7 +109,7 @@ h1 {
 /* 各ロールごとにアイコン画像を設定 */
 .role-btn.top {
   top: 95px;
-  left: 25%;
+  left: 17%;
   transform: translateX(-50%);
   background-image: url("/lol-matchup-quiz/icons/top_icon.PNG");
 }
@@ -117,7 +117,7 @@ h1 {
 /* 各ロールごとにアイコン画像を設定 */
 .role-btn.mid {
   top: 147px;
-  left: 48%;
+  left: 42%;
   transform: translateX(-50%);
   background-image: url("/lol-matchup-quiz/icons/mid_icon.PNG");
 }
@@ -125,7 +125,7 @@ h1 {
 /* 各ロールごとにアイコン画像を設定 */
 .role-btn.jg {
   top: 142px;
-  left: 34%;
+  left: 27%;
   transform: translateX(-50%);
   background-image: url("/lol-matchup-quiz/icons/jg_icon.PNG");
 }
