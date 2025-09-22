@@ -120,8 +120,7 @@ export default function Quiz({ role, mainChampion, round, onEnd }: QuizProps) {
           const blob = new Blob([htmlContent], { type: "text/html" });
           const link = document.createElement("a");
           link.href = URL.createObjectURL(blob);
-          // ファイル名にroundやタイムスタンプ入れると上書き防止になる
-          link.download = `explanation_${opponentNameRef.current}_vs_${selected}_${Date.now()}.html`;
+          link.download = `explanation_${role}_${opponentNameRef.current}_vs_${selected}.html`;
           link.click();
           URL.revokeObjectURL(link.href);
         } catch (err) {
