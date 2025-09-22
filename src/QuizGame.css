@@ -82,3 +82,117 @@ h1 {
   border: none;
 }
 
+.role-select {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  background-image: url("/lol-matchup-quiz/icons/map_fix.PNG"); /* 背景画像 */
+  background-size: cover;
+  background-position: center;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+/* 共通のボタンスタイル */
+.role-btn {
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  background-size: cover;
+  background-position: center;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+/* 各ロールごとにアイコン画像を設定 */
+.role-btn.top {
+  top: 95px;
+  left: 17%;
+  transform: translateX(-50%);
+  background-image: url("/lol-matchup-quiz/icons/top_icon.PNG");
+}
+
+/* 各ロールごとにアイコン画像を設定 */
+.role-btn.mid {
+  top: 147px;
+  left: 42%;
+  transform: translateX(-50%);
+  background-image: url("/lol-matchup-quiz/icons/mid_icon.PNG");
+}
+
+/* 各ロールごとにアイコン画像を設定 */
+.role-btn.jg {
+  top: 142px;
+  left: 27%;
+  transform: translateX(-50%);
+  background-image: url("/lol-matchup-quiz/icons/jg_icon.PNG");
+}
+
+/* 各ロールごとにアイコン画像を設定 */
+.role-btn.bot {
+  top: 253px;
+  left: 67%;
+  transform: translateX(-50%);
+  background-image: url("/lol-matchup-quiz/icons/bot_icon.PNG");
+}
+
+/* 各ロールごとにアイコン画像を設定 */
+.role-btn.sup {
+  top: 252px;
+  left: 82%;
+  transform: translateX(-50%);
+  background-image: url("/lol-matchup-quiz/icons/sup_icon.PNG");
+}
+
+/* 各ロールごとにアイコン画像を設定 */
+.role-btn.bot-sup {
+  top: 317px;
+  left: 75%;
+  transform: translateX(-50%);
+  background-image: url("/lol-matchup-quiz/icons/botsup_icon.PNG");
+  border-radius: 35%;
+  width: 120px;
+}
+
+/* .role-btn:hover {
+  transform: scale(1.1);
+} */
+
+.role-btn.active {
+  border-color: #4f46e5; /* 選択時に枠を表示 */
+  box-shadow: 0 0 10px rgba(79, 70, 229, 0.6);
+}
+
+.champion-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+  gap: 10px;
+  justify-items: center;
+}
+
+.champion-button {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.champion-button.selected {
+  outline: 3px solid #4cafef;
+  border-radius: 8px;
+}
+
+.champion-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+.champion-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+}
