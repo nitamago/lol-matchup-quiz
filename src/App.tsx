@@ -4,10 +4,11 @@ import MainMenu from "./MainMenu";
 import QuizGame from "./QuizGame";
 import SubChampSuggest from "./SubChampSuggest";
 import TitlesPage from "./TitlesPage";
+import ExplainPage from "./ExplainPage";
 import { useSearchParams, useNavigate  } from "react-router-dom";
 
 export default function App() {
-  const [page, setPage] = useState<"menu" | "quiz" | "graph" | "title">("menu");
+  const [page, setPage] = useState<"menu" | "quiz" | "graph" | "title" | "explain">("menu");
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   
@@ -48,6 +49,7 @@ export default function App() {
                           }} />}
       {page === "graph" && <SubChampSuggest onBack={() => setPage("menu")} />}
       {page === "title" && <TitlesPage onBack={() => setPage("menu")} />}
+      {page === "explain" && <ExplainPage onBack={() => setPage("menu")} />}
     </div>
   );
 }
