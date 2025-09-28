@@ -14,6 +14,7 @@ interface Props {
 export default function MainMenu({ onNavigate }: Props) {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const { t } = useTranslation();
+  const isDebug = import.meta.env.VITE_DEBUG === 'true';
 
   useEffect(() => {
     const lang = localStorage.getItem("lang") || "en";
@@ -88,6 +89,14 @@ export default function MainMenu({ onNavigate }: Props) {
           tabIndex={-1}
         ></iframe>
         </motion.div>
+
+        
+        {/* デバッグボタン */}
+        {isDebug && (
+          <Button id="explain-button" onClick={() => onNavigate("explain")}>
+            explain
+          </Button>
+        )}
 
         {/* フッター */}
         <motion.footer> 

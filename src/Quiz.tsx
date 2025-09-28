@@ -94,52 +94,6 @@ export default function Quiz({ role, mainChampion, round, onEnd }: QuizProps) {
   useEffect(() => {
     window.gtag("event", "Round"+round.current);
   }, [roundState]);
-
-  useEffect(() => {
-    if (import.meta.env.VITE_DEBUG === 'true') {
-      const saveChartWithEmbeddedImages = async () => {
-        if (!selected) return;
-        if (!chartRef.current) return; // ここで null を弾く
-
-        try {
-          // const htmlContent = await exportChartAsHtml(explanationRef.current!, chartRef.current!);
-          
-          // 現在の画面をまるごと HTML として取得
-          let htmlContent = `
-          <!DOCTYPE html>
-          ${document.documentElement.outerHTML}
-          `;
-          htmlContent = htmlContent.replace('<title>マッチアップクイズ</title>', '<title> LoL '+opponentNameRef.current+" vs "+selected+" 相性 カウンター 対策"+'</title>'); 
-          htmlContent = htmlContent.replace('<meta charset="UTF-8">', '<meta charset="UTF-8">\n<meta name="description" content="League of Legendsの'+opponentNameRef.current+' vs '+selected+'の相性について説明します。">'); 
-          
-          htmlContent = htmlContent.replace(/\/lol-matchup-quiz\//g, "https://nitamago.github.io/lol-matchup-quiz/"); 
-          htmlContent = htmlContent.replace('<button id="next-button" tabindex="-1">次へ</button>', ""); 
-          htmlContent = htmlContent.replace('<button class="mt-6">← メニューに戻る</button>', '<a href="https://nitamago.github.io/lol-matchup-quiz/"><button>クイズページへ</button></a>')
-          
-          // 6) Blob にして自動ダウンロード
-          const blob = new Blob([htmlContent], { type: "text/html" });
-          const link = document.createElement("a");
-          link.href = URL.createObjectURL(blob);
-          link.download = `explanation_${role}_${opponentNameRef.current}_vs_${selected}.html`;
-          link.click();
-          URL.revokeObjectURL(link.href);
-        } catch (err) {
-          console.error("保存失敗:", err);
-        }
-      };
-
-      // 少し待ってから実行することでレンダリング完了を待つ（必要なら値を増やす）
-      const delayMs = 600; // 0.6秒。必要なら 1000〜1500 に増やす
-      const id = window.setTimeout(() => {
-        void saveChartWithEmbeddedImages();
-      }, delayMs);
-
-      return () => {
-        clearTimeout(id);
-      };
-    }
-  }, [selected]);
-
   
   const translateChanmpName = (nameStr: string|null) => {
     if (nameStr) {
