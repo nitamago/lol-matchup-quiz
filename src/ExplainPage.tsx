@@ -10,6 +10,7 @@ interface Matchups {
   [key: string]: {
     beats: { [key: string]: string }[];
     loses: { [key: string]: string }[];
+    even_list: { [key: string]: string }[];
     origins: { [key: string]: string }[];
     url: string;
   };
@@ -19,6 +20,7 @@ interface Reasons {
   [key: string]: {
     beats: { [key: string]: string };
     loses: { [key: string]: string };
+    even_list: { [key: string]: string };
   };
 }
 
@@ -108,8 +110,6 @@ export default function ExplainPage({ onBack }: ExplainPageProps) {
 
       const matchupData = matchupJsonData.current;
       const reasonData = reasonJsonData.current;
-
-      setOrigins(matchupData[champ1].origins);
       setOpponentName(champ1);
       setDataUrl(matchupData[champ1].url);
 
@@ -131,6 +131,8 @@ export default function ExplainPage({ onBack }: ExplainPageProps) {
         setDisadvantage(champ2);
         const disad = matchupRow.beats.filter(item => item.name === champ2)[0];
         setDisadvantageDelta2(disad["delta2"]);
+
+        setOrigins(matchupData[champ1].origins);
       } else if (champ2 in row['loses']) {
         console.log(`${champ2} は ${champ1} に有利`);
         const reason = row['loses'][champ2]; 
@@ -144,6 +146,24 @@ export default function ExplainPage({ onBack }: ExplainPageProps) {
         const disad = matchupRow.beats[0];
         setDisadvantage(disad["name"]);
         setDisadvantageDelta2(disad["delta2"]);
+
+        setOrigins(matchupData[champ1].origins);
+      } else if (champ2 in row['even_list']) {
+        console.log(`${champ2} は ${champ1} と互角`);
+        const reason = row['even_list'][champ2]; 
+        console.log("reason:", reason);
+        setReason(reason);
+
+        const ad = matchupRow.loses[0];
+        setAdvantage(ad["name"]);
+        setAdvantageDelta2(ad["delta2"]);
+
+        const disad = matchupRow.beats[0];
+        setDisadvantage(disad["name"]);
+        setDisadvantageDelta2(disad["delta2"]);
+
+        const even = matchupRow.even_list.filter(item => item.name === champ2)[0];
+        setOrigins([even]);
       } else {
         console.log(`${champ1} vs ${champ2} のデータは存在しない`);
       }
