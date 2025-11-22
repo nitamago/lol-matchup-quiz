@@ -682,5 +682,9 @@
 	"スカーナー": {
 		"name": "スカーナー",
 		"icon": "/lol-matchup-quiz/icons/ico_Skarner.jpg"
+	},
+	"ザーヘン": {
+		"name": "ザーヘン",
+		"icon": "/lol-matchup-quiz/icons/ico_Zaahen.jpg"
 	}
 }

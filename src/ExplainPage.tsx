@@ -10,6 +10,7 @@ interface Matchups {
   [key: string]: {
     beats: { [key: string]: string }[];
     loses: { [key: string]: string }[];
+    even_list: { [key: string]: string }[];
     origins: { [key: string]: string }[];
     url: string;
   };
@@ -19,6 +20,7 @@ interface Reasons {
   [key: string]: {
     beats: { [key: string]: string };
     loses: { [key: string]: string };
+    even_list: { [key: string]: string };
   };
 }
 
@@ -144,6 +146,19 @@ export default function ExplainPage({ onBack }: ExplainPageProps) {
         const disad = matchupRow.beats[0];
         setDisadvantage(disad["name"]);
         setDisadvantageDelta2(disad["delta2"]);
+      }  else if (champ2 in row['even_list']) {
+        console.log(`${champ2} は ${champ1} と互角`);
+        const reason = row['even_list'][champ2]; 
+        console.log("reason:", reason);
+        setReason(reason);
+
+        setAdvantage(champ2);
+        const ad = matchupRow.even_list.filter(item => item.name === champ2)[0];
+        setAdvantageDelta2(ad["delta2"]);
+
+        const disad = matchupRow.even_list[0];
+        setDisadvantage(disad["name"]);
+        setDisadvantageDelta2(disad["delta2"]);
       } else {
         console.log(`${champ1} vs ${champ2} のデータは存在しない`);
       }
@@ -166,10 +181,12 @@ export default function ExplainPage({ onBack }: ExplainPageProps) {
           
           htmlContent = htmlContent.replace(/\/lol-matchup-quiz\//g, "https://nitamago.github.io/lol-matchup-quiz/"); 
           htmlContent = htmlContent.replace('<div style="margin-top: 10px;"><button class="update-explain" style="margin-right: 10px;">更新</button></div>', ""); 
-          htmlContent = htmlContent.replace('<h2>Explain Page</h2>', '')
+          htmlContent = htmlContent.replace('<h2>Explain Page</h2>', '<h2>チャンピオン相性辞書は<a href="https://loldictionary.win/" target="_blank">こちら</a></h2>')
           htmlContent = htmlContent.replace('<label>Role:<input type="text" value="'+role+'" style="margin-left: 8px;"></label>', '')
           htmlContent = htmlContent.replace('<label>Champion 1:<input type="text" value="'+champ1+'" style="margin-left: 8px;"></label>', '')
           htmlContent = htmlContent.replace('<label>Champion 2:<input type="text" value="'+champ2+'" style="margin-left: 8px;"></label>', '')
+          htmlContent = htmlContent.replace('G-MVL5C35764', ''); // GA ID 変更
+          htmlContent = htmlContent.replace('page_view', '')
           
           // 6) Blob にして自動ダウンロード
           const blob = new Blob([htmlContent], { type: "text/html" });
